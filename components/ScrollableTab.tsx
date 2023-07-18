@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import VerseList from './VerseList';
@@ -19,11 +19,11 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           </Text>
         </View>
         <View style={styles.verseList}>
-          <VerseList verses={verses} key="verseList" similar=false/>
+          <VerseList verses={verses} key="verseList" similar={false} />
         </View>
         <Text> ------------------- </Text>
         <View style={styles.verseList}>
-          <VerseList verses={similars} key="verseList" similar=true/>
+          <VerseList verses={similars} key="verseList" similar={true} />
         </View>
       </View>
     </ScrollableTabView>

@@ -15,4 +15,5 @@ export interface VerseListProps {
 export interface ScrollableTabProps {
   kalima: string;
   verses: Verse[];
+  similars: Verse[];
 }
