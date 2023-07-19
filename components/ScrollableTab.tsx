@@ -15,15 +15,11 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
       <View style={styles.view}>
         <View style={styles.headerContainer}>
           <Text style={styles.header} key="header">
-            {kalima} ({verses.length}) - {verses[0].sourate}
+            {verses[0].sourate} - {kalima}({verses.length + similars.length})
           </Text>
         </View>
         <View style={styles.verseList}>
-          <VerseList verses={verses} key="verseList" similar={false} />
-        </View>
-        <Text> ------------------- </Text>
-        <View style={styles.verseList}>
-          <VerseList verses={similars} key="verseList" similar={true} />
+          <VerseList verses={verses} key="verseList" similars={similars} />
         </View>
       </View>
     </ScrollableTabView>

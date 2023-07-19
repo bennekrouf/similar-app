@@ -9,7 +9,7 @@ import {loadSimilars} from './api/loadSimilars';
 const App: React.FC = () => {
   const [chapters, setChapters] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [similars, setSimilars] = useState<any[]>([]);
+  const [contents, setContents] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const openModal = () => {
@@ -25,7 +25,7 @@ const App: React.FC = () => {
     const updatedSimilars = await loadSimilars(chapter.no);
 
     // Set the sorted verses as the new value for similars
-    setSimilars(updatedSimilars);
+    setContents(updatedSimilars);
   };
 
   const handlePanResponderRelease = (evt: any, gestureState: {dy: number}) => {
@@ -48,7 +48,7 @@ const App: React.FC = () => {
           loadSimilars(),
           loadChapters(),
         ]);
-        setSimilars(similarsData);
+        setContents(similarsData);
         setChapters(chaptersData);
         setIsLoading(false);
       } catch (error) {
@@ -71,7 +71,7 @@ const App: React.FC = () => {
   return (
     <View style={{flex: 1}}>
       {/* Main App Content */}
-      <ScrollableSwipablePage similars={similars} />
+      <ScrollableSwipablePage contents={contents} />
 
       {/* Floating Button */}
       <TouchableOpacity

@@ -9,7 +9,7 @@ export interface Verse {
 
 export interface VerseListProps {
   verses: Verse[];
-  similar: boolean;
+  similars: Verse[];
 }
 
 export interface ScrollableTabProps {

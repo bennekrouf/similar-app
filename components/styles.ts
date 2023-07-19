@@ -1,6 +1,9 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  defaultFontFamily: {
+    fontFamily: 'ScheherazadeNew-Regular',
+  },
   verseList: {
     paddingTop: 40,
   },
@@ -28,22 +31,20 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: 'bold',
   },
-  view: {flex: 1, padding: 16},
+  view: {flex: 1, padding: 0},
   headerContainer: {
-    marginBotom: 20,
-    elevation: 5,
+    elevation: 30,
     paddingVertical: 10,
-    paddingHorizontal: 20,
     backgroundColor: '#f2f2f2',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: 'red',
     // borderBottomColor: 'black',
   },
   sourateLabel: {
-    borderRadius: 50,
+    // borderRadius: 50,
     padding: 10,
-    marginRight: 100,
-    marginLeft: 100,
+    marginRight: 10,
+    marginLeft: 10,
   },
   header: {
     fontSize: 24,
@@ -79,6 +80,21 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: '#333',
     fontWeight: 'bold',
+  },
+  versesContainer: {
+    margin: 10,
+    padding: 10,
+    borderWidth: 3,
+    borderColor: 'gray',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  similarsContainer: {
+    margin: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
   },
 });
 

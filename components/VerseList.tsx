@@ -7,15 +7,41 @@ import FormattedText from './FormattedText';
 
 const VerseList: React.FC<VerseListProps> = ({verses, similars}) => (
   <ScrollView contentContainerStyle={styles.container}>
-    {verses.map(({text, sourate, background_color}, index) => (
-      <View style={styles.rightAlignContainer} key={index}>
-        <View style={[{borderRadius: 50}]}>
-          <Text style={styles.verse}>
-            <Text>{` ${index + 1} - ${sourate} `}</Text> {' '} : <FormattedText text={text} />
-          </Text>
+    <View style={styles.versesContainer}>
+      {verses.map(({text, background_color, ayah}, index) => (
+        <View style={styles.rightAlignContainer} key={index}>
+          <View>
+            <Text style={styles.verse}>
+              <Text> </Text>
+              <View
+                style={[{backgroundColor: background_color, borderRadius: 50}]}>
+                <Text>{': '}</Text>
+              </View>
+              <FormattedText text={text} ayah={ayah} />
+            </Text>
+          </View>
         </View>
-      </View>
-    ))}
+      ))}
+    </View>
+
+    <View style={styles.similarsContainer}>
+      {similars.map(({text, sourate, background_color, ayah}, index) => (
+        <View style={styles.rightAlignContainer} key={index}>
+          <View>
+            <Text style={styles.verse}>
+              <View
+                style={[
+                  styles.sourateLabel,
+                  {backgroundColor: 'red', borderRadius: 20},
+                ]}>
+                <Text>{` ${index + 1} - ${sourate} : `}</Text>
+              </View>
+              <FormattedText text={text} ayah={ayah} />
+            </Text>
+          </View>
+        </View>
+      ))}
+    </View>
   </ScrollView>
 );
 
