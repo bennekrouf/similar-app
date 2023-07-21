@@ -16,4 +16,10 @@ export interface ScrollableTabProps {
   kalima: string;
   verses: Verse[];
   similars: Verse[];
+  chapters: any[];
+  handleChapterSelection: (chapterNo: {no: number | undefined}) => void; // Add the handleChapterSelection function to the interface
+}
+export interface Chapter {
+  name: string;
+  count: number;
 }

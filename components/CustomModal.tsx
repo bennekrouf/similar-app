@@ -1,13 +1,20 @@
-// CustomModal.tsx
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal } from 'react-native';
-import { PanResponderInstance } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  PanResponderInstance,
+  // GestureResponderEvent,
+} from 'react-native';
+// import {Chapter} from './interfaces';
 
 interface CustomModalProps {
   visible: boolean;
   onClose: () => void;
-  chapters: any[];
-  handleLabelPress: (chapter: { no: number | undefined }) => void;
+  chapters: any[]; // Add the chapters prop
+  handleLabelPress: (chapter: {no: number | undefined}) => Promise<void>; // Add the handleLabelPress prop
   panResponder: PanResponderInstance;
 }
 
@@ -18,16 +25,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
   handleLabelPress,
   panResponder,
 }) => {
-  const handlePanResponderRelease = (
-    evt: any,
-    gestureState: { dy: number }
-  ) => {
-    // Check if the user has swiped down by a certain threshold
-    if (gestureState.dy > 100) {
-      onClose();
-    }
-  };
-
   return (
     <Modal
       visible={visible}
@@ -41,10 +38,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
         }}>
         <View
-          style={{ backgroundColor: 'white', minHeight: '80%' }}
+          style={{backgroundColor: 'white', minHeight: '80%'}}
           {...panResponder.panHandlers}>
           {/* Modal Content */}
-          <View style={{ padding: 20, flexDirection: 'row', flexWrap: 'wrap' }}>
+          <View style={{padding: 20, flexDirection: 'row', flexWrap: 'wrap'}}>
             {chapters.map((chapter, index) => (
               <TouchableOpacity
                 key={index}
@@ -61,8 +58,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </View>
 
           {/* Close Button */}
-          <TouchableOpacity style={{ marginTop: 20 }} onPress={onClose}>
-            <Text style={{ color: 'black', fontSize: 14 }}>X</Text>
+          <TouchableOpacity style={{marginTop: 20}} onPress={onClose}>
+            <Text style={{color: 'black', fontSize: 14}}>X</Text>
           </TouchableOpacity>
         </View>
       </View>

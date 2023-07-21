@@ -31,20 +31,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderTopColor: 'white',
   },
-  leftHeaderText: {
+  rightHeaderText: {
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Regular',
     // fontWeight: 'bold',
     // color: '#040101',
     color: 'white',
   },
-  leftHeaderView: {
+  sourateHeaderView: {
     backgroundColor: 'red',
     color: 'white',
     borderRadius: 15,
     paddingHorizontal: 10,
   },
-  rightHeaderText: {
+  leftHeaderText: {
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Medium',
     color: '#040101',
