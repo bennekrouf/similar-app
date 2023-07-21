@@ -40,6 +40,14 @@ const App: React.FC = () => {
     onPanResponderRelease: handlePanResponderRelease,
   });
 
+  const parseChapterProp = (sourates: any, verses: any) => {
+    return verses.map(verse => ({
+      ...verse,
+      backgroundColor: chapters.find(c => c.no === verse.chapter_no)
+        ?.background_color,
+    }));
+  };
+
   useEffect(() => {
     I18nManager.forceRTL(true);
     const fetchData = async () => {
@@ -48,7 +56,15 @@ const App: React.FC = () => {
           loadSimilars(),
           loadChapters(),
         ]);
-        setContents(similarsData);
+        setContents(() => {
+          return similarsData.map(similar => {
+            return {
+              ...similar,
+              verses: parseChapterProp(chapters, similar.verses),
+              similars: parseChapterProp(chapters, similar.similars),
+            };
+          });
+        });
         setChapters(chaptersData);
         setIsLoading(false);
       } catch (error) {
@@ -79,7 +95,7 @@ const App: React.FC = () => {
           position: 'absolute',
           bottom: 20,
           left: 20,
-          backgroundColor: 'blue',
+          backgroundColor: '#ff8c00',
           borderRadius: 25,
           width: 50,
           height: 50,
@@ -126,7 +142,7 @@ const App: React.FC = () => {
 
             {/* Close Button */}
             <TouchableOpacity style={{marginTop: 20}} onPress={closeModal}>
-              <Text style={{color: 'black', fontSize: 18}}>Close Modal</Text>
+              <Text style={{color: 'black', fontSize: 14}}>X</Text>
             </TouchableOpacity>
           </View>
         </View>

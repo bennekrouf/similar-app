@@ -1,14 +1,20 @@
-const rules = [
+interface Rule {
+  delimiter: string;
+  targetVariable: string;
+  additionalLogic?: boolean;
+}
+
+const rules: Rule[] = [
   {delimiter: '\\(مشترك\\)', targetVariable: 'isCommon'},
   {
-    delimiter: '\\(other_delimiter\\)',
-    targetVariable: 'otherVariable',
+    delimiter: '\\(مختلف\\)',
+    targetVariable: 'isDifferent',
     additionalLogic: true,
   },
 ];
 
 export function parseText(text: string | any[]) {
-  let parts = [];
+  let parts: {text: string; [key: string]: any}[] = [];
   let start = 0;
 
   for (const rule of rules) {
@@ -21,8 +27,10 @@ export function parseText(text: string | any[]) {
         parts.push({text: text.slice(start, match.index)});
       }
 
-      const part = {text: match[1]};
-      part[targetVariable] = true;
+      const part: {text: string; [key: string]: any} = {
+        text: match[1],
+        [targetVariable]: true, // Set the property dynamically using computed property names
+      };
 
       if (additionalLogic) {
         // Additional logic specific to the rule

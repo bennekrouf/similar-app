@@ -1,19 +1,25 @@
-import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text, StyleSheet, View} from 'react-native';
 import {parseText} from './textParser';
+import {I18nManager} from 'react-native';
 
-function FormattedText({text, ayah}) {
+function FormattedText({text}: {text: string; ayah: number}) {
+  useEffect(() => {
+    I18nManager.forceRTL(true);
+  });
   const parts = parseText(text);
 
   return (
-    <Text style={styles.baseText}>
-      {parts.map((part, index) => (
-        <Text key={index} style={part.isCommon && styles.specialText}>
-          {part.text}
-        </Text>
-      ))}
-      ({ayah})
-    </Text>
+    <View>
+      <Text style={styles.shit}>
+        {parts.map((part, index) => (
+          <Text key={index} style={part.isCommon && styles.specialText}>
+            {' '}
+            {` ${part.text}`}
+          </Text>
+        ))}
+      </Text>
+    </View>
   );
 }
 
@@ -23,6 +29,10 @@ const styles = StyleSheet.create({
   },
   specialText: {
     color: 'red',
+  },
+  shit: {
+    fontSize: 20,
+    fontFamily: 'ScheherazadeNew-Regular',
   },
 });
 

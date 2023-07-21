@@ -5,43 +5,67 @@ import styles from './styles';
 import {View} from 'react-native';
 import FormattedText from './FormattedText';
 
-const VerseList: React.FC<VerseListProps> = ({verses, similars}) => (
-  <ScrollView contentContainerStyle={styles.container}>
-    <View style={styles.versesContainer}>
-      {verses.map(({text, background_color, ayah}, index) => (
-        <View style={styles.rightAlignContainer} key={index}>
-          <View>
-            <Text style={styles.verse}>
-              <Text> </Text>
-              <View
-                style={[{backgroundColor: background_color, borderRadius: 50}]}>
-                <Text>{': '}</Text>
-              </View>
-              <FormattedText text={text} ayah={ayah} />
-            </Text>
-          </View>
-        </View>
-      ))}
-    </View>
+const chapterProperties = (chapters, chapter_no) => {
+  return chapters.find(chapter => chapter.no === chapter_no);
+};
 
-    <View style={styles.similarsContainer}>
-      {similars.map(({text, sourate, background_color, ayah}, index) => (
-        <View style={styles.rightAlignContainer} key={index}>
-          <View>
-            <Text style={styles.verse}>
-              <View
-                style={[
-                  styles.sourateLabel,
-                  {backgroundColor: 'red', borderRadius: 20},
-                ]}>
-                <Text>{` ${index + 1} - ${sourate} : `}</Text>
-              </View>
-              <FormattedText text={text} ayah={ayah} />
-            </Text>
+const VerseList: React.FC<VerseListProps> = ({verses, similars, chapters}) => (
+  <ScrollView contentContainerStyle={styles.container}>
+    {verses.length > 0 && (
+      <View style={styles.versesContainer}>
+        {verses.map(({text, background_color, ayah}, index) => (
+          <View style={styles.rightAlignContainer} key={index}>
+            <View>
+              <Text style={styles.verse}>
+                <FormattedText text={text} ayah={ayah} />
+              </Text>
+            </View>
           </View>
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    )}
+
+    {similars.length > 0 && (
+      <View style={styles.similarsContainer}>
+        {similars.map(({text, sourate, background_color, ayah}, index) => (
+          <View style={styles.rightAlignContainer} key={index}>
+            <View>
+              {/* Similar Header */}
+              <View style={styles.similarsHeader}>
+                {/* Left column */}
+                <View
+                  style={[
+                    styles.columnContainer,
+                    styles.leftColumn,
+                    {backgroundColor: background_color},
+                  ]}>
+                  <View style={styles.column}>
+                    <Text style={styles.columnText}>{sourate}</Text>
+                  </View>
+                </View>
+
+                {/* Right column */}
+                <View style={[styles.columnContainer, styles.rightColumn]}>
+                  <View style={styles.columnNumbers}>
+                    <View style={styles.columnNumber}>
+                      <Text style={styles.columnTextNumber}>{index + 1}</Text>
+                    </View>
+                    <View style={styles.columnNumber}>
+                      <Text style={styles.columnTextNumber}>{ayah}</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              {/* Similar Content */}
+              <View style={styles.similarsContent}>
+                <FormattedText text={text} />
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
+    )}
   </ScrollView>
 );
 

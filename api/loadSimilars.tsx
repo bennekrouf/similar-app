@@ -33,13 +33,14 @@ export async function loadSimilars(chapterNo = 40) {
   }
 }
 
-const formatSimilars = verses => {
-  return verses.map(item1 => {
+const formatSimilars = (verses) => {
+  return verses.map(verse => {
     return {
-      sourate: item1.sourate,
-      chapter: item1.verse.chapter,
-      ayah: item1.verse.ayah,
-      text: item1.verse.text,
+      ...verse,
+      sourate: verse.sourate,
+      chapter: verse.verse.chapter,
+      ayah: verse.verse.ayah,
+      text: verse.verse.text,
     };
   });
 };

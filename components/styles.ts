@@ -1,14 +1,15 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  defaultFontFamily: {
+  shit: {
+    fontFamily: 'ScheherazadeNew-Regular',
+  },
+  specialText: {
+    color: 'red',
     fontFamily: 'ScheherazadeNew-Regular',
   },
   verseList: {
     paddingTop: 40,
-  },
-  specialText: {
-    color: 'red',
   },
   rightAlignContainer: {
     alignItems: 'flex-end',
@@ -18,57 +19,63 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
   },
-  underline: {
-    textDecorationLine: 'underline',
-  },
-  underlineAndBold: {
-    textDecorationLine: 'underline',
-    fontWeight: 'bold',
-  },
-  normal: {
-    fontWeight: 'normal',
-  },
-  bold: {
-    fontWeight: 'bold',
-  },
   view: {flex: 1, padding: 0},
   headerContainer: {
-    elevation: 30,
-    paddingVertical: 10,
-    backgroundColor: '#f2f2f2',
-    borderBottomWidth: 1,
-    borderBottomColor: 'red',
-    // borderBottomColor: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 0,
+    paddingHorizontal: 3,
+    // backgroundColor: '#3a3939',
+    // color: '#f0eded',
+    borderBottomWidth: 0.5,
+    borderTopColor: 'white',
+  },
+  leftHeaderText: {
+    fontSize: 18,
+    fontFamily: 'ScheherazadeNew-Regular',
+    // fontWeight: 'bold',
+    // color: '#040101',
+    color: 'white',
+  },
+  leftHeaderView: {
+    backgroundColor: 'red',
+    color: 'white',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+  },
+  rightHeaderText: {
+    fontSize: 18,
+    fontFamily: 'ScheherazadeNew-Medium',
+    color: '#040101',
+    // Add additional styles as needed
   },
   sourateLabel: {
     // borderRadius: 50,
-    padding: 10,
+    padding: 3,
     marginRight: 10,
     marginLeft: 10,
-  },
-  header: {
-    fontSize: 24,
-    fontFamily: 'ScheherazadeNew-Medium',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   verse: {
     fontFamily: 'ScheherazadeNew-Regular',
     fontSize: 25,
-    marginBottom: 35,
+    // marginBottom: 35,
+    marginBottom: 15, // Add some vertical spacing between verses
     textAlign: 'right',
   },
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
   },
   modalContent: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    backgroundColor: 'transparent', // Set a transparent background
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
     padding: 20,
-    height: '90%',
+    height: '95%',
     marginTop: 'auto',
     marginBottom: 30, // Add marginBottom to stop 30px before the top
   },
@@ -84,17 +91,86 @@ const styles = StyleSheet.create({
   versesContainer: {
     margin: 10,
     padding: 10,
-    borderWidth: 3,
-    borderColor: 'gray',
+    backgroundColor: 'white',
     borderRadius: 5,
-    marginBottom: 20,
+    // marginBottom: 100,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  // New styles for the header and content
+  similarsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  columnContainer: {
+    alignItems: 'flex-start',
+  },
+  leftColumn: {
+    flex: 1,
+  },
+  rightColumn: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  column: {
+    backgroundColor: 'gray',
+    padding: 5,
+    borderRadius: 5,
+  },
+  columnNumbers: {
+    flexDirection: 'row',
+  },
+  columnNumber: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    paddingVertical: 5,
+    borderRadius: 1,
+  },
+  columnText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  columnTextNumber: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  similarsHeaderText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'ScheherazadeNew-Regular',
+  },
+  similarsContent: {
+    paddingHorizontal: 10,
+    fontSize: 30,
+    fontFamily: 'ScheherazadeNew-Regular',
+    paddingBottom: 40,
+  },
+  similarsItem: {
+    fontSize: 30,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  similarsItemText: {
+    marginLeft: 5,
+    fontSize: 30,
   },
   similarsContainer: {
     margin: 10,
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: 'gray',
     borderRadius: 5,
+    marginBottom: 200,
   },
 });
 
