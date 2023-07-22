@@ -1,6 +1,6 @@
 import {ViewProps, PanResponderInstance} from 'react-native';
 
-declare module 'CustomModal' {
+declare module 'ChapterSelectionModal' {
   export interface CustomModalProps extends ViewProps {
     visible: boolean;
     onClose: () => void;
@@ -9,6 +9,6 @@ declare module 'CustomModal' {
     panResponder: PanResponderInstance;
   }
 
-  const CustomModal: React.FC<CustomModalProps>;
-  export default CustomModal;
+  const ChapterSelectionModal: React.FC<CustomModalProps>;
+  export default ChapterSelectionModal;
 }

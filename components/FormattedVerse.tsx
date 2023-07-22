@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import {parseText} from './textParser';
+import {parseText} from '../helpers.ts/textParser';
 import {I18nManager} from 'react-native';
 
-function FormattedText({text}: {text: string; ayah: number}) {
+function FormattedVerse({text}: {text: string; ayah: number}) {
   useEffect(() => {
     I18nManager.forceRTL(true);
   });
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormattedText;
+export default FormattedVerse;

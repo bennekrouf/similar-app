@@ -3,12 +3,12 @@ import React from 'react';
 import {
   View,
   Text,
+  StyleSheet,
   TouchableOpacity,
   Modal,
   PanResponderInstance,
   // GestureResponderEvent,
 } from 'react-native';
-// import {Chapter} from './interfaces';
 
 interface CustomModalProps {
   visible: boolean;
@@ -18,7 +18,7 @@ interface CustomModalProps {
   panResponder: PanResponderInstance;
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({
+const ChapterSelectionModal: React.FC<CustomModalProps> = ({
   visible,
   onClose,
   chapters,
@@ -67,4 +67,4 @@ const CustomModal: React.FC<CustomModalProps> = ({
   );
 };
 
-export default CustomModal;
+export default ChapterSelectionModal;

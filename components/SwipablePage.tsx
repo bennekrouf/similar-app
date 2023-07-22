@@ -8,7 +8,7 @@ import {loadChapters} from '../api/loadChapters';
 import {loadSimilars} from '../api/loadSimilars';
 interface ScrollableSwipablePageProps {}
 
-const ScrollableSwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
+const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
   const handleChapterSelection = async (chapter: any) => {
     setSelectedChapter(chapter.no);
     // const newContents = await loadSimilars(chapter.no);
@@ -87,4 +87,4 @@ const ScrollableSwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
   );
 };
 
-export default ScrollableSwipablePage;
+export default SwipablePage;

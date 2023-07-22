@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import VerseList from './VerseList';
-import {ScrollableTabProps} from './interfaces';
-import styles from './styles';
-import CustomModal from './CustomModal'; // Import the TypeScript declaration file
+import LessonContent from './LessonContent';
+import {ScrollableTabProps} from '../models/interfaces';
+import ChapterSelectionModal from './ChapterSelectionModal'; // Import the TypeScript declaration file
 import {
   View,
   Text,
   TouchableOpacity,
   PanResponder,
   PanResponderInstance,
+  StyleSheet,
 } from 'react-native';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({
@@ -65,11 +65,11 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
         </View>
 
         <View style={styles.verseList}>
-          <VerseList verses={verses} key="verseList" similars={similars} />
+          <LessonContent verses={verses} key="verseList" similars={similars} />
         </View>
 
         {/* Pass the isModalOpen state and setIsModalOpen function as props */}
-        <CustomModal
+        <ChapterSelectionModal
           visible={isModalOpen}
           onClose={handleCloseModal} // Close the modal
           chapters={chapters}
@@ -82,3 +82,40 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 };
 
 export default ScrollableTab;
+
+const styles = StyleSheet.create({
+  view: {flex: 1, padding: 0},
+  headerContainer: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 0,
+    paddingHorizontal: 3,
+    // backgroundColor: '#3a3939',
+    // color: '#f0eded',
+    borderBottomWidth: 0.5,
+    borderTopColor: 'white',
+  },
+  leftHeaderText: {
+    fontSize: 18,
+    fontFamily: 'ScheherazadeNew-Medium',
+    color: '#040101',
+    // Add additional styles as needed
+  },
+  sourateHeaderView: {
+    backgroundColor: 'red',
+    color: 'white',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+  },
+  rightHeaderText: {
+    fontSize: 18,
+    fontFamily: 'ScheherazadeNew-Regular',
+    // fontWeight: 'bold',
+    // color: '#040101',
+    color: 'white',
+  },
+  verseList: {
+    paddingTop: 40,
+  },
+});

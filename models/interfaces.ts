@@ -7,8 +7,14 @@ export interface Verse {
   font_color: string;
 }
 
+export interface LessonListProps {
+  verses: Verse[];
+  similars: Verse[];
+}
 export interface VerseListProps {
   verses: Verse[];
+}
+export interface SimilarListProps {
   similars: Verse[];
 }
 
