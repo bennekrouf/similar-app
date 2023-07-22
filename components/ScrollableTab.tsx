@@ -11,6 +11,7 @@ import {
   PanResponderInstance,
   StyleSheet,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({
   kalima,
@@ -43,8 +44,18 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
     handleCloseModal();
-    handleChapterSelection({no: chapter.no});
+    if (chapter.no !== undefined) {
+      handleChapterSelection({no: chapter.no});
+
+      try {
+        // Save the selectedChapter in AsyncStorage
+        await AsyncStorage.setItem('selectedChapter', chapter.no.toString());
+      } catch (error) {
+        console.log('Error saving selectedChapter:', error);
+      }
+    }
   };
+
   return (
     <ScrollableTabView>
       <View style={styles.view}>

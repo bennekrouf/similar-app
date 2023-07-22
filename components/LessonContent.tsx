@@ -15,8 +15,6 @@ const MainContent: React.FC<LessonListProps> = ({verses, similars}) => (
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
   },
 });
 
