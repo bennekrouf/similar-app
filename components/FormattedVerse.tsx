@@ -1,24 +1,19 @@
-import React, {useEffect} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import {parseText} from '../helpers.ts/textParser';
-import {I18nManager} from 'react-native';
-
-// Enable RTL support globally
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
+import {parseText} from '../helpers/textParser';
 
 function FormattedVerse({text}: {text: string; ayah: number}) {
-  useEffect(() => {
-    I18nManager.forceRTL(true);
-  });
   const parts = parseText(text);
 
   return (
     <View>
       <Text style={styles.verseStyle}>
         {parts.map((part, index) => (
-          <Text key={index} style={part.isCommon && styles.specialText}>
-            {' '}
+          <Text
+            key={index}
+            style={[
+              part.isCommon && styles.commonText,
+              part.isDifferent && styles.differentText,
+            ]}>
             {` ${part.text}`}{' '}
           </Text>
         ))}
@@ -28,17 +23,16 @@ function FormattedVerse({text}: {text: string; ayah: number}) {
 }
 
 const styles = StyleSheet.create({
-  baseText: {
-    // textAlign: 'right',
+  commonText: {
+    color: 'blue',
   },
-  specialText: {
+  differentText: {
     color: 'red',
-    // textAlign: 'right', // Add the textAlign directly to the inner Text components
   },
   verseStyle: {
     fontSize: 20,
     fontFamily: 'ScheherazadeNew-Regular',
-    // textAlign: 'right', // Add the textAlign directly to the inner Text components
+    textAlign: 'right',
   },
 });
 

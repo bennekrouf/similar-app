@@ -24,6 +24,7 @@ export async function loadSimilars(chapterNo = 40) {
       kalima: item.kalima,
       verses: formatSimilars(item.verses),
       similars: formatSimilars(item.similars),
+      opposites: formatSimilars(item.opposites),
     }));
     AsyncStorage.setItem('similars', JSON.stringify(similars));
     return similars;

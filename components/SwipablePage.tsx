@@ -4,7 +4,6 @@ import ScrollableTab from './ScrollableTab';
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {I18nManager} from 'react-native';
 import {loadChapters} from '../api/loadChapters';
 import {loadSimilars} from '../api/loadSimilars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,7 +48,7 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
     return verses.map(verse => ({
       ...verse,
       backgroundColor: chapters.find(c => c.no === verse.chapter_no)
-        ?.background_color,
+        ?.backgroundColor,
     }));
   };
 
@@ -91,7 +90,6 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
   }, []); // Empty dependency array to run this effect only once, on mount
 
   useEffect(() => {
-    I18nManager.forceRTL(true);
     const fetchData = async () => {
       try {
         const [similarsData, chaptersData] = await Promise.all([
@@ -103,6 +101,7 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
             return {
               ...similar,
               verses: parseChapterProp(chapters, similar.verses),
+              opposites: parseChapterProp(chapters, similar.opposites),
               similars: parseChapterProp(chapters, similar.similars),
             };
           });
@@ -137,7 +136,7 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
       {contents &&
         contents.map(
           (
-            {kalima, verses, similars}: any,
+            {kalima, verses, similars, opposites}: any,
             index: React.Key | null | undefined,
           ) => (
             <View key={index} style={{flex: 1}}>
@@ -145,6 +144,7 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
                 kalima={kalima}
                 verses={verses}
                 similars={similars}
+                opposites={opposites}
                 chapters={chapters}
                 handleChapterSelection={handleChapterSelection}
               />

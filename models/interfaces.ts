@@ -3,13 +3,14 @@ export interface Verse {
   ayah: number;
   text: string;
   sourate: string;
-  background_color: string;
-  font_color: string;
+  backgroundColor: string;
+  color: string;
 }
 
 export interface LessonListProps {
   verses: Verse[];
   similars: Verse[];
+  opposites: Verse[];
 }
 export interface VerseListProps {
   verses: Verse[];
@@ -18,10 +19,15 @@ export interface SimilarListProps {
   similars: Verse[];
 }
 
+export interface OppositeListProps {
+  opposites: Verse[];
+}
+
 export interface ScrollableTabProps {
   kalima: string;
   verses: Verse[];
   similars: Verse[];
+  opposites: Verse[];
   chapters: any[];
   handleChapterSelection: (chapterNo: {no: number | undefined}) => void; // Add the handleChapterSelection function to the interface
 }

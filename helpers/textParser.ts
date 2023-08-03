@@ -5,9 +5,9 @@ interface Rule {
 }
 
 const rules: Rule[] = [
-  {delimiter: '\\(مشترك\\)', targetVariable: 'isCommon'},
+  {delimiter: '\\((.*?)\\)', targetVariable: 'isCommon'},
   {
-    delimiter: '\\(مختلف\\)',
+    delimiter: '\\[(.*?)\\]',
     targetVariable: 'isDifferent',
     additionalLogic: true,
   },
@@ -19,7 +19,7 @@ export function parseText(text: string | any[]) {
 
   for (const rule of rules) {
     const {delimiter, targetVariable, additionalLogic} = rule;
-    const regex = new RegExp(`${delimiter}(.*?)${delimiter}`, 'g');
+    const regex = new RegExp(`${delimiter}`, 'g');
     let match;
 
     while ((match = regex.exec(text)) !== null) {
@@ -29,7 +29,7 @@ export function parseText(text: string | any[]) {
 
       const part: {text: string; [key: string]: any} = {
         text: match[1],
-        [targetVariable]: true, // Set the property dynamically using computed property names
+        [targetVariable]: true,
       };
 
       if (additionalLogic) {

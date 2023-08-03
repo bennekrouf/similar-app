@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import LessonContent from './LessonContent';
+import LessonContent from './lesson/LessonContent';
 import {ScrollableTabProps} from '../models/interfaces';
 import ChapterSelectionModal from './ChapterSelectionModal'; // Import the TypeScript declaration file
 import {
@@ -18,6 +18,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   verses,
   similars,
   chapters,
+  opposites,
   handleChapterSelection,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,7 +77,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
         </View>
 
         <View style={styles.verseList}>
-          <LessonContent verses={verses} key="verseList" similars={similars} />
+          <LessonContent verses={verses} key="verseList" similars={similars} opposites={opposites}/>
         </View>
 
         {/* Pass the isModalOpen state and setIsModalOpen function as props */}
@@ -127,6 +128,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   verseList: {
-    paddingTop: 40,
+    // paddingTop: 40,
   },
 });

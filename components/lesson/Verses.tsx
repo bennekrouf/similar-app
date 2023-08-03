@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { VerseListProps } from '../models/interfaces';
-import FormattedVerse from './FormattedVerse';
+import {View, Text, StyleSheet} from 'react-native';
+import {VerseListProps} from '../../models/interfaces';
+import FormattedVerse from '../FormattedVerse';
 
-const Verses: React.FC<VerseListProps> = ({ verses }) => (
+const Verses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>
-    {verses.map(({ text, background_color, ayah }, index) => (
+    {verses.map(({text, backgroundColor, ayah}, index) => (
       <View key={index} style={styles.verseContainer}>
         <Text style={styles.verse} allowFontScaling={false}>
           <FormattedVerse text={text} ayah={ayah} />
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     // The following properties will ensure RTL text is rendered correctly
     writingDirection: 'rtl',
-    textAlignVertical: 'center',
+    // textAlignVertical: 'center',
     textAlign: 'right', // Add the textAlign directly to the inner Text components
   },
   versesContainer: {
