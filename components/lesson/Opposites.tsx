@@ -12,6 +12,14 @@ const Opposites: React.FC<OppositeListProps> = ({opposites}) => (
         <View>
           {/* Similar Header */}
           <View style={styles.similarsHeader}>
+            {/* Right column */}
+            <View style={[styles.columnContainer]}>
+              <View style={styles.columnNumber}>
+                <Text style={styles.columnTextNumber}>
+                  {`${chapter}:${ayah}`}
+                </Text>
+              </View>
+            </View>
             {/* Left column */}
             <View
               style={[
@@ -22,15 +30,6 @@ const Opposites: React.FC<OppositeListProps> = ({opposites}) => (
               <View style={[styles.column, {backgroundColor: 'black'}]}>
                 <Text style={[styles.columnText, {textAlign: 'right'}]}>
                   {sourate}
-                </Text>
-              </View>
-            </View>
-
-            {/* Right column */}
-            <View style={[styles.columnContainer]}>
-              <View style={styles.columnNumber}>
-                <Text style={styles.columnTextNumber}>
-                  {`${chapter}:${ayah}`}
                 </Text>
               </View>
             </View>
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'gray',
     borderRadius: 5,
-    marginBottom: 200,
+    marginBottom: 50,
   },
   similarWrapper: {
     marginBottom: 2,
@@ -88,7 +87,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   columnContainer: {
-    flex: 1,
     width: '20%', // Set fixed width for the columns
     alignItems: 'center',
     justifyContent: 'center',

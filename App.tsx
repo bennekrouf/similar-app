@@ -11,7 +11,11 @@ const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="SwipablePage" component={SwipablePage} />
+        <Stack.Screen
+          name="SwipablePage"
+          component={SwipablePage}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="DiscriminantExercise"
           component={DiscriminantExercise}

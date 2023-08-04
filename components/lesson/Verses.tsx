@@ -9,6 +9,7 @@ const Verses: React.FC<VerseListProps> = ({verses}) => (
       <View key={index} style={styles.verseContainer}>
         <Text style={styles.verse} allowFontScaling={false}>
           <FormattedVerse text={text} ayah={ayah} />
+          <Text style={styles.ayahText}>[{ayah}]</Text>
         </Text>
       </View>
     ))}
@@ -16,6 +17,11 @@ const Verses: React.FC<VerseListProps> = ({verses}) => (
 );
 
 const styles = StyleSheet.create({
+  ayahText: {
+    fontSize: 18,
+    lineHeight: 12, // New Line
+    textAlign: 'right',
+  },
   verseContainer: {
     marginVertical: 10, // Add margin to separate the cards
     padding: 10,
