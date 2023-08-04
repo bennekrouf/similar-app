@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, View, Text} from 'react-native';
 
-const AnotherPage = ({navigation}) => {
+const DiscriminantExercise = ({navigation}) => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Another Page</Text>
@@ -13,4 +13,4 @@ const AnotherPage = ({navigation}) => {
   );
 };
 
-export default AnotherPage;
+export default DiscriminantExercise;
