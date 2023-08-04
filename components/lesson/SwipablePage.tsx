@@ -4,8 +4,8 @@ import ScrollableTab from './ScrollableTab';
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {loadChapters} from '../api/loadChapters';
-import {loadSimilars} from '../api/loadSimilars';
+import {loadChapters} from '../../api/loadChapters';
+import {loadSimilars} from '../../api/loadSimilars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ScrollableSwipablePageProps {}

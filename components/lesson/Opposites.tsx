@@ -3,7 +3,7 @@ import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import {OppositeListProps} from '../../models/interfaces';
 import {View} from 'react-native';
-import FormattedVerse from '../FormattedVerse';
+import FormattedVerse from './FormattedVerse';
 
 const Opposites: React.FC<OppositeListProps> = ({opposites}) => (
   <View style={[styles.similarsContainer]}>

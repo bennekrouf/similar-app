@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {VerseListProps} from '../../models/interfaces';
-import FormattedVerse from '../FormattedVerse';
+import FormattedVerse from './FormattedVerse';
 
 const Verses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>

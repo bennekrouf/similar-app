@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import LessonContent from './lesson/LessonContent';
-import {ScrollableTabProps} from '../models/interfaces';
+
+import LessonContent from './LessonContent';
+import {ScrollableTabProps} from '../../models/interfaces';
 import ChapterSelectionModal from './ChapterSelectionModal'; // Import the TypeScript declaration file
 import {
   View,
@@ -77,7 +78,12 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
         </View>
 
         <View style={styles.verseList}>
-          <LessonContent verses={verses} key="verseList" similars={similars} opposites={opposites}/>
+          <LessonContent
+            verses={verses}
+            key="verseList"
+            similars={similars}
+            opposites={opposites}
+          />
         </View>
 
         {/* Pass the isModalOpen state and setIsModalOpen function as props */}
@@ -97,6 +103,12 @@ export default ScrollableTab;
 
 const styles = StyleSheet.create({
   view: {flex: 1, padding: 0},
+  centerHeaderText: {
+    fontSize: 18,
+    fontFamily: 'ScheherazadeNew-Medium',
+    color: '#040101',
+    // Add additional styles as needed
+  },
   headerContainer: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',

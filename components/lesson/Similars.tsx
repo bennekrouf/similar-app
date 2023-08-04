@@ -3,7 +3,7 @@ import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import {SimilarListProps} from '../../models/interfaces';
 import {View} from 'react-native';
-import FormattedVerse from '../FormattedVerse';
+import FormattedVerse from './FormattedVerse';
 
 const Similars: React.FC<SimilarListProps> = ({similars}) => (
   <View style={[styles.similarsContainer]}>

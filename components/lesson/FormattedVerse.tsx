@@ -1,5 +1,5 @@
 import {Text, StyleSheet, View} from 'react-native';
-import {parseText} from '../helpers/textParser';
+import {parseText} from '../../helpers/textParser';
 
 function FormattedVerse({text}: {text: string; ayah: number}) {
   const parts = parseText(text);

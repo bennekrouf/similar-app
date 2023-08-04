@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import SwipablePage from './components/SwipablePage';
+import SwipablePage from './components/lesson/SwipablePage';
 import {View} from 'react-native';
 
 const App: React.FC = () => {
