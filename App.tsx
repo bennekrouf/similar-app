@@ -1,14 +1,20 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import SwipablePage from './components/lesson/SwipablePage';
-import {View} from 'react-native';
+import AnotherPage from './components/AnotherPage'; // Add your another page component
+
+// Create the application stack
+const Stack = createStackNavigator();
 
 const App: React.FC = () => {
   return (
-    <View style={{flex: 1}}>
-      {/* Main App Content */}
-      <SwipablePage />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="SwipablePage" component={SwipablePage} />
+        <Stack.Screen name="AnotherPage" component={AnotherPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
