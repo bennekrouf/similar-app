@@ -37,21 +37,12 @@ const styles = StyleSheet.create({
     fontFamily: 'ScheherazadeNew-Regular',
     fontSize: 25,
     marginBottom: 15,
-    // The following properties will ensure RTL text is rendered correctly
     writingDirection: 'rtl',
-    // textAlignVertical: 'center',
     textAlign: 'right', // Add the textAlign directly to the inner Text components
   },
   versesContainer: {
     margin: 10,
     padding: 10,
-    // backgroundColor: 'white',
-    // borderRadius: 5,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // elevation: 5,
   },
 });
 

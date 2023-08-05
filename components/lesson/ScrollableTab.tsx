@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import {useNavigation} from '@react-navigation/native';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../models/interfaces';
@@ -23,6 +24,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   handleChapterSelection,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigation = useNavigation();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -68,6 +70,15 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
               {kalima} ({verses.length + similars.length})
             </Text>
           </View>
+
+          <TouchableOpacity
+            style={styles.navigationButton}
+            onPress={() =>
+              navigation.navigate('DiscriminantExercise', {kalima})
+            }>
+            <Text style={styles.navigationText}>Test</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.sourateHeaderView}
             onPress={handleOpenModal}>
@@ -102,7 +113,18 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 export default ScrollableTab;
 
 const styles = StyleSheet.create({
-  view: {flex: 1, padding: 0},
+  navigationButton: {
+    //...add your styles here
+  },
+  navigationText: {
+    //...add your styles here
+  },
+  view: {
+    backgroundColor: '#fff',
+    elevation: 3,
+    flex: 1,
+    padding: 0,
+  },
   centerHeaderText: {
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Medium',
@@ -115,10 +137,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 0,
     paddingHorizontal: 3,
-    // backgroundColor: '#3a3939',
-    // color: '#f0eded',
-    borderBottomWidth: 0.5,
-    borderTopColor: 'white',
+    elevation: 3, // This will add shadow in Android
+    shadowColor: '#000', // iOS shadow
+    shadowOffset: {
+      // iOS shadow
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22, // iOS shadow
+    shadowRadius: 2.22, // iOS shadow
+    backgroundColor: '#fff', // You should set background color for the shadow to appear
   },
   leftHeaderText: {
     fontSize: 18,
