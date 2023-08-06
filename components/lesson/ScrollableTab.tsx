@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     // Add additional styles as needed
   },
   sourateHeaderView: {
-    backgroundColor: 'red',
+    backgroundColor: 'green',
     color: 'white',
     borderRadius: 15,
     paddingHorizontal: 10,

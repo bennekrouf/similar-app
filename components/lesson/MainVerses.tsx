@@ -8,7 +8,7 @@ const Verses: React.FC<VerseListProps> = ({verses}) => (
     {verses.map(({text, backgroundColor, ayah}, index) => (
       <View key={index} style={styles.verseContainer}>
         <Text style={styles.verse} allowFontScaling={false}>
-          <FormattedVerse text={text} ayah={ayah} />
+          <FormattedVerse isOpposite={false} text={text} ayah={ayah} />
           <Text style={styles.ayahText}>[{ayah}]</Text>
         </Text>
       </View>

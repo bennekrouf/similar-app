@@ -14,13 +14,10 @@ export interface LessonListProps {
 }
 export interface VerseListProps {
   verses: Verse[];
+  isOpposite: boolean;
 }
 export interface SimilarListProps {
   similars: Verse[];
-}
-
-export interface OppositeListProps {
-  opposites: Verse[];
 }
 
 export interface ScrollableTabProps {

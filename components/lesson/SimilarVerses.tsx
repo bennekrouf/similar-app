@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import {OppositeListProps} from '../../models/interfaces';
+import {VerseListProps} from '../../models/interfaces';
 import {View} from 'react-native';
 import FormattedVerse from './FormattedVerse';
 
-const Opposites: React.FC<OppositeListProps> = ({opposites}) => (
+const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
   <View style={[styles.similarsContainer]}>
-    {opposites.map(({text, sourate, backgroundColor, ayah, chapter}, index) => (
+    {verses.map(({text, sourate, backgroundColor, ayah, chapter}, index) => (
       <View key={index}>
         <View>
           {/* Similar Header */}
@@ -37,7 +37,7 @@ const Opposites: React.FC<OppositeListProps> = ({opposites}) => (
 
           {/* Similar Content */}
           <View style={styles.similarsContent}>
-            <FormattedVerse text={text} ayah={ayah} />
+            <FormattedVerse text={text} ayah={ayah} isOpposite={isOpposite} />
           </View>
         </View>
       </View>
@@ -45,7 +45,7 @@ const Opposites: React.FC<OppositeListProps> = ({opposites}) => (
   </View>
 );
 
-export default Opposites;
+export default SimilarVerses;
 
 const styles = StyleSheet.create({
   column: {

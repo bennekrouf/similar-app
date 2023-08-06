@@ -1,8 +1,9 @@
 import {Text, StyleSheet, View} from 'react-native';
 import {parseText} from '../../helpers/textParser';
+import React from 'react';
 
-function FormattedVerse({text}: {text: string; ayah: number}) {
-  const parts = parseText(text);
+function FormattedVerse({text, ayah, isOpposite}) {
+  const parts = parseText(text, isOpposite);
 
   return (
     <View>
@@ -12,7 +13,8 @@ function FormattedVerse({text}: {text: string; ayah: number}) {
             key={index}
             style={[
               part.isCommon && styles.commonText,
-              part.isDifferent && styles.differentText,
+              part.isDifferent && !part.isOpposite && styles.differentTextRight,
+              part.isDifferent && part.isOpposite && styles.differentTextWrong,
             ]}>
             {` ${part.text}`}{' '}
           </Text>
@@ -26,7 +28,10 @@ const styles = StyleSheet.create({
   commonText: {
     color: 'blue',
   },
-  differentText: {
+  differentTextRight: {
+    color: 'green',
+  },
+  differentTextWrong: {
     color: 'red',
   },
   verseStyle: {

@@ -2,8 +2,8 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {LessonListProps} from '../../models/interfaces';
-import Verses from './Verses';
-import Opposites from './Opposites';
+import MainVerses from './MainVerses';
+import SimilarVerses from './SimilarVerses';
 
 const MainContent: React.FC<LessonListProps> = ({
   verses,
@@ -11,9 +11,13 @@ const MainContent: React.FC<LessonListProps> = ({
   opposites,
 }) => (
   <ScrollView contentContainerStyle={styles.container}>
-    {verses.length > 0 && <Verses verses={verses} />}
-    {opposites.length > 0 && <Opposites opposites={opposites} />}
-    {similars.length > 0 && <Opposites opposites={similars} />}
+    {verses.length > 0 && <MainVerses verses={verses} isOpposite={false} />}
+    {opposites.length > 0 && (
+      <SimilarVerses verses={opposites} isOpposite={true} />
+    )}
+    {similars.length > 0 && (
+      <SimilarVerses verses={similars} isOpposite={false} />
+    )}
   </ScrollView>
 );
 

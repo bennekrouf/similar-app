@@ -13,7 +13,7 @@ const rules: Rule[] = [
   },
 ];
 
-export function parseText(text: string | any[]) {
+export function parseText(text: string | any[], isOpposite: boolean | false) {
   let parts: {text: string; [key: string]: any}[] = [];
   let start = 0;
 
@@ -31,6 +31,10 @@ export function parseText(text: string | any[]) {
         text: match[1],
         [targetVariable]: true,
       };
+
+      if (isOpposite) {
+        part.isOpposite = true;
+      }
 
       if (additionalLogic) {
         // Additional logic specific to the rule
