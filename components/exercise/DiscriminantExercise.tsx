@@ -1,23 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {Button, View, StyleSheet} from 'react-native';
 
-import {RadioButton, Text, Card} from 'react-native-paper';
+import {Text, Card} from 'react-native-paper';
+// import RadioForm, {RadioButton} from 'react-native-simple-radio-button';
 
 import {loadExercise} from '../../api/loadExercises'; // import your API function
 import {checkExercise} from '../../api/checkExercise'; // import your API function
+import CustomRadioButton from './CustomRadioButton';
 
 const DiscriminantExercise = ({route, navigation}) => {
-  const [exercise, setExercise] = useState(null);
-  const [selectedValue, setSelectedValue] = useState('');
+  const [question, setQuestion] = useState(null);
+  const [options, setOptions] = useState<string[]>([]); // if answers is an array of strings
+  const [selectedValue, setSelectedValue] = useState<number>(0); // Changed from string to number
   const {kalima} = route.params; // Get the kalima from the route parameters
-  console.log("toto :", exercise);
 
   const handleCheck = async () => {
     try {
       const result = await checkExercise(
         kalima,
-        exercise[0].ayah,
-        exercise[0].chapter,
+        question.ayah,
+        question.chapter,
       );
       console.log(result); // Do something with the result here
     } catch (error) {
@@ -28,8 +30,11 @@ const DiscriminantExercise = ({route, navigation}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // console.log('Options0 : ', options);
         const data = await loadExercise(kalima);
-        setExercise(data);
+        setQuestion(data[0]);
+        setOptions(data[1]);
+        // console.log('Options1 : ', options);
       } catch (error) {
         // Handle the error here
         console.error(error);
@@ -40,33 +45,33 @@ const DiscriminantExercise = ({route, navigation}) => {
   }, [kalima]); // Call the function when the component mounts and whenever kalima changes
 
   return (
-    <View style={styles.container}>
+   <View style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
           <View style={styles.headerLine}>
             <Text style={styles.leftText}>
-              {exercise && `${exercise[0].chapter}:${exercise[0].ayah}`}
+              {question && `${question.chapter}:${question.ayah}`}
             </Text>
             <Text style={styles.rightText}>
-              {exercise && exercise[0].chapter_name}
+              {question && question.chapter_name}
             </Text>
           </View>
           <Text style={styles.rightAlignedText}>
-            {exercise && `${exercise[0].pre} ... ${exercise[0].post}`}
+            {question && `${question.pre} ... ${question.post}`}
           </Text>
         </Card.Content>
       </Card>
 
-      {/* <RadioButton.Group
-        onValueChange={newValue => setSelectedValue(newValue)}
-        value={selectedValue}>
-        {exercise[1].map((response, index) => (
-          <View key={index} style={styles.radioButtonContainer}>
-            <Text>{response}</Text>
-            <RadioButton value={response} />
-          </View>
+      <View style={styles.radioContainer}>
+        {options.map((option, index) => (
+          <CustomRadioButton
+            key={index}
+            text={option}
+            selected={selectedValue === index}
+            onPress={() => setSelectedValue(index)}
+          />
         ))}
-      </RadioButton.Group> */}
+      </View>
 
       <Button title="Check" onPress={handleCheck} />
     </View>
@@ -74,6 +79,17 @@ const DiscriminantExercise = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  radioContainer: {
+    alignItems: 'flex-end',
+    alignSelf: 'stretch', // make sure the container takes the full width
+  },
+  radioButton: {
+    alignSelf: 'flex-end',
+  },
+  radioLabel: {
+    textAlign: 'right',
+    writingDirection: 'rtl',
+  },
   headerLine: {
     flexDirection: 'row',
     justifyContent: 'space-between',

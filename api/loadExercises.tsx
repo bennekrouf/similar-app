@@ -13,19 +13,9 @@ export async function loadExercise(kalima) {
       `http://similar.mayorana.ch/exercise/${kalima}`,
     );
     const exercise = await exerciseAPI.json();
-
-    const formattedExercise = exercise.map(item => ({
-      kalima: item.kalima,
-      pre: item.pre,
-      //   discriminant: item.discriminant,
-      post: item.post,
-      chapter_name: item.chapter_name,
-      ayah: item.ayah,
-      chapter: item.chapter,
-      responses: item[1],
-    }));
-
-    return formattedExercise;
+    console.log('Parsed json exo 0:', exercise[0]);
+    console.log('Parsed json exo 1:', exercise[1]);
+    return exercise;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
