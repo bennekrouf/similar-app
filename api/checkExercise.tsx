@@ -1,6 +1,11 @@
 import NetInfo from '@react-native-community/netinfo';
 
-export async function checkExercise(kalima, ayah, chapter) {
+export async function checkExercise(
+  kalima: string,
+  ayah: number,
+  chapter: number,
+  discriminant: string,
+) {
   try {
     const networkState = await NetInfo.fetch();
 
@@ -10,7 +15,7 @@ export async function checkExercise(kalima, ayah, chapter) {
     }
 
     const response = await fetch(
-      `http://similar.mayorana.ch/check_discriminant?kalima=${kalima}&ayah=${ayah}&chapter=${chapter}`,
+      `http://similar.mayorana.ch/check_discriminant?kalima=${kalima}&ayah=${ayah}&chapter=${chapter}&discriminant=${discriminant}`,
     );
     const result = await response.json();
 

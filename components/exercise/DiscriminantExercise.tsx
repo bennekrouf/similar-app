@@ -8,19 +8,37 @@ import {loadExercise} from '../../api/loadExercises'; // import your API functio
 import {checkExercise} from '../../api/checkExercise'; // import your API function
 import CustomRadioButton from './CustomRadioButton';
 
-const DiscriminantExercise = ({route, navigation}) => {
+const DiscriminantExercise = ({route, _}) => {
   const [question, setQuestion] = useState(null);
   const [options, setOptions] = useState<string[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(0); // Changed from string to number
   const {kalima} = route.params; // Get the kalima from the route parameters
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [lastFailedSelection, setLastFailedSelection] = useState(null);
 
   const handleCheck = async () => {
     try {
+      console.log(
+        'Params :',
+        kalima,
+        question.ayah,
+        question.chapter,
+        options[selectedValue],
+      );
       const result = await checkExercise(
         kalima,
         question.ayah,
         question.chapter,
+        options[selectedValue],
       );
+      setIsValid(result);
+
+      if (result) {
+        setLastFailedSelection(null); // Reset if the response is valid.
+      } else {
+        setLastFailedSelection(selectedValue);
+      }
+
       console.log(result); // Do something with the result here
     } catch (error) {
       console.error(error);
@@ -45,7 +63,7 @@ const DiscriminantExercise = ({route, navigation}) => {
   }, [kalima]); // Call the function when the component mounts and whenever kalima changes
 
   return (
-   <View style={styles.container}>
+    <View style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
           <View style={styles.headerLine}>
@@ -69,6 +87,8 @@ const DiscriminantExercise = ({route, navigation}) => {
             text={option}
             selected={selectedValue === index}
             onPress={() => setSelectedValue(index)}
+            serviceFailed={lastFailedSelection === index}
+            serviceValid={isValid && selectedValue === index}
           />
         ))}
       </View>
@@ -80,6 +100,7 @@ const DiscriminantExercise = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   radioContainer: {
+    margin: 20,
     alignItems: 'flex-end',
     alignSelf: 'stretch', // make sure the container takes the full width
   },
