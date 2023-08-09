@@ -13,8 +13,8 @@ export async function loadExercise(kalima) {
       `http://similar.mayorana.ch/exercise/${kalima}`,
     );
     const exercise = await exerciseAPI.json();
-    console.log('Parsed json exo 0:', exercise[0]);
-    console.log('Parsed json exo 1:', exercise[1]);
+    // console.log('Parsed json exo 0:', exercise[0]);
+    // console.log('Parsed json exo 1:', exercise[1]);
     return exercise;
   } catch (error) {
     console.error('Error fetching data:', error);

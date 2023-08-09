@@ -40,7 +40,12 @@ const ChapterSelectionModal: React.FC<CustomModalProps> = ({
           style={{backgroundColor: 'white', minHeight: '80%'}}
           {...panResponder.panHandlers}>
           {/* Modal Content */}
-          <View style={{padding: 20, flexDirection: 'row-reverse', flexWrap: 'wrap'}}>
+          <View
+            style={{
+              padding: 20,
+              flexDirection: 'row-reverse',
+              flexWrap: 'wrap',
+            }}>
             {chapters.map((chapter, index) => (
               <TouchableOpacity
                 key={index}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import {Text, Card} from 'react-native-paper';
 // import RadioForm, {RadioButton} from 'react-native-simple-radio-button';
@@ -11,34 +11,21 @@ import CustomRadioButton from './CustomRadioButton';
 const DiscriminantExercise = ({route, _}) => {
   const [question, setQuestion] = useState(null);
   const [options, setOptions] = useState<string[]>([]); // if answers is an array of strings
-  const [selectedValue, setSelectedValue] = useState<number>(0); // Changed from string to number
+  const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
   const {kalima} = route.params; // Get the kalima from the route parameters
-  const [isValid, setIsValid] = useState<boolean>(true);
-  const [lastFailedSelection, setLastFailedSelection] = useState(null);
+  const [isValid, setIsValid] = useState<boolean>(false);
+  // const [lastFailedSelection, setLastFailedSelection] = useState(null);
 
-  const handleCheck = async () => {
+  const handleCheck = async index => {
+    setSelectedValue(index);
     try {
-      console.log(
-        'Params :',
-        kalima,
-        question.ayah,
-        question.chapter,
-        options[selectedValue],
-      );
       const result = await checkExercise(
         kalima,
         question.ayah,
         question.chapter,
-        options[selectedValue],
+        options[index],
       );
       setIsValid(result);
-
-      if (result) {
-        setLastFailedSelection(null); // Reset if the response is valid.
-      } else {
-        setLastFailedSelection(selectedValue);
-      }
-
       console.log(result); // Do something with the result here
     } catch (error) {
       console.error(error);
@@ -48,11 +35,9 @@ const DiscriminantExercise = ({route, _}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // console.log('Options0 : ', options);
         const data = await loadExercise(kalima);
         setQuestion(data[0]);
         setOptions(data[1]);
-        // console.log('Options1 : ', options);
       } catch (error) {
         // Handle the error here
         console.error(error);
@@ -86,14 +71,14 @@ const DiscriminantExercise = ({route, _}) => {
             key={index}
             text={option}
             selected={selectedValue === index}
-            onPress={() => setSelectedValue(index)}
-            serviceFailed={lastFailedSelection === index}
+            onPress={() => handleCheck(index)}
+            serviceFailed={!isValid && selectedValue === index}
             serviceValid={isValid && selectedValue === index}
           />
         ))}
       </View>
 
-      <Button title="Check" onPress={handleCheck} />
+      {/* <Button title="Check" onPress={handleCheck} /> */}
     </View>
   );
 };

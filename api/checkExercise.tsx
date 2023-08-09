@@ -7,6 +7,7 @@ export async function checkExercise(
   discriminant: string,
 ) {
   try {
+    console.log('Checking : ', kalima, ayah, chapter, discriminant);
     const networkState = await NetInfo.fetch();
 
     // If there's no internet connection
