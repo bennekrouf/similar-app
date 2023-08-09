@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 
-import {Text, Card} from 'react-native-paper';
-// import RadioForm, {RadioButton} from 'react-native-simple-radio-button';
+import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 
 import {loadExercise} from '../../api/loadExercises'; // import your API function
 import {checkExercise} from '../../api/checkExercise'; // import your API function
 import CustomRadioButton from './CustomRadioButton';
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'orange', // The primary color represents button color in `contained` mode.
+  },
+};
 
 const DiscriminantExercise = ({route, _}) => {
   const [question, setQuestion] = useState(null);
@@ -14,7 +22,6 @@ const DiscriminantExercise = ({route, _}) => {
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
   const {kalima} = route.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<boolean>(false);
-  // const [lastFailedSelection, setLastFailedSelection] = useState(null);
 
   const handleCheck = async index => {
     setSelectedValue(index);
@@ -32,58 +39,72 @@ const DiscriminantExercise = ({route, _}) => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await loadExercise(kalima);
-        setQuestion(data[0]);
-        setOptions(data[1]);
-      } catch (error) {
-        // Handle the error here
-        console.error(error);
-      }
-    };
+  const loadData = async () => {
+    try {
+      const data = await loadExercise(kalima);
+      setQuestion(data[0]);
+      setOptions(data[1]);
+      setSelectedValue(undefined); // Reset the selected value
+      setIsValid(false); // Reset the validation flag
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    fetchData();
-  }, [kalima]); // Call the function when the component mounts and whenever kalima changes
+  useEffect(() => {
+    loadData();
+  }, [kalima]);
 
   return (
-    <View style={styles.container}>
-      <Card style={styles.card}>
-        <Card.Content>
-          <View style={styles.headerLine}>
-            <Text style={styles.leftText}>
-              {question && `${question.chapter}:${question.ayah}`}
-            </Text>
-            <Text style={styles.rightText}>
-              {question && question.chapter_name}
-            </Text>
+    <Provider theme={theme}>
+      <ScrollView style={{flex: 1}}>
+        <View style={styles.container}>
+          <Card style={styles.card}>
+            <Card.Content>
+              <View style={styles.headerLine}>
+                <Text style={styles.leftText}>
+                  {question && `${question.chapter}:${question.ayah}`}
+                </Text>
+                <Text style={styles.rightText}>
+                  {question && question.chapter_name}
+                </Text>
+              </View>
+              <Text style={styles.rightAlignedText}>
+                {question && `${question.pre} ... ${question.post}`}
+              </Text>
+            </Card.Content>
+          </Card>
+
+          <View style={styles.radioContainer}>
+            {options.map((option, index) => (
+              <CustomRadioButton
+                key={index}
+                text={option}
+                selected={selectedValue === index}
+                onPress={() => handleCheck(index)}
+                serviceFailed={!isValid && selectedValue === index}
+                serviceValid={isValid && selectedValue === index}
+              />
+            ))}
           </View>
-          <Text style={styles.rightAlignedText}>
-            {question && `${question.pre} ... ${question.post}`}
-          </Text>
-        </Card.Content>
-      </Card>
 
-      <View style={styles.radioContainer}>
-        {options.map((option, index) => (
-          <CustomRadioButton
-            key={index}
-            text={option}
-            selected={selectedValue === index}
-            onPress={() => handleCheck(index)}
-            serviceFailed={!isValid && selectedValue === index}
-            serviceValid={isValid && selectedValue === index}
-          />
-        ))}
-      </View>
-
-      {/* <Button title="Check" onPress={handleCheck} /> */}
-    </View>
+          <Card style={styles.newExerciseButtonCard}>
+            <Button mode="contained" onPress={loadData} color="">
+              Continue
+            </Button>
+          </Card>
+        </View>
+      </ScrollView>
+    </Provider>
   );
 };
 
 const styles = StyleSheet.create({
+  newExerciseButtonCard: {
+    width: '95%',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
   radioContainer: {
     margin: 20,
     alignItems: 'flex-end',
