@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import config from './config.json';
 
 export async function loadSimilars(chapterNo = 40) {
   try {
@@ -14,13 +15,12 @@ export async function loadSimilars(chapterNo = 40) {
       }
       return;
     }
-
-    const similarsAPI = await fetch(
-      `http://similar.mayorana.ch/similars/${chapterNo}`,
-    );
+    // console.log('config.domain3 : ', config.domain);
+    const similarsAPI = await fetch(`${config.domain}similars/${chapterNo}`);
+    // console.log('config.domain33 : ', similarsAPI);
     similars = await similarsAPI.json();
 
-    similars = similars.map(item => ({
+    similars = similars?.map(item => ({
       kalima: item.kalima,
       verses: formatSimilars(item.verses),
       similars: formatSimilars(item.similars),
@@ -34,12 +34,12 @@ export async function loadSimilars(chapterNo = 40) {
   }
 }
 
-const formatSimilars = (verses) => {
+const formatSimilars = verses => {
   return verses.map(verse => {
     return {
       ...verse,
       sourate: verse.sourate,
-      chapter: verse.verse.chapter,
+      chapter_no: verse.verse.chapter_no,
       ayah: verse.verse.ayah,
       text: verse.verse.text,
     };

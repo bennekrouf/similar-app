@@ -1,5 +1,5 @@
 export interface Verse {
-  chapter: number;
+  chapter_no: number;
   ayah: number;
   text: string;
   sourate: string;

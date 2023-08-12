@@ -7,7 +7,7 @@ import FormattedVerse from './FormattedVerse';
 
 const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
   <View style={[styles.similarsContainer]}>
-    {verses.map(({text, sourate, backgroundColor, ayah, chapter}, index) => (
+    {verses.map(({text, sourate, backgroundColor, ayah, chapter_no}, index) => (
       <View key={index}>
         <View>
           {/* Similar Header */}
@@ -16,7 +16,7 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
             <View style={[styles.columnContainer]}>
               <View style={styles.columnNumber}>
                 <Text style={styles.columnTextNumber}>
-                  {`${chapter}:${ayah}`}
+                  {`${chapter_no}:${ayah}`}
                 </Text>
               </View>
             </View>

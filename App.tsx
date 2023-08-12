@@ -5,9 +5,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SwipablePage from './components/lesson/SwipablePage';
 import DiscriminantExercise from './components/exercise/DiscriminantExercise';
+import './locales/i18n';
 
+type RootStackParamList = {
+  SwipablePage: undefined; // If this route does not take any parameters
+  DiscriminantExercise: {
+    kalima: string;
+    chapterName: string;
+  };
+};
 // Create the application stack
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const App: React.FC = () => (
   <>
@@ -17,11 +25,18 @@ const App: React.FC = () => (
         <Stack.Screen
           name="SwipablePage"
           component={SwipablePage}
-          options={{headerShown: false}}
+          options={({route}) => ({
+            // title: route.params.chapterName || '', // Set title for the back button when navigating away from this screen
+            headerShown: false, // Hide the header on this screen
+          })}
         />
         <Stack.Screen
           name="DiscriminantExercise"
           component={DiscriminantExercise}
+          options={({route}) => ({
+            title: route.params.kalima,
+            headerBackTitle: route.params.chapterName || '',
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

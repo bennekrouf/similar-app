@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-
+import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 
 import {loadExercise} from '../../api/loadExercises'; // import your API function
-import {checkExercise} from '../../api/checkExercise'; // import your API function
+import {checkDiscriminant} from '../../api/checkDiscriminant'; // import your API function
 import CustomRadioButton from './CustomRadioButton';
 
 const theme = {
@@ -17,23 +18,25 @@ const theme = {
 };
 
 const DiscriminantExercise = ({route, _}) => {
+  const {t} = useTranslation();
   const [question, setQuestion] = useState(null);
   const [options, setOptions] = useState<string[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
-  const {kalima} = route.params; // Get the kalima from the route parameters
-  const [isValid, setIsValid] = useState<boolean>(false);
+  const {kalima, currentChapterName} = route.params; // Get the kalima from the route parameters
+  const [isValid, setIsValid] = useState<string>('neutral');
+  const navigation = useNavigation();
 
   const handleCheck = async index => {
     setSelectedValue(index);
     try {
-      const result = await checkExercise(
+      const result = await checkDiscriminant(
         kalima,
         question.ayah,
-        question.chapter,
+        question.chapter_no,
         options[index],
       );
-      setIsValid(result);
-      console.log(result); // Do something with the result here
+      setIsValid(result[0] ? 'right' : 'wrong');
+      // console.log(result); // Do something with the result here
     } catch (error) {
       console.error(error);
     }
@@ -43,9 +46,17 @@ const DiscriminantExercise = ({route, _}) => {
     try {
       const data = await loadExercise(kalima);
       setQuestion(data[0]);
+
+      // Set the back button title after updating the question
+      // if (data[0] && data[0].chapter_name) {
+      navigation.setOptions({
+        headerBackTitle: currentChapterName,
+      });
+      // }
+
       setOptions(data[1]);
       setSelectedValue(undefined); // Reset the selected value
-      setIsValid(false); // Reset the validation flag
+      setIsValid('neutral'); // Reset the validation flag
     } catch (error) {
       console.error(error);
     }
@@ -63,7 +74,7 @@ const DiscriminantExercise = ({route, _}) => {
             <Card.Content>
               <View style={styles.headerLine}>
                 <Text style={styles.leftText}>
-                  {question && `${question.chapter}:${question.ayah}`}
+                  {question && `${question.chapter_no}:${question.ayah}`}
                 </Text>
                 <Text style={styles.rightText}>
                   {question && question.chapter_name}
@@ -82,15 +93,18 @@ const DiscriminantExercise = ({route, _}) => {
                 text={option}
                 selected={selectedValue === index}
                 onPress={() => handleCheck(index)}
-                serviceFailed={!isValid && selectedValue === index}
-                serviceValid={isValid && selectedValue === index}
+                serviceFailed={isValid === 'wrong' && selectedValue === index}
+                serviceValid={isValid === 'right' && selectedValue === index}
               />
             ))}
           </View>
 
           <Card style={styles.newExerciseButtonCard}>
-            <Button mode="contained" onPress={loadData} color="">
-              Continue
+            <Button
+              mode="contained"
+              onPress={loadData}
+              disabled={isValid !== 'right'}>
+              {t('continue')}
             </Button>
           </Card>
         </View>

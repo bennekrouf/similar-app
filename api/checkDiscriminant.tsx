@@ -1,13 +1,14 @@
 import NetInfo from '@react-native-community/netinfo';
+const config = require('./config.json');
 
-export async function checkExercise(
+export async function checkDiscriminant(
   kalima: string,
   ayah: number,
-  chapter: number,
+  chapter_no: number,
   discriminant: string,
 ) {
   try {
-    console.log('Checking : ', kalima, ayah, chapter, discriminant);
+    // console.log('Checking : ', kalima, ayah, chapter_no, discriminant);
     const networkState = await NetInfo.fetch();
 
     // If there's no internet connection
@@ -16,7 +17,7 @@ export async function checkExercise(
     }
 
     const response = await fetch(
-      `http://similar.mayorana.ch/check_discriminant?kalima=${kalima}&ayah=${ayah}&chapter=${chapter}&discriminant=${discriminant}`,
+      `${config.domain}check_discriminant?kalima=${kalima}&ayah=${ayah}&chapter_no=${chapter_no}&discriminant=${discriminant}`,
     );
     const result = await response.json();
 

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../models/interfaces';
@@ -15,6 +16,11 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+type RootStackParamList = {
+  SwipablePage: undefined; // If this route does not take any parameters
+  DiscriminantExercise: {kalima: string; currentChapterName: string};
+};
+
 const ScrollableTab: React.FC<ScrollableTabProps> = ({
   kalima,
   verses,
@@ -23,8 +29,10 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   opposites,
   handleChapterSelection,
 }) => {
+  const {t} = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, 'DiscriminantExercise'>>();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -74,9 +82,12 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           <TouchableOpacity
             style={styles.navigationButton}
             onPress={() =>
-              navigation.navigate('DiscriminantExercise', {kalima})
+              navigation.navigate('DiscriminantExercise', {
+                kalima,
+                currentChapterName: verses[0].sourate,
+              })
             }>
-            <Text style={styles.navigationText}>Test</Text>
+            <Text style={styles.navigationText}>{t('test')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
