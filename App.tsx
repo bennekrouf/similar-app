@@ -6,6 +6,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SwipablePage from './components/lesson/SwipablePage';
 import DiscriminantExercise from './components/exercise/DiscriminantExercise';
 import './locales/i18n';
+import 'intl';
+import 'intl/locale-data/jsonp/en'; // For English
+import 'intl/locale-data/jsonp/ar'; // For Arabic
+import 'intl-pluralrules';
 
 type RootStackParamList = {
   SwipablePage: undefined; // If this route does not take any parameters

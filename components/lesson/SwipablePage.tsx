@@ -134,23 +134,18 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
       index={currentIndex} // Set the initial index of the Swiper to currentIndex
     >
       {contents &&
-        contents.map(
-          (
-            {kalima, verses, similars, opposites}: any,
-            index: React.Key | null | undefined,
-          ) => (
-            <View key={index} style={{flex: 1}}>
-              <ScrollableTab
-                kalima={kalima}
-                verses={verses}
-                similars={similars}
-                opposites={opposites}
-                chapters={chapters}
-                handleChapterSelection={handleChapterSelection}
-              />
-            </View>
-          ),
-        )}
+        contents.map(({kalima, verses, similars, opposites}: any) => (
+          <View key={kalima} style={{flex: 1}}>
+            <ScrollableTab
+              kalima={kalima}
+              verses={verses}
+              similars={similars}
+              opposites={opposites}
+              chapters={chapters}
+              handleChapterSelection={handleChapterSelection}
+            />
+          </View>
+        ))}
     </Swiper>
   );
 };
