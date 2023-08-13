@@ -14,6 +14,8 @@
     "@expo-google-fonts/cairo": "^0.2.3",
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-native-community/netinfo": "^9.3.10",
+    "@react-native-firebase/app": "^18.3.0",
+    "@react-native-firebase/firestore": "^18.3.0",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "@types/react-native-scrollable-tab-view": "^0.10.3",

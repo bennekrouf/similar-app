@@ -32,6 +32,11 @@ target 'tafseel' do
   flags = get_default_flags()
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
 
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
