@@ -7,6 +7,9 @@ import zh from './zh/translation.json';
 import sq from './sq/translation.json';
 import fr from './fr/translation.json';
 import en from './en/translation.json';
+import hi from './hi/translation.json';
+import ur from './ur/translation.json';
+import tr from './tr/translation.json';
 
 const resources = {
   ar: {
@@ -23,6 +26,15 @@ const resources = {
   },
   en: {
     translation: en,
+  },
+  hi: {
+    translation: hi,
+  },
+  ur: {
+    translation: ur,
+  },
+  tr: {
+    translation: tr,
   },
 };
 
