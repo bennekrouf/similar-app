@@ -24,12 +24,15 @@ const CustomRadioButton = ({
         <Icon
           name="radiobox-marked"
           size={24}
-          style={[styles.radioIcon, isSelectedAndValid && styles.validIcon]}
+          style={[
+            styles.radioIcon,
+            isSelectedAndValid && styles.validIcon && styles.textColorValid,
+          ]}
         />
       ) : (
         <Icon name="radiobox-blank" size={24} style={styles.radioIcon} />
       )}
-      <Text style={[styles.text, isSelectedAndFailed && styles.textColorError]}>
+      <Text style={[styles.text, isSelectedAndValid && styles.textColorValid]}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ScheherazadeNew-Regular',
     textAlign: 'right',
     fontSize: 18,
-    color: '#000',
+    // color: '#000',
     marginRight: 10,
   },
   radioIcon: {
@@ -58,14 +61,17 @@ const styles = StyleSheet.create({
   validIcon: {
     color: '#000400',
   },
-  textColorError: {
-    color: 'white',
+  textColorValid: {
+    color: '#ffffffff',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
   errorContainer: {
     backgroundColor: '#f92323',
   },
   validContainer: {
-    backgroundColor: '#17a817',
+    backgroundColor: '#09a009ff',
+    color: 'white',
   },
 });
 

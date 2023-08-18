@@ -1,26 +1,43 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {VerseListProps} from '../../models/interfaces';
 import FormattedVerse from './FormattedVerse';
+import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 
-const Verses: React.FC<VerseListProps> = ({verses}) => (
+const MainVerses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>
-    {verses.map(({text, backgroundColor, ayah}, index) => (
-      <View key={index} style={styles.verseContainer}>
-        <Text style={styles.verse} allowFontScaling={false}>
-          <FormattedVerse isOpposite={false} text={text} ayah={ayah} />
-          <Text style={styles.ayahText}>[{ayah}]</Text>
-        </Text>
+    {verses.map(({text, ayah}, index) => (
+      <View>
+        <Card style={styles.card}>
+          <Card.Content>
+            <View>
+              <FormattedVerse isOpposite={false} text={text} />
+            </View>
+            <View style={styles.ayahContainer}>
+              <Text style={styles.ayahText}>[{ayah}]</Text>
+            </View>
+          </Card.Content>
+        </Card>
       </View>
     ))}
   </View>
 );
 
 const styles = StyleSheet.create({
+  card: {
+    width: '95%', // Set the card width to almost full screen width
+    alignSelf: 'center', // Center the card
+    backgroundColor: 'white',
+    marginBottom: 10,
+  },
   ayahText: {
-    fontSize: 18,
-    lineHeight: 12, // New Line
+    fontSize: 12,
+    lineHeight: 20,
     textAlign: 'right',
+  },
+  ayahContainer: {
+    flexDirection: 'row', // Ensures items are horizontally aligned
+    justifyContent: 'flex-start', // Aligns items to the start/left
   },
   verseContainer: {
     marginVertical: 10, // Add margin to separate the cards
@@ -46,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Verses;
+export default MainVerses;

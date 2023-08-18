@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-const config = require('./config.json');
+import Config from 'react-native-config';
 
 export async function loadChapters() {
   try {
@@ -16,9 +16,9 @@ export async function loadChapters() {
       return;
     }
 
-    // console.log('config.domain11 : ', config.domain);
+    console.log('config.domain11 : ', Config.DOMAIN);
 
-    const chaptersAPI = await fetch(`${config.domain}/chapters`);
+    const chaptersAPI = await fetch(`${Config.DOMAIN}/chapters`);
     // console.log('config.domain1 chapters: ', chapters);
     chapters = await chaptersAPI.json();
 

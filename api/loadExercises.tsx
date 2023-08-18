@@ -1,5 +1,5 @@
 import NetInfo from '@react-native-community/netinfo';
-const config = require('./config.json');
+import Config from 'react-native-config';
 
 export async function loadExercise(kalima) {
   try {
@@ -12,7 +12,7 @@ export async function loadExercise(kalima) {
     // console.log('Calling:', kalima);
     // console.log('config.domain2 : ', config.domain);
 
-    const exerciseAPI = await fetch(`${config.domain}exercise/${kalima}`);
+    const exerciseAPI = await fetch(`${Config.DOMAIN}/exercise/${kalima}`);
     const exercise = await exerciseAPI.json();
     // console.log('Parsed json exo 0:', exercise[0]);
     // console.log('Parsed json exo 1:', exercise[1]);

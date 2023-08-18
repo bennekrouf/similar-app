@@ -9,36 +9,34 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
   <View style={[styles.similarsContainer]}>
     {verses.map(({text, sourate, backgroundColor, ayah, chapter_no}, index) => (
       <View key={index}>
-        <View>
-          {/* Similar Header */}
-          <View style={styles.similarsHeader}>
-            {/* Right column */}
-            <View style={[styles.columnContainer]}>
-              <View style={styles.columnNumber}>
-                <Text style={styles.columnTextNumber}>
-                  {`${chapter_no}:${ayah}`}
-                </Text>
-              </View>
-            </View>
-            {/* Left column */}
-            <View
-              style={[
-                styles.columnContainer,
-                styles.leftColumn,
-                {backgroundColor: backgroundColor},
-              ]}>
-              <View style={[styles.column, {backgroundColor: 'black'}]}>
-                <Text style={[styles.columnText, {textAlign: 'right'}]}>
-                  {sourate}
-                </Text>
-              </View>
+        {/* Similar Header */}
+        <View style={styles.similarsHeader}>
+          {/* Right column */}
+          <View style={styles.columnContainer}>
+            <View style={styles.columnNumber}>
+              <Text style={styles.columnTextNumber}>
+                {`${chapter_no}:${ayah}`}
+              </Text>
             </View>
           </View>
+          {/* Left column */}
+          <View
+            style={[
+              styles.columnContainer,
+              styles.leftColumn,
+              {backgroundColor: backgroundColor},
+            ]}>
+            <View style={[styles.column, {backgroundColor: 'black'}]}>
+              <Text style={[styles.columnText, {textAlign: 'right'}]}>
+                {sourate}
+              </Text>
+            </View>
+          </View>
+        </View>
 
-          {/* Similar Content */}
-          <View style={styles.similarsContent}>
-            <FormattedVerse text={text} ayah={ayah} isOpposite={isOpposite} />
-          </View>
+        {/* Similar Content */}
+        <View style={styles.similarsContent}>
+          <FormattedVerse text={text} ayah={ayah} isOpposite={isOpposite} />
         </View>
       </View>
     ))}

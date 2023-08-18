@@ -24,6 +24,7 @@ const DiscriminantExercise = ({route, _}) => {
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
   const {kalima, currentChapterName} = route.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<string>('neutral');
+  const [otherSourate, setOtherSourate] = useState<string>('');
   const navigation = useNavigation();
 
   const handleCheck = async index => {
@@ -36,6 +37,7 @@ const DiscriminantExercise = ({route, _}) => {
         options[index],
       );
       setIsValid(result[0] ? 'right' : 'wrong');
+      setOtherSourate(result[0] ? '' : result[1]);
       // console.log(result); // Do something with the result here
     } catch (error) {
       console.error(error);
@@ -66,6 +68,13 @@ const DiscriminantExercise = ({route, _}) => {
     loadData();
   }, [kalima]);
 
+  const getRadioButtonText = (option, index, otherSourate) => {
+    if (otherSourate && selectedValue === index) {
+      return `${option}   [${otherSourate}]`;
+    }
+    return option;
+  };
+
   return (
     <Provider theme={theme}>
       <ScrollView style={{flex: 1}}>
@@ -90,7 +99,7 @@ const DiscriminantExercise = ({route, _}) => {
             {options.map((option, index) => (
               <CustomRadioButton
                 key={index}
-                text={option}
+                text={getRadioButtonText(option, index, otherSourate)}
                 selected={selectedValue === index}
                 onPress={() => handleCheck(index)}
                 serviceFailed={isValid === 'wrong' && selectedValue === index}

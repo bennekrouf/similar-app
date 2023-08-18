@@ -1,23 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import config from './config.json';
+import Config from 'react-native-config';
 
-export async function loadSimilars(chapterNo = 40) {
+export async function loadSimilars(chapterNo = 2) {
   try {
     let similars;
     const networkState = await NetInfo.fetch();
+    console.log('networkState: ', networkState);
 
     // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
       const cachedData = await AsyncStorage.getItem('similars');
       if (cachedData) {
+        console.log('Getting data from cache');
         similars = JSON.parse(cachedData);
       }
       return;
     }
-    // console.log('config.domain3 : ', config.domain);
-    const similarsAPI = await fetch(`${config.domain}similars/${chapterNo}`);
-    // console.log('config.domain33 : ', similarsAPI);
+    console.log(
+      'FETCH Config.DOMAIN/similars: ',
+      `${Config.DOMAIN}/similars/${chapterNo}`,
+    );
+    const similarsAPI = await fetch(`${Config.DOMAIN}/similars/${chapterNo}`);
     similars = await similarsAPI.json();
 
     similars = similars?.map(item => ({

@@ -2,21 +2,29 @@ import {Text, StyleSheet, View} from 'react-native';
 import {parseText} from '../../helpers/textParser';
 import React from 'react';
 
-function FormattedVerse({text, ayah, isOpposite}) {
+function FormattedVerse({text, isOpposite}) {
   const parts = parseText(text, isOpposite);
+
+  function determineStyle(part) {
+    if (part.isCommon) {
+      return styles.commonText;
+    }
+    if (part.isDifferent && !part.isOpposite) {
+      return styles.differentTextRight;
+    }
+    if (part.isDifferent && part.isOpposite) {
+      return styles.differentTextWrong;
+    }
+
+    return {};
+  }
 
   return (
     <View>
       <Text style={styles.verseStyle}>
         {parts.map((part, index) => (
-          <Text
-            key={index}
-            style={[
-              part.isCommon && styles.commonText,
-              part.isDifferent && !part.isOpposite && styles.differentTextRight,
-              part.isDifferent && part.isOpposite && styles.differentTextWrong,
-            ]}>
-            {` ${part.text}`}{' '}
+          <Text key={index} style={determineStyle(part)}>
+            {`${part.text}`}{''}
           </Text>
         ))}
       </Text>
@@ -29,7 +37,8 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   differentTextRight: {
-    color: 'green',
+    color: '#0dc40d',
+    fontWeight: 'bold',
   },
   differentTextWrong: {
     color: 'red',
