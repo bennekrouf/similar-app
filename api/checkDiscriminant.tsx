@@ -17,6 +17,11 @@ export async function checkDiscriminant(
 
     const response = await fetch(
       `${Config.DOMAIN}/check_discriminant?kalima=${kalima}&ayah=${ayah}&chapter_no=${chapter_no}&discriminant=${discriminant}`,
+      {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      },
     );
     const result = await response.json();
     console.log('Result : ', result);

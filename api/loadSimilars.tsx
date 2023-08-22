@@ -21,7 +21,11 @@ export async function loadSimilars(chapterNo = 2) {
       'FETCH Config.DOMAIN/similars: ',
       `${Config.DOMAIN}/similars/${chapterNo}`,
     );
-    const similarsAPI = await fetch(`${Config.DOMAIN}/similars/${chapterNo}`);
+    const similarsAPI = await fetch(`${Config.DOMAIN}/similars/${chapterNo}`, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    });
     similars = await similarsAPI.json();
 
     similars = similars?.map(item => ({
