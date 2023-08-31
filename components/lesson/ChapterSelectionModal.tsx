@@ -59,7 +59,7 @@ const ChapterSelectionModal: React.FC<CustomModalProps> = ({
                 <Text
                   style={{
                     textAlign: 'right',
-                  }}>{`${chapter.name} (${chapter.count})`}</Text>
+                  }}>{`${chapter.sourate} (${chapter.count})`}</Text>
               </TouchableOpacity>
             ))}
           </View>

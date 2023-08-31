@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
@@ -15,10 +15,15 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {loadExercise} from '../../api/loadExercisesList'; // import your API function
 
 type RootStackParamList = {
   SwipablePage: undefined; // If this route does not take any parameters
-  DiscriminantExercise: {kalima: string; currentChapterName: string};
+  DiscriminantExercise: {
+    kalima: string;
+    currentChapterName: string;
+    exercises: any;
+  };
 };
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({
@@ -31,6 +36,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 }) => {
   const {t} = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [exercises, setExercises] = useState([]);
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'DiscriminantExercise'>>();
 
@@ -68,6 +74,20 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
     }
   };
 
+  const loadData = useCallback(async () => {
+    try {
+      const data = await loadExercise(kalima);
+      // console.log('CALLLLLLL', data);
+      setExercises(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [kalima]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
   return (
     <ScrollableTabView>
       <View style={styles.view}>
@@ -85,6 +105,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
               navigation.navigate('DiscriminantExercise', {
                 kalima,
                 currentChapterName: verses[0].sourate,
+                exercises,
               })
             }>
             <Text style={styles.navigationText}>{t('test')}</Text>

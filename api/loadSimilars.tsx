@@ -4,9 +4,9 @@ import Config from 'react-native-config';
 
 export async function loadSimilars(chapterNo = 2) {
   try {
-    let similars;
+    let similars: any[];
     const networkState = await NetInfo.fetch();
-    console.log('networkState: ', networkState);
+    // console.log('networkState: ', networkState);
 
     // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
@@ -27,6 +27,7 @@ export async function loadSimilars(chapterNo = 2) {
       },
     });
     similars = await similarsAPI.json();
+    // console.log('SIMILARS :', similars);
 
     similars = similars?.map(item => ({
       kalima: item.kalima,
@@ -47,9 +48,9 @@ const formatSimilars = verses => {
     return {
       ...verse,
       sourate: verse.sourate,
-      chapter_no: verse.verse.chapter_no,
-      ayah: verse.verse.ayah,
-      text: verse.verse.text,
+      chapter_no: verse.chapter_no,
+      ayah: verse.ayah,
+      text: verse.text,
     };
   });
 };

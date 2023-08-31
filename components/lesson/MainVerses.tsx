@@ -2,11 +2,11 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {VerseListProps} from '../../models/interfaces';
 import FormattedVerse from './FormattedVerse';
-import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
+import {Text, Card} from 'react-native-paper';
 
 const MainVerses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>
-    {verses.map(({text, ayah}, index) => (
+    {verses.map(({text, ayah}) => (
       <View>
         <Card style={styles.card}>
           <Card.Content>

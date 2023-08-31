@@ -1,11 +1,10 @@
 import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
 
-export async function checkDiscriminant(
+export async function checkChapter(
   kalima: string,
   ayah: number,
   chapter_no: number,
-  discriminant: string,
 ) {
   try {
     // console.log('Checking : ', kalima, ayah, chapter_no, discriminant);
@@ -16,7 +15,7 @@ export async function checkDiscriminant(
     }
 
     const response = await fetch(
-      `${Config.DOMAIN}/check_discriminant?kalima=${kalima}&ayah=${ayah}&chapter_no=${chapter_no}&discriminant=${discriminant}`,
+      `${Config.DOMAIN}/check_chapter?kalima=${kalima}&ayah=${ayah}&selected_chapter_no=${chapter_no}`,
       {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
@@ -24,7 +23,7 @@ export async function checkDiscriminant(
       },
     );
     const result = await response.json();
-    console.log('Result : ', result);
+    console.log('Check chapter result : ', result);
     return result;
   } catch (error) {
     console.error('Error fetching data:', error);

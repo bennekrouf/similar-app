@@ -12,6 +12,10 @@ const CustomRadioButton = ({
   const isSelectedAndValid = selected && serviceValid;
   const isSelectedAndFailed = selected && serviceFailed;
 
+  // console.log('Inside radio button text: ', text);
+  // console.log('Inside radio button selected: ', selected);
+  // console.log('Inside radio serviceValid: ', serviceFailed, serviceValid);
+
   return (
     <TouchableOpacity
       style={[

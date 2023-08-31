@@ -92,12 +92,13 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('Todays SIMILAR : ', selectedChapter);
         const [similarsData, chaptersData] = await Promise.all([
           loadSimilars(selectedChapter),
           loadChapters(),
         ]);
         setContents(() => {
-          return similarsData.map(similar => {
+          return similarsData?.map(similar => {
             return {
               ...similar,
               verses: parseChapterProp(chapters, similar.verses),

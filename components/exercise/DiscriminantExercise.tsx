@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 
-import {loadExercise} from '../../api/loadExercises'; // import your API function
 import {checkDiscriminant} from '../../api/checkDiscriminant'; // import your API function
+import {checkChapter} from '../../api/checkChapter'; // import your API function
 import CustomRadioButton from './CustomRadioButton';
 
 const theme = {
@@ -20,77 +20,122 @@ const theme = {
 const DiscriminantExercise = ({route, _}) => {
   const {t} = useTranslation();
   const [question, setQuestion] = useState(null);
-  const [options, setOptions] = useState<string[]>([]); // if answers is an array of strings
+  const [options, setOptions] = useState<[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
-  const {kalima, currentChapterName} = route.params; // Get the kalima from the route parameters
+  const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<string>('neutral');
   const [otherSourate, setOtherSourate] = useState<string>('');
+  const [exerciseIndex, setExerciseIndex] = useState(0);
+  const [exerciseType, setExerciseType] = useState('');
+
   const navigation = useNavigation();
 
-  const handleCheck = async index => {
+  const handleCheck = async (index: React.SetStateAction<number>) => {
     setSelectedValue(index);
     try {
-      const result = await checkDiscriminant(
-        kalima,
-        question.ayah,
-        question.chapter_no,
-        options[index],
+      console.log('Calling checkDiscriminant with kalima:', kalima);
+      console.log(
+        'Calling checkDiscriminant with : question.ayah',
+        question.verse.ayah,
       );
+      console.log(
+        'Calling checkDiscriminant with : question.chapter_no',
+        question.verse.chapter_no,
+      );
+      console.log(
+        'Calling checkDiscriminant with : options[index]',
+        options[index].content,
+      );
+
+      const result =
+        exerciseType === 'B'
+          ? await checkChapter(
+              kalima,
+              question.verse.ayah,
+              question.verse.chapter_no,
+            )
+          : await checkDiscriminant(
+              kalima,
+              question.verse.ayah,
+              question.verse.chapter_no,
+              options[index].content,
+            );
       setIsValid(result[0] ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
-      // console.log(result); // Do something with the result here
+      console.log(`handleCheck RESULT ${result}`); // Do something with the result here
     } catch (error) {
       console.error(error);
     }
   };
 
-  const loadData = async () => {
+  const loadData = useCallback(() => {
     try {
-      const data = await loadExercise(kalima);
-      setQuestion(data[0]);
+      // console.log('Inside loadData : ', exercises);
+      if (exercises && exercises[exerciseIndex]) {
+        const data = exercises[exerciseIndex];
+        // console.log('Inside setQuestion : ', data[0]);
+        console.log('Inside setOptions : ', data[1]);
+        // console.log('Inside type : ', data[2]);
 
-      // Set the back button title after updating the question
-      // if (data[0] && data[0].chapter_name) {
-      navigation.setOptions({
-        headerBackTitle: currentChapterName,
-      });
-      // }
+        setQuestion(data[0]);
+        setOptions(data[1]);
+        setSelectedValue(undefined); // Reset the selected value
+        setIsValid('neutral'); // Reset the validation flag
+        setExerciseType(data[2]);
 
-      setOptions(data[1]);
-      setSelectedValue(undefined); // Reset the selected value
-      setIsValid('neutral'); // Reset the validation flag
+        // Set the back button title after updating the question
+        navigation.setOptions({
+          headerBackTitle: currentChapterName,
+        });
+      } else {
+        // Handle the end of exercises if needed
+        console.log('No more exercises!');
+      }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [exerciseIndex, exercises, currentChapterName, navigation]);
 
   useEffect(() => {
     loadData();
-  }, [kalima]);
+  }, [loadData, kalima]);
 
-  const getRadioButtonText = (option, index, otherSourate) => {
-    if (otherSourate && selectedValue === index) {
-      return `${option}   [${otherSourate}]`;
+  const getRadioButtonText = (
+    alternative: any,
+    index: number,
+    type: string,
+  ) => {
+    if (alternative.content && selectedValue === index) {
+      return `${alternative.content}  ${type === 'A' ? alternative.ayah : ''}`;
     }
-    return option;
+    return alternative.content;
   };
-
+  console.log(`QUESTION : ${JSON.stringify(question)}`);
   return (
     <Provider theme={theme}>
       <ScrollView style={{flex: 1}}>
         <View style={styles.container}>
           <Card style={styles.card}>
             <Card.Content>
-              <View style={styles.headerLine}>
-                <Text style={styles.leftText}>
-                  {question && `${question.chapter_no}:${question.ayah}`}
-                </Text>
-                <Text style={styles.rightText}>
-                  {question && question.chapter_name}
-                </Text>
-              </View>
+              {exerciseType !== 'B' && (
+                <View style={styles.headerLine}>
+                  <Text style={styles.leftText}>
+                    {question
+                      ? `${question.verse.chapter_no}:${question.verse.ayah}`
+                      : ''}
+                  </Text>
+                  <Text style={styles.rightText}>
+                    {question ? question.verse.sourate : ''}
+                  </Text>
+                </View>
+              )}
+
               <Text style={styles.rightAlignedText}>
-                {question && `${question.pre} ... ${question.post}`}
+                {question
+                  ? `${question.pre} ${
+                      exerciseType === 'A' ? '...' : question.discriminant
+                    } ${question.post}`
+                  : ''}
               </Text>
             </Card.Content>
           </Card>
@@ -99,7 +144,7 @@ const DiscriminantExercise = ({route, _}) => {
             {options.map((option, index) => (
               <CustomRadioButton
                 key={index}
-                text={getRadioButtonText(option, index, otherSourate)}
+                text={getRadioButtonText(option, index, exerciseType)}
                 selected={selectedValue === index}
                 onPress={() => handleCheck(index)}
                 serviceFailed={isValid === 'wrong' && selectedValue === index}
@@ -111,7 +156,11 @@ const DiscriminantExercise = ({route, _}) => {
           <Card style={styles.newExerciseButtonCard}>
             <Button
               mode="contained"
-              onPress={loadData}
+              onPress={() => {
+                // Increment the exercise index and load the next one
+                setExerciseIndex(prevIndex => prevIndex + 1);
+                loadData();
+              }}
               disabled={isValid !== 'right'}>
               {t('continue')}
             </Button>
@@ -149,10 +198,12 @@ const styles = StyleSheet.create({
   leftText: {
     textAlign: 'left',
     writingDirection: 'ltr',
+    fontWeight: 'bold',
   },
   rightText: {
     textAlign: 'right',
     writingDirection: 'rtl',
+    fontWeight: 'bold',
   },
   container: {
     flex: 1,

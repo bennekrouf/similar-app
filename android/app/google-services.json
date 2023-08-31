@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "165389489294",
+    "project_id": "tafseel-d044f",
+    "storage_bucket": "tafseel-d044f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165389489294:android:5060c8b726bd944ad5e5df",
+        "android_client_info": {
+          "package_name": "com.mayorana.tafseel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165389489294-8sl0l6dda23ej27mcsbrmv6m7ooriimd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIigCtI83zIdrGQv8RJL8G-9puXyFZGqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165389489294-8sl0l6dda23ej27mcsbrmv6m7ooriimd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "165389489294-bt74r8r6jebm5ief5bhfo08kjd2bbos3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mayorana.tafseel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
