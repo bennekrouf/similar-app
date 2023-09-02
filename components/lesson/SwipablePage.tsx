@@ -44,12 +44,16 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
     getSelectedChapterFromStorage();
   }, []); // Empty dependency array to run this effect only once, on mount
 
-  const parseChapterProp = (sourates: any, verses: any) => {
-    return verses.map(verse => ({
-      ...verse,
-      backgroundColor: chapters.find(c => c.no === verse.chapter_no)
-        ?.backgroundColor,
-    }));
+  const parseChapterProp = (chapters: any, verses: any) => {
+    // console.log('CHAPTERS : ', chapters[0]);
+    // console.log('VERSES : ', verses[0]);
+    return verses
+      .map(verse => ({
+        ...verse,
+        background_color: chapters.find(c => c.no === verse.chapter_no)
+          ?.background_color,
+      }))
+      .filter(a => a);
   };
 
   const handleSwiperIndexChanged = async (index: number) => {
@@ -92,18 +96,22 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Todays SIMILAR : ', selectedChapter);
+        // console.log('selectedChapter: ', selectedChapter);
         const [similarsData, chaptersData] = await Promise.all([
           loadSimilars(selectedChapter),
           loadChapters(),
         ]);
         setContents(() => {
+          // console.log('similarsData : ', similarsData[0]);
           return similarsData?.map(similar => {
+            if (!similar.verses?.length) {
+              console.log('This similar has no verses :', similar.kalima);
+            }
             return {
               ...similar,
-              verses: parseChapterProp(chapters, similar.verses),
-              opposites: parseChapterProp(chapters, similar.opposites),
-              similars: parseChapterProp(chapters, similar.similars),
+              verses: parseChapterProp(chaptersData, similar.verses),
+              opposites: parseChapterProp(chaptersData, similar.opposites),
+              similars: parseChapterProp(chaptersData, similar.similars),
             };
           });
         });
@@ -134,8 +142,8 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
       onIndexChanged={handleSwiperIndexChanged} // Add the onIndexChanged event
       index={currentIndex} // Set the initial index of the Swiper to currentIndex
     >
-      {contents &&
-        contents.map(({kalima, verses, similars, opposites}: any) => (
+      {contents?.length &&
+        contents?.map(({kalima, verses, similars, opposites}: any) => (
           <View key={kalima} style={{flex: 1}}>
             <ScrollableTab
               kalima={kalima}

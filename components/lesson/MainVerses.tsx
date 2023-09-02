@@ -6,7 +6,7 @@ import {Text, Card} from 'react-native-paper';
 
 const MainVerses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>
-    {verses.map(({text, ayah}) => (
+    {verses.map(({text, verse_no}) => (
       <View>
         <Card style={styles.card}>
           <Card.Content>
@@ -14,7 +14,7 @@ const MainVerses: React.FC<VerseListProps> = ({verses}) => (
               <FormattedVerse isOpposite={false} text={text} />
             </View>
             <View style={styles.ayahContainer}>
-              <Text style={styles.ayahText}>[{ayah}]</Text>
+              <Text style={styles.ayahText}>[{verse_no}]</Text>
             </View>
           </Card.Content>
         </Card>

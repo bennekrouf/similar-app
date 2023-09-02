@@ -11,16 +11,17 @@ export async function loadSimilars(chapterNo = 2) {
     // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
       const cachedData = await AsyncStorage.getItem('similars');
+      console.log('LOADING SIMILARS FROM CACHE');
       if (cachedData) {
         console.log('Getting data from cache');
         similars = JSON.parse(cachedData);
       }
       return;
     }
-    console.log(
-      'FETCH Config.DOMAIN/similars: ',
-      `${Config.DOMAIN}/similars/${chapterNo}`,
-    );
+    // console.log(
+    //   'FETCH Config.DOMAIN/similars: ',
+    //   `${Config.DOMAIN}/similars/${chapterNo}`,
+    // );
     const similarsAPI = await fetch(`${Config.DOMAIN}/similars/${chapterNo}`, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -29,28 +30,16 @@ export async function loadSimilars(chapterNo = 2) {
     similars = await similarsAPI.json();
     // console.log('SIMILARS :', similars);
 
-    similars = similars?.map(item => ({
-      kalima: item.kalima,
-      verses: formatSimilars(item.verses),
-      similars: formatSimilars(item.similars),
-      opposites: formatSimilars(item.opposites),
-    }));
+    // similars = similars?.map(item => ({
+    //   kalima: item.kalima,
+    //   verses: formatSimilars(item.verses),
+    //   similars: formatSimilars(item.similars),
+    //   opposites: formatSimilars(item.opposites),
+    // }));
     AsyncStorage.setItem('similars', JSON.stringify(similars));
-    return similars;
+    return similars.filter(s => s);
   } catch (error) {
     console.error('Error fetching data:', error);
   } finally {
   }
 }
-
-const formatSimilars = verses => {
-  return verses.map(verse => {
-    return {
-      ...verse,
-      sourate: verse.sourate,
-      chapter_no: verse.chapter_no,
-      ayah: verse.ayah,
-      text: verse.text,
-    };
-  });
-};

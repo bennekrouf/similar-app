@@ -20,7 +20,7 @@ const theme = {
 const DiscriminantExercise = ({route, _}) => {
   const {t} = useTranslation();
   const [question, setQuestion] = useState(null);
-  const [options, setOptions] = useState<[]>([]); // if answers is an array of strings
+  const [alternatives, setAternatives] = useState<[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
   const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<string>('neutral');
@@ -33,36 +33,33 @@ const DiscriminantExercise = ({route, _}) => {
   const handleCheck = async (index: React.SetStateAction<number>) => {
     setSelectedValue(index);
     try {
-      console.log('Calling checkDiscriminant with kalima:', kalima);
-      console.log(
-        'Calling checkDiscriminant with : question.ayah',
-        question.verse.ayah,
-      );
-      console.log(
-        'Calling checkDiscriminant with : question.chapter_no',
-        question.verse.chapter_no,
-      );
-      console.log(
-        'Calling checkDiscriminant with : options[index]',
-        options[index].content,
-      );
-
       const result =
         exerciseType === 'B'
           ? await checkChapter(
               kalima,
-              question.verse.ayah,
-              question.verse.chapter_no,
+              alternatives[index].verse.verse_no,
+              alternatives[index].verse.chapter_no,
+              question?.verse?.ungrouped_text.discriminant,
             )
           : await checkDiscriminant(
               kalima,
-              question.verse.ayah,
-              question.verse.chapter_no,
-              options[index].content,
+              question?.verse?.verse_no,
+              question?.verse?.chapter_no,
+              alternatives[index].content,
             );
-      setIsValid(result[0] ? 'right' : 'wrong');
+      setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
-      console.log(`handleCheck RESULT ${result}`); // Do something with the result here
+      console.log(
+        alternatives[index].verse.chapter_no,
+        alternatives[index].verse.verse_no,
+        '   discriminant :',
+        question?.verse?.ungrouped_text.discriminant,
+        // '   kalima :',
+        // kalima,
+        'result :',
+        result[0],
+      );
+      // console.log(`handleCheck RESULT ${result}`); // Do something with the result here
     } catch (error) {
       console.error(error);
     }
@@ -70,18 +67,18 @@ const DiscriminantExercise = ({route, _}) => {
 
   const loadData = useCallback(() => {
     try {
-      // console.log('Inside loadData : ', exercises);
+      console.log('Inside loadData : ', exercises);
       if (exercises && exercises[exerciseIndex]) {
         const data = exercises[exerciseIndex];
         // console.log('Inside setQuestion : ', data[0]);
-        console.log('Inside setOptions : ', data[1]);
+        // console.log('Inside setAternatives : ', data[1]);
         // console.log('Inside type : ', data[2]);
 
-        setQuestion(data[0]);
-        setOptions(data[1]);
+        setQuestion(data.statement);
+        setAternatives(data.alternatives);
         setSelectedValue(undefined); // Reset the selected value
         setIsValid('neutral'); // Reset the validation flag
-        setExerciseType(data[2]);
+        setExerciseType(data.exercise_type);
 
         // Set the back button title after updating the question
         navigation.setOptions({
@@ -104,13 +101,18 @@ const DiscriminantExercise = ({route, _}) => {
     alternative: any,
     index: number,
     type: string,
+    isOk: string,
   ) => {
     if (alternative.content && selectedValue === index) {
-      return `${alternative.content}  ${type === 'A' ? alternative.ayah : ''}`;
+      return `${alternative.content}  ${
+        type === 'A' && isOk === 'wrong'
+          ? '(' + alternative.verse.sourate + ')'
+          : ''
+      }`;
     }
     return alternative.content;
   };
-  console.log(`QUESTION : ${JSON.stringify(question)}`);
+  // console.log(`QUESTION : ${JSON.stringify(question)}`);
   return (
     <Provider theme={theme}>
       <ScrollView style={{flex: 1}}>
@@ -121,30 +123,32 @@ const DiscriminantExercise = ({route, _}) => {
                 <View style={styles.headerLine}>
                   <Text style={styles.leftText}>
                     {question
-                      ? `${question.verse.chapter_no}:${question.verse.ayah}`
+                      ? `${question?.verse?.chapter_no}:${question?.verse?.verse_no}`
                       : ''}
                   </Text>
                   <Text style={styles.rightText}>
-                    {question ? question.verse.sourate : ''}
+                    {question ? question.verse?.sourate : ''}
                   </Text>
                 </View>
               )}
 
               <Text style={styles.rightAlignedText}>
                 {question
-                  ? `${question.pre} ${
-                      exerciseType === 'A' ? '...' : question.discriminant
-                    } ${question.post}`
+                  ? `${question.ungrouped_text.pre} ${
+                      exerciseType === 'A'
+                        ? '...'
+                        : question.ungrouped_text.discriminant
+                    } ${question.ungrouped_text.post}`
                   : ''}
               </Text>
             </Card.Content>
           </Card>
 
           <View style={styles.radioContainer}>
-            {options.map((option, index) => (
+            {alternatives.map((option, index) => (
               <CustomRadioButton
                 key={index}
-                text={getRadioButtonText(option, index, exerciseType)}
+                text={getRadioButtonText(option, index, exerciseType, isValid)}
                 selected={selectedValue === index}
                 onPress={() => handleCheck(index)}
                 serviceFailed={isValid === 'wrong' && selectedValue === index}

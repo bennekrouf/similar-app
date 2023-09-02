@@ -23,7 +23,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const App: React.FC = () => (
   <>
-    <StatusBar hidden={false} backgroundColor="black" barStyle="dark-content" />
+    <StatusBar hidden={false} background_color="black" barStyle="dark-content" />
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen

@@ -14,6 +14,9 @@ const rules: Rule[] = [
 ];
 
 export function parseText(text: string | any[], isOpposite: boolean | false) {
+  if (!text) {
+    return [];
+  }
   let parts: {text: string; [key: string]: any}[] = [];
   let start = 0;
 

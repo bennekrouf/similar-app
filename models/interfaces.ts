@@ -1,9 +1,9 @@
 export interface Verse {
   chapter_no: number;
-  ayah: number;
+  verse_no: number;
   text: string;
   sourate: string;
-  backgroundColor: string;
+  background_color: string;
   color: string;
 }
 

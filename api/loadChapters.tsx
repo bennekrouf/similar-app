@@ -10,6 +10,7 @@ export async function loadChapters() {
     // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
       const cachedChapters = await AsyncStorage.getItem('chapters');
+      console.log('LOADING CHAPTERS FROM CACHE');
       if (cachedChapters) {
         chapters = JSON.parse(cachedChapters);
       }
@@ -17,7 +18,6 @@ export async function loadChapters() {
     }
 
     // console.log('config.domain11 : ', Config.DOMAIN);
-    console.log('LOADING CHAPTERS');
     const chaptersAPI = await fetch(`${Config.DOMAIN}/chapters`, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -28,7 +28,7 @@ export async function loadChapters() {
     // console.log('CHAPTERS :', chapters);
 
     AsyncStorage.setItem('chapters', JSON.stringify(chapters));
-    return chapters;
+    return chapters.filter(c => c);
   } catch (error) {
     console.error('Error fetching data:', error);
   } finally {

@@ -22,11 +22,13 @@ function FormattedVerse({text, isOpposite}) {
   return (
     <View>
       <Text style={styles.verseStyle}>
-        {parts.map((part, index) => (
-          <Text key={index} style={determineStyle(part)}>
-            {`${part.text}`}{''}
-          </Text>
-        ))}
+        {parts?.length &&
+          parts?.map((part, index) => (
+            <Text key={index} style={determineStyle(part)}>
+              {`${part.text}`}
+              {''}
+            </Text>
+          ))}
       </Text>
     </View>
   );

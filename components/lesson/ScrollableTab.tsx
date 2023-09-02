@@ -77,7 +77,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   const loadData = useCallback(async () => {
     try {
       const data = await loadExercise(kalima);
-      // console.log('CALLLLLLL', data);
       setExercises(data);
     } catch (error) {
       console.error(error);
@@ -87,7 +86,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   useEffect(() => {
     loadData();
   }, [loadData]);
-
+  // console.log('verses : ', verses[0]);
   return (
     <ScrollableTabView>
       <View style={styles.view}>
