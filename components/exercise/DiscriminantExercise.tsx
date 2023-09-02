@@ -6,6 +6,7 @@ import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 
 import {checkDiscriminant} from '../../api/checkDiscriminant'; // import your API function
 import {checkChapter} from '../../api/checkChapter'; // import your API function
+import {radioButtonText} from './radioButtonText'; // import your API function
 import CustomRadioButton from './CustomRadioButton';
 
 const theme = {
@@ -97,22 +98,6 @@ const DiscriminantExercise = ({route, _}) => {
     loadData();
   }, [loadData, kalima]);
 
-  const getRadioButtonText = (
-    alternative: any,
-    index: number,
-    type: string,
-    isOk: string,
-  ) => {
-    if (alternative.content && selectedValue === index) {
-      return `${alternative.content}  ${
-        type === 'A' && isOk === 'wrong'
-          ? '(' + alternative.verse.sourate + ')'
-          : ''
-      }`;
-    }
-    return alternative.content;
-  };
-  // console.log(`QUESTION : ${JSON.stringify(question)}`);
   return (
     <Provider theme={theme}>
       <ScrollView style={{flex: 1}}>
@@ -148,7 +133,13 @@ const DiscriminantExercise = ({route, _}) => {
             {alternatives.map((option, index) => (
               <CustomRadioButton
                 key={index}
-                text={getRadioButtonText(option, index, exerciseType, isValid)}
+                text={radioButtonText(
+                  option,
+                  index,
+                  exerciseType,
+                  isValid,
+                  selectedValue,
+                )}
                 selected={selectedValue === index}
                 onPress={() => handleCheck(index)}
                 serviceFailed={isValid === 'wrong' && selectedValue === index}
