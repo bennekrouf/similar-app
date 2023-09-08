@@ -38,23 +38,23 @@ const DiscriminantExercise = ({route, _}) => {
         exerciseType === 'B'
           ? await checkChapter(
               kalima,
-              alternatives[index].verse.verse_no,
-              alternatives[index].verse.chapter_no,
-              question?.verse?.ungrouped_text.discriminant,
+              alternatives[index].verse_no,
+              alternatives[index].chapter_no,
+              question?.ungrouped_text.discriminant,
             )
           : await checkDiscriminant(
               kalima,
-              question?.verse?.verse_no,
-              question?.verse?.chapter_no,
+              question?.verse_no,
+              question?.chapter_no,
               alternatives[index].content,
             );
       setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
       console.log(
-        alternatives[index].verse.chapter_no,
-        alternatives[index].verse.verse_no,
+        alternatives[index].chapter_no,
+        alternatives[index].verse_no,
         '   discriminant :',
-        question?.verse?.ungrouped_text.discriminant,
+        question?.ungrouped_text.discriminant,
         // '   kalima :',
         // kalima,
         'result :',
@@ -108,11 +108,11 @@ const DiscriminantExercise = ({route, _}) => {
                 <View style={styles.headerLine}>
                   <Text style={styles.leftText}>
                     {question
-                      ? `${question?.verse?.chapter_no}:${question?.verse?.verse_no}`
+                      ? `${question?.chapter_no}:${question?.verse_no}`
                       : ''}
                   </Text>
                   <Text style={styles.rightText}>
-                    {question ? question.verse?.sourate : ''}
+                    {question ? question.sourate : ''}
                   </Text>
                 </View>
               )}

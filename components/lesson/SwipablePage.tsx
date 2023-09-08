@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {loadChapters} from '../../api/loadChapters';
-import {loadSimilars} from '../../api/loadSimilars';
+import {loadLessons} from '../../api/loadLessons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ScrollableSwipablePageProps {}
@@ -97,21 +97,21 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
     const fetchData = async () => {
       try {
         // console.log('selectedChapter: ', selectedChapter);
-        const [similarsData, chaptersData] = await Promise.all([
-          loadSimilars(selectedChapter),
+        const [lessons, chaptersData] = await Promise.all([
+          loadLessons(selectedChapter),
           loadChapters(),
         ]);
         setContents(() => {
-          // console.log('similarsData : ', similarsData[0]);
-          return similarsData?.map(similar => {
-            if (!similar.verses?.length) {
-              console.log('This similar has no verses :', similar.kalima);
+          // console.log('lessons : ', lessons[0]);
+          return lessons?.map(lesson => {
+            if (!lesson.verses?.length) {
+              console.log('This similar has no verses :', lesson.kalima);
             }
             return {
-              ...similar,
-              verses: parseChapterProp(chaptersData, similar.verses),
-              opposites: parseChapterProp(chaptersData, similar.opposites),
-              similars: parseChapterProp(chaptersData, similar.similars),
+              ...lesson,
+              verses: parseChapterProp(chaptersData, lesson.verses),
+              opposites: parseChapterProp(chaptersData, lesson.opposites),
+              similars: parseChapterProp(chaptersData, lesson.similars),
             };
           });
         });

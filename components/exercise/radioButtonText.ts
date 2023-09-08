@@ -7,12 +7,12 @@ export const radioButtonText = (
 ) => {
   switch (type) {
     case 'A':
-      return `${alternative.content} [${alternative.verse.sourate}]`;
+      return `${alternative.content} [${alternative.sourate}]`;
     case 'B':
-      const sourate = `${alternative.verse.sourate} [${alternative.verse.verse_no}]`;
-      if (alternative.verse.sourate && selectedValue === index) {
+      const sourate = `${alternative.sourate} [${alternative.verse_no}]`;
+      if (alternative.sourate && selectedValue === index) {
         return `${sourate} ${
-          isOk === 'wrong' ? '(' + alternative.verse.sourate + ')' : ''
+          isOk === 'wrong' ? '(' + alternative.sourate + ')' : ''
         }`;
       }
       return `${sourate}`;
@@ -20,11 +20,11 @@ export const radioButtonText = (
       break;
   }
 
-  const sourate = `${alternative.verse.sourate} [${alternative.verse.verse_no}]`;
-  if (alternative.verse.sourate && selectedValue === index) {
+  const sourate = `${alternative.sourate} [${alternative.verse_no}]`;
+  if (alternative.sourate && selectedValue === index) {
     return `${sourate} ${
       type === 'A' && isOk === 'wrong'
-        ? '(' + alternative.verse.sourate + ')'
+        ? '(' + alternative.sourate + ')'
         : ''
     }`;
   }
