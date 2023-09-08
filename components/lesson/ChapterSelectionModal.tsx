@@ -9,10 +9,11 @@ import {
   // GestureResponderEvent,
 } from 'react-native';
 
+import useFetchChapters from '../../hooks/useFetchChapters';
+
 interface CustomModalProps {
   visible: boolean;
   onClose: () => void;
-  chapters: any[]; // Add the chapters prop
   handleLabelPress: (chapter: {no: number | undefined}) => Promise<void>; // Add the handleLabelPress prop
   panResponder: PanResponderInstance;
 }
@@ -20,10 +21,19 @@ interface CustomModalProps {
 const ChapterSelectionModal: React.FC<CustomModalProps> = ({
   visible,
   onClose,
-  chapters,
   handleLabelPress,
   panResponder,
 }) => {
+  const {chapters, isLoading} = useFetchChapters();
+  // console.log('Chapters in ChapterSelectionModal : ', chapters);
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+  
   return (
     <Modal
       visible={visible}
@@ -46,7 +56,7 @@ const ChapterSelectionModal: React.FC<CustomModalProps> = ({
               flexDirection: 'row-reverse',
               flexWrap: 'wrap',
             }}>
-            {chapters.map((chapter, index) => (
+            {chapters?.map((chapter, index) => (
               <TouchableOpacity
                 key={index}
                 style={{

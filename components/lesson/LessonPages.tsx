@@ -1,23 +1,19 @@
 /* eslint-disable radix */
 /* eslint-disable react-native/no-inline-styles */
-import ScrollableTab from './ScrollableTab';
+import ScrollableTab from './ScrollableTab/ScrollableTab';
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {loadChapters} from '../../api/loadChapters';
-import {loadLessons} from '../../api/loadLessons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useFetchLessons from '../../hooks/useFetchLessons';
 
 interface ScrollableSwipablePageProps {}
 
-const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
+const LessonPages: React.FC<ScrollableSwipablePageProps> = ({}) => {
   const handleChapterSelection = async (chapter: any) => {
     setSelectedChapter(chapter.no);
   };
 
-  const [chapters, setChapters] = useState<any[]>([]);
-  const [contents, setContents] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   // Use the useState hook to set selectedChapter state
   const [selectedChapter, setSelectedChapter] = useState<number | undefined>(
     undefined,
@@ -44,18 +40,7 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
     getSelectedChapterFromStorage();
   }, []); // Empty dependency array to run this effect only once, on mount
 
-  const parseChapterProp = (chapters: any, verses: any) => {
-    // console.log('CHAPTERS : ', chapters[0]);
-    // console.log('VERSES : ', verses[0]);
-    return verses
-      .map(verse => ({
-        ...verse,
-        background_color: chapters.find(c => c.no === verse.chapter_no)
-          ?.background_color,
-      }))
-      .filter(a => a);
-  };
-
+  const { contents, isLoading } = useFetchLessons(selectedChapter);
   const handleSwiperIndexChanged = async (index: number) => {
     try {
       if (!selectedChapter) {
@@ -65,11 +50,11 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
       // Store selectedChapter and index in AsyncStorage
       await AsyncStorage.setItem('selectedChapter', selectedChapter.toString());
       await AsyncStorage.setItem('currentIndex', index.toString());
-      console.log(
-        'Saved indexes : ',
-        selectedChapter.toString(),
-        index.toString(),
-      );
+      // console.log(
+      //   'Saved indexes : ',
+      //   selectedChapter.toString(),
+      //   index.toString(),
+      // );
     } catch (error) {
       console.log('Error storing data in AsyncStorage:', error);
     }
@@ -93,39 +78,6 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
     getCurrentIndexFromStorage();
   }, []); // Empty dependency array to run this effect only once, on mount
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // console.log('selectedChapter: ', selectedChapter);
-        const [lessons, chaptersData] = await Promise.all([
-          loadLessons(selectedChapter),
-          loadChapters(),
-        ]);
-        setContents(() => {
-          // console.log('lessons : ', lessons[0]);
-          return lessons?.map(lesson => {
-            if (!lesson.verses?.length) {
-              console.log('This similar has no verses :', lesson.kalima);
-            }
-            return {
-              ...lesson,
-              verses: parseChapterProp(chaptersData, lesson.verses),
-              opposites: parseChapterProp(chaptersData, lesson.opposites),
-              similars: parseChapterProp(chaptersData, lesson.similars),
-            };
-          });
-        });
-        setChapters(chaptersData);
-        setIsLoading(false);
-      } catch (error) {
-        console.log('Error fetching data:', error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [selectedChapter]);
-
   if (isLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -143,14 +95,13 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
       index={currentIndex} // Set the initial index of the Swiper to currentIndex
     >
       {contents?.length &&
-        contents?.map(({kalima, verses, similars, opposites}: any) => (
-          <View key={kalima} style={{flex: 1}}>
+        contents?.map(({kalima, verses, similars, opposites}: any, index) => (
+          <View key={index} style={{flex: 1}}>
             <ScrollableTab
               kalima={kalima}
               verses={verses}
               similars={similars}
               opposites={opposites}
-              chapters={chapters}
               handleChapterSelection={handleChapterSelection}
             />
           </View>
@@ -159,4 +110,4 @@ const SwipablePage: React.FC<ScrollableSwipablePageProps> = ({}) => {
   );
 };
 
-export default SwipablePage;
+export default LessonPages;

@@ -22,10 +22,10 @@ export async function checkChapter(
       },
     });
     const result = await response.json();
-    console.log('API check chapter result : ', result);
+    // console.log('API check chapter result : ', result);
     return result;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data1:', error);
     throw error;
   }
 }

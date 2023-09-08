@@ -5,9 +5,10 @@ export const radioButtonText = (
   isOk: string,
   selectedValue: number,
 ) => {
+  alternative = alternative.verse;
   switch (type) {
     case 'A':
-      return `${alternative.content} [${alternative.sourate}]`;
+      return `${alternative.ungrouped_text?.discriminant}`;
     case 'B':
       const sourate = `${alternative.sourate} [${alternative.verse_no}]`;
       if (alternative.sourate && selectedValue === index) {

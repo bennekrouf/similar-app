@@ -3,7 +3,7 @@ import {StatusBar} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import SwipablePage from './components/lesson/SwipablePage';
+import LessonPages from './components/lesson/LessonPages';
 import DiscriminantExercise from './components/exercise/DiscriminantExercise';
 import './locales/i18n';
 import 'intl';
@@ -12,7 +12,7 @@ import 'intl/locale-data/jsonp/ar'; // For Arabic
 import 'intl-pluralrules';
 
 type RootStackParamList = {
-  SwipablePage: undefined; // If this route does not take any parameters
+  LessonPages: undefined; // If this route does not take any parameters
   DiscriminantExercise: {
     kalima: string;
     chapterName: string;
@@ -27,8 +27,8 @@ const App: React.FC = () => (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="SwipablePage"
-          component={SwipablePage}
+          name="LessonPages"
+          component={LessonPages}
           options={({route}) => ({
             // title: route.params.chapterName || '', // Set title for the back button when navigating away from this screen
             headerShown: false, // Hide the header on this screen

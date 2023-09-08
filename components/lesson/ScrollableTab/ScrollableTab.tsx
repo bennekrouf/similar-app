@@ -2,10 +2,11 @@ import React, {useEffect, useState, useCallback} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import SourateBox from '../SourateBox';
 
 import LessonContent from './LessonContent';
-import {ScrollableTabProps} from '../../models/interfaces';
-import ChapterSelectionModal from './ChapterSelectionModal'; // Import the TypeScript declaration file
+import {ScrollableTabProps} from '../../../models/interfaces';
+import ChapterSelectionModal from '../ChapterSelectionModal'; // Import the TypeScript declaration file
 import {
   View,
   Text,
@@ -15,10 +16,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {loadExercise} from '../../api/loadExercisesList'; // import your API function
+import {loadExercise} from '../../../api/loadExercisesList'; // import your API function
 
 type RootStackParamList = {
-  SwipablePage: undefined; // If this route does not take any parameters
+  LessonPages: undefined; // If this route does not take any parameters
   DiscriminantExercise: {
     kalima: string;
     currentChapterName: string;
@@ -30,7 +31,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   kalima,
   verses,
   similars,
-  chapters,
   opposites,
   handleChapterSelection,
 }) => {
@@ -110,13 +110,13 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
             <Text style={styles.navigationText}>{t('test')}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.sourateHeaderView}
-            onPress={handleOpenModal}>
-            <View>
-              <Text style={styles.rightHeaderText}>{verses[0].sourate}</Text>
-            </View>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              onPress={handleOpenModal}>
+              <SourateBox chapterNo={verses[0].chapter_no} />
+            </TouchableOpacity>
+          </View>
+
         </View>
 
         <View style={styles.verseList}>
@@ -132,7 +132,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
         <ChapterSelectionModal
           visible={isModalOpen}
           onClose={handleCloseModal} // Close the modal
-          chapters={chapters}
           handleLabelPress={handleLabelPress}
           panResponder={panResponder}
         />
@@ -162,12 +161,14 @@ const styles = StyleSheet.create({
     color: '#040101',
     // Add additional styles as needed
   },
+
+
   headerContainer: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 0,
-    paddingHorizontal: 3,
+    marginBottom: 5,
+    paddingHorizontal: 5,
     elevation: 3, // This will add shadow in Android
     shadowColor: '#000', // iOS shadow
     shadowOffset: {
@@ -186,10 +187,10 @@ const styles = StyleSheet.create({
     // Add additional styles as needed
   },
   sourateHeaderView: {
-    backgroundColor: 'green',
-    color: 'white',
-    borderRadius: 15,
-    paddingHorizontal: 10,
+    // backgroundColor: 'green',
+    // color: 'white',
+    // borderRadius: 15,
+    // paddingHorizontal: 10,
   },
   rightHeaderText: {
     fontSize: 18,

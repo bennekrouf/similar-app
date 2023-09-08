@@ -1,9 +1,9 @@
 // MainContent.tsx
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {LessonListProps} from '../../models/interfaces';
-import MainVerses from './MainVerses';
-import SimilarVerses from './SimilarVerses';
+import {LessonListProps} from '../../../models/interfaces';
+import MainVerses from './LessonContent/MainVerses';
+import SimilarVerses from './LessonContent/SimilarVerses';
 
 const LessonContent: React.FC<LessonListProps> = ({
   verses,

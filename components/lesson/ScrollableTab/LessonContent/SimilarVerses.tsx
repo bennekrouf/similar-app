@@ -1,14 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import {VerseListProps} from '../../models/interfaces';
+import {VerseListProps} from '../../../../models/interfaces';
 import {View} from 'react-native';
-import FormattedVerse from './FormattedVerse';
+import FormattedVerse from '../../FormattedVerse';
+import SourateBox from '../../SourateBox';
 
-const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
+const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => {
+
+  return (
   <View style={[styles.similarsContainer]}>
     {verses.map(
-      ({text, sourate, background_color, verse_no, chapter_no}, index) => (
+      ({text, verse_no, chapter_no}, index) => (
         <View key={index}>
           {/* Similar Header */}
           <View style={styles.similarsHeader}>
@@ -21,25 +24,13 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
               </View>
             </View>
             {/* Left column */}
-            <View
-              style={[
-                styles.columnContainer,
-                styles.leftColumn,
-                {backgroundColor: background_color},
-              ]}>
-              <View style={[styles.column, {backgroundColor: 'black'}]}>
-                <Text style={[styles.columnText, {textAlign: 'right'}]}>
-                  {sourate}
-                </Text>
-              </View>
-            </View>
+            <SourateBox chapterNo={chapter_no} />
           </View>
 
           {/* Similar Content */}
           <View style={styles.similarsContent}>
             <FormattedVerse
               text={text}
-              // verse_no={verse_no}
               isOpposite={isOpposite}
             />
           </View>
@@ -47,7 +38,7 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
       ),
     )}
   </View>
-);
+)};
 
 export default SimilarVerses;
 

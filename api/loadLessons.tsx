@@ -4,6 +4,7 @@ import Config from 'react-native-config';
 import {withTextVar} from '../helpers/withTextVar';
 
 export async function loadLessons(chapterNo = 2) {
+  console.log(' CALLING loadLessons');
   try {
     let lessons: any[];
     const networkState = await NetInfo.fetch();
@@ -19,10 +20,10 @@ export async function loadLessons(chapterNo = 2) {
       }
       return;
     }
-    // console.log(
-    //   'FETCH Config.DOMAIN/similars: ',
-    //   `${Config.DOMAIN}/similars/${chapterNo}`,
-    // );
+    console.log(
+      'FETCH Config.DOMAIN/similars: ',
+      `${Config.DOMAIN}/similars/${chapterNo}`,
+    );
     const lessonsAPI = await fetch(`${Config.DOMAIN}/similars/${chapterNo}`, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -39,7 +40,7 @@ export async function loadLessons(chapterNo = 2) {
     AsyncStorage.setItem('lessons', JSON.stringify(lessons));
     return lessons.filter(s => s);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data5:', error);
   } finally {
   }
 }

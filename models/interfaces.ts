@@ -25,10 +25,13 @@ export interface ScrollableTabProps {
   verses: Verse[];
   similars: Verse[];
   opposites: Verse[];
-  chapters: any[];
   handleChapterSelection: (chapterNo: {no: number | undefined}) => void; // Add the handleChapterSelection function to the interface
 }
 export interface Chapter {
-  name: string;
-  count: number;
+  sourate: string,
+  no: 2,
+  mekka: false,
+  background_color: string,
+  color: string,
+  count: 24
 }

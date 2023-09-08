@@ -27,7 +27,7 @@ export async function loadExercise(kalima) {
     // console.log('Parsed json exo 1:', exercise[1]);
     return exercises;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data4:', error);
     throw error;
   }
 }

@@ -27,7 +27,7 @@ export async function checkDiscriminant(
     // console.log('Result : ', result);
     return result;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data2:', error);
     throw error;
   }
 }

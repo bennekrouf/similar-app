@@ -20,7 +20,7 @@ const theme = {
 
 const DiscriminantExercise = ({route, _}) => {
   const {t} = useTranslation();
-  const [question, setQuestion] = useState(null);
+  const [statement, setStatement] = useState(null);
   const [alternatives, setAternatives] = useState<[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
   const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
@@ -34,32 +34,31 @@ const DiscriminantExercise = ({route, _}) => {
   const handleCheck = async (index: React.SetStateAction<number>) => {
     setSelectedValue(index);
     try {
+      const alternative = alternatives[index]?.verse;
       const result =
         exerciseType === 'B'
           ? await checkChapter(
               kalima,
-              alternatives[index].verse_no,
-              alternatives[index].chapter_no,
-              question?.ungrouped_text.discriminant,
+              alternative.verse_no,
+              alternative.chapter_no,
+              statement?.ungrouped_text.discriminant,
             )
           : await checkDiscriminant(
               kalima,
-              question?.verse_no,
-              question?.chapter_no,
-              alternatives[index].content,
+              statement?.verse_no,
+              statement?.chapter_no,
+              alternative.ungrouped_text.discriminant,
             );
       setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
-      console.log(
-        alternatives[index].chapter_no,
-        alternatives[index].verse_no,
-        '   discriminant :',
-        question?.ungrouped_text.discriminant,
-        // '   kalima :',
-        // kalima,
-        'result :',
-        result[0],
-      );
+      // console.log(
+      //   alternative.chapter_no,
+      //   alternative.verse_no,
+      //   '   discriminant :',
+      //   statement?.ungrouped_text.discriminant,
+      //   'result :',
+      //   result[0],
+      // );
       // console.log(`handleCheck RESULT ${result}`); // Do something with the result here
     } catch (error) {
       console.error(error);
@@ -71,17 +70,17 @@ const DiscriminantExercise = ({route, _}) => {
       console.log('Inside loadData : ', exercises);
       if (exercises && exercises[exerciseIndex]) {
         const data = exercises[exerciseIndex];
-        // console.log('Inside setQuestion : ', data[0]);
+        // console.log('Inside setStatement : ', data[0]);
         // console.log('Inside setAternatives : ', data[1]);
         // console.log('Inside type : ', data[2]);
 
-        setQuestion(data.statement);
+        setStatement(data.statement);
         setAternatives(data.alternatives);
         setSelectedValue(undefined); // Reset the selected value
         setIsValid('neutral'); // Reset the validation flag
         setExerciseType(data.exercise_type);
 
-        // Set the back button title after updating the question
+        // Set the back button title after updating the statement
         navigation.setOptions({
           headerBackTitle: currentChapterName,
         });
@@ -107,23 +106,23 @@ const DiscriminantExercise = ({route, _}) => {
               {exerciseType !== 'B' && (
                 <View style={styles.headerLine}>
                   <Text style={styles.leftText}>
-                    {question
-                      ? `${question?.chapter_no}:${question?.verse_no}`
+                    {statement
+                      ? `${statement?.verse.chapter_no}:${statement?.verse.verse_no}`
                       : ''}
                   </Text>
                   <Text style={styles.rightText}>
-                    {question ? question.sourate : ''}
+                    {statement?.verse.sourate || ''}
                   </Text>
                 </View>
               )}
 
               <Text style={styles.rightAlignedText}>
-                {question
-                  ? `${question.ungrouped_text.pre} ${
+                {statement
+                  ? `${statement.verse?.ungrouped_text?.pre} ${
                       exerciseType === 'A'
                         ? '...'
-                        : question.ungrouped_text.discriminant
-                    } ${question.ungrouped_text.post}`
+                        : statement.verse?.ungrouped_text?.discriminant
+                    } ${statement.verse?.ungrouped_text?.post}`
                   : ''}
               </Text>
             </Card.Content>
@@ -196,6 +195,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   rightText: {
+    fontFamily: 'ScheherazadeNew-Regular',
+    fontSize: 20,
     textAlign: 'right',
     writingDirection: 'rtl',
     fontWeight: 'bold',
