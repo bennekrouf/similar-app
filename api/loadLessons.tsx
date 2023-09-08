@@ -6,7 +6,7 @@ import {withTextVar} from '../helpers/withTextVar';
 const key = (chapterNo) => `lessons-${chapterNo}`;
 
 export async function loadLessons(chapterNo = 2) {
-  // AsyncStorage.removeItem('lessons');
+  // AsyncStorage.removeItem(key(chapterNo));
   try {
     let lessons: any[];
     const networkState = await NetInfo.fetch();

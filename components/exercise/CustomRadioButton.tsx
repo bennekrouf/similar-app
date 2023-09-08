@@ -12,7 +12,10 @@ const CustomRadioButton = ({
   const isSelectedAndValid = selected && serviceValid;
   const isSelectedAndFailed = selected && serviceFailed;
 
-  console.log('Inside radio button text: ', text);
+  // TEMP remove bracket chars
+  text = text.replace(/[\[\]]/g, "");
+
+  // console.log('Inside radio button text: ', text);
   // console.log('Inside radio button selected: ', selected);
   // console.log('Inside radio serviceValid: ', serviceFailed, serviceValid);
 

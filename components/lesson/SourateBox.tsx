@@ -3,7 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import useFetchChapters from '../../hooks/useFetchChapters';
 
 const sourateColor = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.background_color
+const sourateFontColor = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.color
 const sourateName = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.sourate
+const sourateIsMekka = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.mekka;
 
 const SourateBox: React.FC<{
   chapterNo: number;
@@ -26,19 +28,25 @@ const SourateBox: React.FC<{
 
   // console.log(chapters);
   return (
-    <View
-      style={[
-        styles.columnContainer,
-        styles.leftColumn,
-        { backgroundColor: sourateColor(chapterNo, chapters) },
-        additionalStyles,
-      ]}
-    > 
-      <View style={[styles.column, { backgroundColor: 'black' }]}>
-      <Text style={[styles.columnText, { textAlign: 'right' }]}>
-        {sourateName(chapterNo, chapters)}
-        {count_ayat !== undefined ? ` (${count_ayat})` : ""}
-      </Text>
+    <View style={{position: 'relative'}}>
+      {sourateIsMekka(chapterNo, chapters) && 
+        <View style={styles.bubble}/>
+      }
+
+      <View
+        style={[
+          styles.columnContainer,
+          styles.leftColumn,
+          { backgroundColor: sourateColor(chapterNo, chapters) },
+          additionalStyles,
+        ]}
+      > 
+        <View style={[styles.column]}>
+          <Text style={[styles.columnText, { textAlign: 'right' }, {color: sourateFontColor(chapterNo, chapters)}]}>
+            {sourateName(chapterNo, chapters)}
+            {count_ayat !== undefined ? ` (${count_ayat})` : ""}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -53,15 +61,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   column: {
-    backgroundColor: 'gray',
     padding: 5,
     borderRadius: 5,
   },
   columnText: {
-    color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'right',
+  },
+  bubble: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    backgroundColor: 'blue',
   },
 });
 

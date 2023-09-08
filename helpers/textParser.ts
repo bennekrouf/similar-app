@@ -13,7 +13,7 @@ const rules: Rule[] = [
   },
 ];
 
-export function parseText(text: string | any[], isOpposite: boolean | false) {
+export function parseText(text: string, isOpposite: boolean | false) {
   if (!text) {
     return [];
   }
@@ -48,6 +48,7 @@ export function parseText(text: string | any[], isOpposite: boolean | false) {
       start = regex.lastIndex;
     }
   }
+  text = text.replace(/[\[\]]/g, "");
 
   if (start < text.length) {
     parts.push({text: text.slice(start)});

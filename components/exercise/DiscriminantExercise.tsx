@@ -8,6 +8,7 @@ import {checkDiscriminant} from '../../api/checkDiscriminant'; // import your AP
 import {checkChapter} from '../../api/checkChapter'; // import your API function
 import {radioButtonText} from './radioButtonText'; // import your API function
 import CustomRadioButton from './CustomRadioButton';
+import SourateBox from '../lesson/SourateBox';
 
 const theme = {
   ...DefaultTheme,
@@ -23,7 +24,7 @@ const DiscriminantExercise = ({route, _}) => {
   const [statement, setStatement] = useState(null);
   const [alternatives, setAternatives] = useState<[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
-  const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
+  const {kalima, currentChapterName, currentChapterNo, exercises} = route.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<string>('neutral');
   const [otherSourate, setOtherSourate] = useState<string>('');
   const [exerciseIndex, setExerciseIndex] = useState(0);
@@ -45,9 +46,9 @@ const DiscriminantExercise = ({route, _}) => {
             )
           : await checkDiscriminant(
               kalima,
-              statement?.verse_no,
-              statement?.chapter_no,
-              alternative.ungrouped_text.discriminant,
+              statement?.verse?.verse_no,
+              statement?.verse?.chapter_no,
+              alternative.ungrouped_text?.discriminant?.replace(/[\[\]]/g, ""),
             );
       setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
@@ -81,8 +82,12 @@ const DiscriminantExercise = ({route, _}) => {
         setExerciseType(data.exercise_type);
 
         // Set the back button title after updating the statement
+        // navigation.setOptions({
+        //   headerBackTitle: currentChapterName,
+        // });
+
         navigation.setOptions({
-          headerBackTitle: currentChapterName,
+          headerBackTitle: props => <SourateBox chapterNo={currentChapterNo} />,
         });
       } else {
         // Handle the end of exercises if needed
@@ -91,7 +96,7 @@ const DiscriminantExercise = ({route, _}) => {
     } catch (error) {
       console.error(error);
     }
-  }, [exerciseIndex, exercises, currentChapterName, navigation]);
+  }, [exerciseIndex, exercises, currentChapterName, currentChapterNo, navigation]);
 
   useEffect(() => {
     loadData();

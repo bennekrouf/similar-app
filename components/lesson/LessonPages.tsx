@@ -1,6 +1,6 @@
 /* eslint-disable radix */
 /* eslint-disable react-native/no-inline-styles */
-import ScrollableTab from './ScrollableTab/ScrollableTab';
+import LessonPage from './LessonPage/LessonPage';
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -97,7 +97,7 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({}) => {
       {contents?.length &&
         contents?.map(({kalima, verses, similars, opposites}: any, index) => (
           <View key={index} style={{flex: 1}}>
-            <ScrollableTab
+            <LessonPage
               kalima={kalima}
               verses={verses}
               similars={similars}
