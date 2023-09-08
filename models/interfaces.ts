@@ -29,9 +29,10 @@ export interface ScrollableTabProps {
 }
 export interface Chapter {
   sourate: string,
-  no: 2,
+  no: number,
   mekka: false,
   background_color: string,
   color: string,
-  count: 24
+  count: number,
+  count_ayat: number,
 }

@@ -2,13 +2,14 @@
 import React from 'react';
 import {
   View,
+  ScrollView,
   Text,
   TouchableOpacity,
   Modal,
   PanResponderInstance,
   // GestureResponderEvent,
 } from 'react-native';
-
+import SourateBox from './SourateBox';
 import useFetchChapters from '../../hooks/useFetchChapters';
 
 interface CustomModalProps {
@@ -36,20 +37,21 @@ const ChapterSelectionModal: React.FC<CustomModalProps> = ({
   
   return (
     <Modal
-      visible={visible}
-      animationType="slide"
-      transparent={true}
-      onRequestClose={onClose}>
+    visible={visible}
+    animationType="slide"
+    transparent={true}
+    onRequestClose={onClose}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      }}>
       <View
-        style={{
-          flex: 1,
-          justifyContent: 'flex-end',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        }}>
-        <View
-          style={{backgroundColor: 'white', minHeight: '80%'}}
-          {...panResponder.panHandlers}>
-          {/* Modal Content */}
+        style={{backgroundColor: 'white', maxHeight: '80%'}}
+        {...panResponder.panHandlers}>
+        {/* Modal Content */}
+        <ScrollView>
           <View
             style={{
               padding: 20,
@@ -60,27 +62,23 @@ const ChapterSelectionModal: React.FC<CustomModalProps> = ({
               <TouchableOpacity
                 key={index}
                 style={{
-                  backgroundColor: 'lightgrey',
                   borderRadius: 20,
                   padding: 5,
                   marginVertical: 5,
                 }}
                 onPress={() => handleLabelPress(chapter)}>
-                <Text
-                  style={{
-                    textAlign: 'right',
-                  }}>{`${chapter.sourate} (${chapter.count})`}</Text>
+                <SourateBox chapterNo={chapter.no} count_ayat={chapter.count_ayat}/>
               </TouchableOpacity>
             ))}
           </View>
-
-          {/* Close Button */}
-          <TouchableOpacity style={{marginTop: 20}} onPress={onClose}>
-            <Text style={{color: 'black', fontSize: 14}}>X</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
+        {/* Close Button */}
+        <TouchableOpacity style={{marginTop: 20}} onPress={onClose}>
+          <Text style={{color: 'black', fontSize: 14}}>X</Text>
+        </TouchableOpacity>
       </View>
-    </Modal>
+    </View>
+  </Modal>
   );
 };
 

@@ -7,8 +7,9 @@ const sourateName = (chapterNo, chapters) => chapters?.find(c => c.no === chapte
 
 const SourateBox: React.FC<{
   chapterNo: number;
+  count_ayat?: number, 
   additionalStyles?: object;
-}> = ({ chapterNo, additionalStyles }) => {
+}> = ({ chapterNo, count_ayat, additionalStyles }) => {
   useEffect(() => {
 
   }, []);
@@ -34,7 +35,10 @@ const SourateBox: React.FC<{
       ]}
     > 
       <View style={[styles.column, { backgroundColor: 'black' }]}>
-        <Text style={[styles.columnText, { textAlign: 'right' }]}>{sourateName(chapterNo, chapters)}</Text>
+      <Text style={[styles.columnText, { textAlign: 'right' }]}>
+        {sourateName(chapterNo, chapters)}
+        {count_ayat !== undefined ? ` (${count_ayat})` : ""}
+      </Text>
       </View>
     </View>
   );
@@ -42,9 +46,6 @@ const SourateBox: React.FC<{
 
 const styles = StyleSheet.create({
   columnContainer: {
-    width: '20%', // Set fixed width for the columns
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 3,
     borderRadius: 5,
   },
