@@ -8,17 +8,14 @@ export async function loadLessons(chapterNo = 2) {
   try {
     let lessons: any[];
     const networkState = await NetInfo.fetch();
-    // console.log('networkState: ', networkState);
-
-    // If there's no internet connection
-    if (!networkState.isConnected && !networkState.isInternetReachable) {
-      const cachedData = await AsyncStorage.getItem('lessons');
+    const cachedData = await AsyncStorage.getItem('lessons');
+    if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedData) {
       console.log('LOADING SIMILARS FROM CACHE');
       if (cachedData) {
         console.log('Getting data from cache');
         lessons = JSON.parse(cachedData);
       }
-      return;
+      return lessons;
     }
     console.log(
       'FETCH Config.DOMAIN/similars: ',
@@ -38,6 +35,7 @@ export async function loadLessons(chapterNo = 2) {
       opposites: withTextVar(item.opposites),
     }));
     AsyncStorage.setItem('lessons', JSON.stringify(lessons));
+    AsyncStorage.setItem('lessons_dates', `${new Date()}`);
     return lessons.filter(s => s);
   } catch (error) {
     console.error('Error fetching data5:', error);

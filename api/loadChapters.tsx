@@ -6,21 +6,11 @@ export async function loadChapters() {
   try {
     let chapters: any;
     const networkState = await NetInfo.fetch();
-
     const cachedChapters = await AsyncStorage.getItem('chapters');
-    if (cachedChapters !== null) {
-      return JSON.parse(cachedChapters);
+    if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedChapters) {
+      chapters = JSON.parse(cachedChapters);
+      return chapters;
     }
-
-    // // If there's no internet connection
-    // if (!networkState.isConnected && !networkState.isInternetReachable) {
-    //   const cachedChapters = await AsyncStorage.getItem('chapters');
-    //   console.log('LOADING CHAPTERS FROM CACHE');
-    //   if (cachedChapters) {
-    //     chapters = JSON.parse(cachedChapters);
-    //   }
-    //   return;
-    // }
 
     // console.log('config.domain11 : ', Config.DOMAIN);
     const chaptersAPI = await fetch(`${Config.DOMAIN}/chapters`, {
@@ -31,6 +21,7 @@ export async function loadChapters() {
     chapters = await chaptersAPI.json();
 
     AsyncStorage.setItem('chapters', JSON.stringify(chapters));
+    AsyncStorage.setItem('chapters_dates', `${new Date()}`);
     console.log('config.domain1 chapters: ', chapters);
 
     return chapters.filter(c => c);
