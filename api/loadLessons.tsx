@@ -3,12 +3,14 @@ import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
 import {withTextVar} from '../helpers/withTextVar';
 
+const key = (chapterNo) => `lessons-${chapterNo}`;
+
 export async function loadLessons(chapterNo = 2) {
-  console.log(' CALLING loadLessons');
+  // AsyncStorage.removeItem('lessons');
   try {
     let lessons: any[];
     const networkState = await NetInfo.fetch();
-    const cachedData = await AsyncStorage.getItem('lessons');
+    const cachedData = await AsyncStorage.getItem(key(chapterNo));
     if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedData) {
       console.log('LOADING SIMILARS FROM CACHE');
       if (cachedData) {
@@ -34,7 +36,7 @@ export async function loadLessons(chapterNo = 2) {
       verses: withTextVar(item.verses),
       opposites: withTextVar(item.opposites),
     }));
-    AsyncStorage.setItem('lessons', JSON.stringify(lessons));
+    AsyncStorage.setItem(key(chapterNo), JSON.stringify(lessons));
     AsyncStorage.setItem('lessons_dates', `${new Date()}`);
     return lessons.filter(s => s);
   } catch (error) {

@@ -3,6 +3,8 @@ import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
 
 export async function loadChapters() {
+  // AsyncStorage.removeItem('chapters');
+
   try {
     let chapters: any;
     const networkState = await NetInfo.fetch();
