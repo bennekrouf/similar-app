@@ -94,7 +94,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
         <View style={styles.headerContainer}>
           <View>
             <Text style={styles.leftHeaderText}>
-              {kalima} ({verses.length + similars.length})
+              {kalima} ({verses.length + similars.length + opposites.length})
             </Text>
           </View>
 
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   leftHeaderText: {
     fontSize: 18,
-    fontFamily: 'ScheherazadeNew-Medium',
+    fontFamily: 'ScheherazadeNew-Regular',
     color: '#040101',
     // Add additional styles as needed
   },
@@ -194,8 +194,6 @@ const styles = StyleSheet.create({
   rightHeaderText: {
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Regular',
-    // fontWeight: 'bold',
-    // color: '#040101',
     color: 'white',
   },
   verseList: {
