@@ -30,6 +30,7 @@ const LessonContent: React.FC<LessonListProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    width: '100%',
   },
 });
 

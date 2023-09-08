@@ -25,7 +25,7 @@ const MainVerses: React.FC<VerseListProps> = ({verses}) => (
 
 const styles = StyleSheet.create({
   card: {
-    width: '95%', // Set the card width to almost full screen width
+    width: '100%', // Set the card width to almost full screen width
     alignSelf: 'center', // Center the card
     backgroundColor: 'white',
     marginBottom: 10,

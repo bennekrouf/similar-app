@@ -103,19 +103,17 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
             onPress={() =>
               navigation.navigate('DiscriminantExercise', {
                 kalima,
-                currentChapterName: verses[0].sourate,
+                currentChapterName: verses[0]?.sourate,
                 exercises,
               })
             }>
             <Text style={styles.navigationText}>{t('test')}</Text>
           </TouchableOpacity>
 
-          <View>
             <TouchableOpacity
               onPress={handleOpenModal}>
-              <SourateBox chapterNo={verses[0].chapter_no} />
+              <SourateBox chapterNo={verses[0]?.chapter_no} />
             </TouchableOpacity>
-          </View>
 
         </View>
 
@@ -161,7 +159,6 @@ const styles = StyleSheet.create({
     color: '#040101',
     // Add additional styles as needed
   },
-
 
   headerContainer: {
     flexDirection: 'row-reverse',

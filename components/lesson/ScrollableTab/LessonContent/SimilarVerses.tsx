@@ -69,6 +69,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 5,
     marginBottom: 50,
+    marginRight: 20,
+    marginLeft: 20,
   },
   similarWrapper: {
     marginBottom: 2,
