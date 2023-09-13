@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "dev": "rm -Rf ~/Library/Developer/Xcode/DerivedData && ENVFILE=.env.local yarn ios",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "@react-native-community/netinfo": "^9.3.10",
     "@react-native-firebase/app": "^18.3.0",
     "@react-native-firebase/firestore": "^18.3.0",
+    "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "@types/react-native-scrollable-tab-view": "^0.10.3",
@@ -39,6 +41,7 @@
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0"
+    "rn-auth-firebase": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
