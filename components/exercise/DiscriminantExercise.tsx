@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20, // Add some spacing between this line and the following text
+    marginBottom: 20,
   },
   leftText: {
     textAlign: 'left',

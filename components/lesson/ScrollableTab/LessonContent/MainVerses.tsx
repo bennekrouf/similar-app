@@ -6,12 +6,12 @@ import {Text, Card} from 'react-native-paper';
 
 const MainVerses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>
-    {verses.map(({text, verse_no}, index) => (
+    {verses.map(({ungrouped_text, verse_no}, index) => (
       <View key={index}>
         <Card style={styles.card}>
           <Card.Content>
             <View>
-              <FormattedVerse isOpposite={false} text={text} />
+              <FormattedVerse isOpposite={false} ungroupedText={ungrouped_text} />
             </View>
             <View style={styles.ayahContainer}>
               <Text style={styles.ayahText}>[{verse_no}]</Text>

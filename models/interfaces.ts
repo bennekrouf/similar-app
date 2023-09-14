@@ -1,7 +1,13 @@
+export interface UngroupedText {
+  pre: string;
+  discriminant;
+  post;
+}
+
 export interface Verse {
   chapter_no: number;
   verse_no: number;
-  text: string;
+  ungrouped_text: UngroupedText;
   sourate: string;
   background_color: string;
   color: string;

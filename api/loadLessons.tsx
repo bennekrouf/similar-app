@@ -1,17 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
-import {withTextVar} from '../helpers/withTextVar';
 
 const key = (chapterNo) => `lessons-${chapterNo}`;
 
 export async function loadLessons(chapterNo = 2) {
-  // AsyncStorage.removeItem('lessons');
+  AsyncStorage.removeItem(key(chapterNo));
   try {
     let lessons: any[];
     const networkState = await NetInfo.fetch();
     const cachedData = await AsyncStorage.getItem(key(chapterNo));
-    if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedData) {
+    if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedData) {
       console.log('LOADING SIMILARS FROM CACHE');
       if (cachedData) {
         console.log('Getting data from cache');
@@ -32,9 +31,6 @@ export async function loadLessons(chapterNo = 2) {
 
     lessons = lessons?.map(item => ({
       ...item,
-      similars: withTextVar(item.similars),
-      verses: withTextVar(item.verses),
-      opposites: withTextVar(item.opposites),
     }));
     AsyncStorage.setItem(key(chapterNo), JSON.stringify(lessons));
     AsyncStorage.setItem('lessons_dates', `${new Date()}`);

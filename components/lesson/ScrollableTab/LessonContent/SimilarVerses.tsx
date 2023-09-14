@@ -11,7 +11,7 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => {
   return (
   <View style={[styles.similarsContainer]}>
     {verses.map(
-      ({text, verse_no, chapter_no}, index) => (
+      ({ungrouped_text, verse_no, chapter_no}, index) => (
         <View key={index}>
           {/* Similar Header */}
           <View style={styles.similarsHeader}>
@@ -30,7 +30,7 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => {
           {/* Similar Content */}
           <View style={styles.similarsContent}>
             <FormattedVerse
-              text={text}
+              ungroupedText={ungrouped_text}
               isOpposite={isOpposite}
             />
           </View>

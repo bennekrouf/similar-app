@@ -1,34 +1,17 @@
 import {Text, StyleSheet, View} from 'react-native';
-import {parseText} from '../../helpers/textParser';
 import React from 'react';
 
-function FormattedVerse({text, isOpposite}) {
-  const parts = parseText(text, isOpposite);
-
-  function determineStyle(part) {
-    if (part.isCommon) {
-      return styles.commonText;
-    }
-    if (part.isDifferent && !part.isOpposite) {
-      return styles.differentTextRight;
-    }
-    if (part.isDifferent && part.isOpposite) {
-      return styles.differentTextWrong;
-    }
-
-    return {};
-  }
+function FormattedVerse({ungroupedText, isOpposite}) {
+  const discriminantStyle = isOpposite ? styles.differentTextWrong : styles.differentTextRight;
 
   return (
     <View>
       <Text style={styles.verseStyle}>
-        {parts?.length &&
-          parts?.map((part, index) => (
-            <Text key={index} style={determineStyle(part)}>
-              {`${part.text}`}
-              {''}
-            </Text>
-          ))}
+        {ungroupedText.pre}
+        <Text style={discriminantStyle}>
+          {ungroupedText.discriminant}
+        </Text>
+        {ungroupedText.post}
       </Text>
     </View>
   );
