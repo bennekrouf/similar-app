@@ -66,7 +66,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
       handleChapterSelection({no: chapter.no});
 
       try {
-        // Save the selectedChapter in AsyncStorage
         await AsyncStorage.setItem('selectedChapter', chapter.no.toString());
       } catch (error) {
         console.log('Error saving selectedChapter:', error);

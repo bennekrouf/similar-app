@@ -4,7 +4,7 @@ import Config from 'react-native-config';
 
 const key = (chapterNo) => `lessons-${chapterNo}`;
 
-export async function loadLessons(chapterNo = 2) {
+export async function loadLessons(chapterNo = 59) {
   AsyncStorage.removeItem(key(chapterNo));
   try {
     let lessons: any[];
@@ -28,10 +28,6 @@ export async function loadLessons(chapterNo = 2) {
       },
     });
     lessons = await lessonsAPI.json();
-
-    lessons = lessons?.map(item => ({
-      ...item,
-    }));
     AsyncStorage.setItem(key(chapterNo), JSON.stringify(lessons));
     AsyncStorage.setItem('lessons_dates', `${new Date()}`);
     return lessons.filter(s => s);

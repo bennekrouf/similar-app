@@ -10,12 +10,10 @@ export async function checkChapter(
   try {
     // console.log('Checking : ', kalima, verse_no, chapter_no, discriminant);
     const networkState = await NetInfo.fetch();
-    // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
       throw new Error('No internet connection');
     }
     const url = `${Config.DOMAIN}/check_chapter?kalima=${kalima}&verse_no=${verse_no}&selected_chapter_no=${chapter_no}&discriminant=${discriminant}`;
-    // console.log('URL : ', url);
     const response = await fetch(url, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',

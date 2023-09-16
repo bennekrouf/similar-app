@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>165389489294-bt74r8r6jebm5ief5bhfo08kjd2bbos3.apps.googleusercontent.com</string>
+	<string>581865288762-i939qkmdb7kem0bs40f7eaf1lp0sivle.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.165389489294-bt74r8r6jebm5ief5bhfo08kjd2bbos3</string>
+	<string>com.googleusercontent.apps.581865288762-i939qkmdb7kem0bs40f7eaf1lp0sivle</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDLVQrYpFRTIY52MbE3NdyhnOCVwUPczC0</string>
+	<string>AIzaSyCBC-_D1DfbN7k-7lNfvpkaUYXleqPc21g</string>
 	<key>GCM_SENDER_ID</key>
-	<string>165389489294</string>
+	<string>581865288762</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.mayorana.tafseel</string>
 	<key>PROJECT_ID</key>
-	<string>tafseel-d044f</string>
+	<string>tafseel-7f242</string>
 	<key>STORAGE_BUCKET</key>
-	<string>tafseel-d044f.appspot.com</string>
+	<string>tafseel-7f242.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:165389489294:ios:b703e6daeaf5d277d5e5df</string>
+	<string>1:581865288762:ios:fe7f738065c08e8f253103</string>
 </dict>
 </plist>
