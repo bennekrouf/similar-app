@@ -1,8 +1,10 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useContext, useEffect, useState, useCallback} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import SourateBox from '../SourateBox';
+
+import { UserContext, authEvents } from 'rn-auth-firebase';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../../models/interfaces';
@@ -20,6 +22,7 @@ import {loadExercise} from '../../../api/loadExercisesList'; // import your API 
 
 type RootStackParamList = {
   LessonPages: undefined; // If this route does not take any parameters
+  SignIn: undefined,
   DiscriminantExercise: {
     kalima: string;
     currentChapterName: string;
@@ -35,6 +38,10 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   handleChapterSelection,
 }) => {
   const {t} = useTranslation();
+  let { user, logout } = useContext(UserContext);
+  // user = useContext(UserContext).user;
+  // console.log('After', user);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
   const navigation =
@@ -125,10 +132,9 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           />
         </View>
 
-        {/* Pass the isModalOpen state and setIsModalOpen function as props */}
         <ChapterSelectionModal
           visible={isModalOpen}
-          onClose={handleCloseModal} // Close the modal
+          onClose={handleCloseModal}
           handleLabelPress={handleLabelPress}
           panResponder={panResponder}
         />

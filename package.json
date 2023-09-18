@@ -41,7 +41,7 @@
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0",
-    "rn-auth-firebase": "^1.0.4"
+    "rn-auth-firebase": "^1.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
