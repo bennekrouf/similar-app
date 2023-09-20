@@ -80,6 +80,40 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
     }
   };
 
+  const goExercises = () => {
+    navigation.navigate('DiscriminantExercise', {
+      kalima,
+      currentChapterName: verses[0]?.sourate,
+      exercises,
+    });
+  }
+
+  const handlePress = () => {
+    user ? goExercises() : navigation.navigate('SignIn');
+  };
+
+  // useEffect(() => {
+  //   // console.log('useEffect running'); // Debug line
+
+  // if (!user) {
+  //   // console.log('Attaching listener'); // Debug line
+  //   const handleSignIn = (newUser) => {
+  //     console.log('user logged : ', newUser);
+  //     goExercises();
+  //   };
+
+  //   // console.log(`Current listener count before add: ${authEvents.listenerCount('signedIn')}`); // Debug line
+  //   authEvents.on('signedIn', handleSignIn);
+  //   // console.log(`Current listener count after add: ${authEvents.listenerCount('signedIn')}`); // Debug line
+
+  //   return () => {
+  //     // console.log('Removing listener'); // Debug line
+  //     authEvents.off('signedIn', handleSignIn);
+  //     // console.log(`Current listener count after remove: ${authEvents.listenerCount('signedIn')}`); // Debug line
+  //   };
+  // }
+  // }, [kalima]);
+
   const loadData = useCallback(async () => {
     try {
       const data = await loadExercise(kalima);
@@ -88,6 +122,22 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
       console.error(error);
     }
   }, [kalima]);
+
+  const handleLogout = () => {
+    if (logout) { // Make sure logout is defined
+      logout();
+    }
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={handleLogout}>
+          <Text style={{ color: 'red', marginRight: 10 }}>Logout</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, logout]);
 
   useEffect(() => {
     loadData();
@@ -104,15 +154,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
             </Text>
           </View>
 
-          <TouchableOpacity
-            style={styles.navigationButton}
-            onPress={() =>
-              navigation.navigate('DiscriminantExercise', {
-                kalima,
-                currentChapterName: verses[0]?.sourate,
-                exercises,
-              })
-            }>
+          <TouchableOpacity style={styles.navigationButton} onPress={handlePress}>
             <Text style={styles.navigationText}>{t('test')}</Text>
           </TouchableOpacity>
 
@@ -143,7 +185,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   );
 };
 
-export default ScrollableTab;
+export default React.memo(ScrollableTab);
 
 const styles = StyleSheet.create({
   navigationButton: {

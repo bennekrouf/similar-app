@@ -15,8 +15,9 @@
     "@expo-google-fonts/cairo": "^0.2.3",
     "@react-native-async-storage/async-storage": "^1.19.2",
     "@react-native-community/netinfo": "^9.3.10",
-    "@react-native-firebase/app": "^18.3.0",
-    "@react-native-firebase/firestore": "^18.3.0",
+    "@react-native-firebase/app": "^18.4.0",
+    "@react-native-firebase/auth": "^18.4.0",
+    "@react-native-firebase/firestore": "^18.4.0",
     "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
@@ -41,7 +42,8 @@
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0",
-    "rn-auth-firebase": "^1.0.6"
+    "rn-auth-firebase": "latest",
+    "rn-write-firestone": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

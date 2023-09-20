@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {loadChapters} from '../api/loadChapters';
+// import {loadChapters} from '../api/loadChapters';
 import {loadLessons} from '../api/loadLessons';
 
 const useFetchLessons = (selectedChapter) => {

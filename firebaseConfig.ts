@@ -1,4 +1,4 @@
-const conf = {
+export const firebaseConf = {
   apiKey: 'AIzaSyDdQFw-79rwKy1nuyU0ZqTshaQr1e3w04U',
   authDomain: 'tafseel-7f242.firebaseapp.com',
   projectId: 'tafseel-7f242',
@@ -8,5 +8,3 @@ const conf = {
   databaseURL: '',
   measurementId: 'G-DPK57K96HF',
 };
-
-export {conf};

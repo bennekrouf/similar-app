@@ -10,30 +10,32 @@ import useFetchLessons from '../../hooks/useFetchLessons';
 interface ScrollableSwipablePageProps {}
 
 const LessonPages: React.FC<ScrollableSwipablePageProps> = ({}) => {
+
+  useEffect(() => {
+    console.log("LessonPages component mounted");
+  
+    return () => {
+      console.log("LessonPages component will unmount");
+    };
+  }, []);
+
   const handleChapterSelection = async (chapter: any) => {
     setSelectedChapter(chapter.no);
   };
 
   // Use the useState hook to set selectedChapter state
-  const [selectedChapter, setSelectedChapter] = useState<number | undefined>(
-    undefined,
-  );
+  const [selectedChapter, setSelectedChapter] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     // When the component mounts, retrieve the selectedChapter value from AsyncStorage
     const getSelectedChapterFromStorage = async () => {
       try {
-        const storedSelectedChapter = await AsyncStorage.getItem(
-          'selectedChapter',
-        );
+        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter',);
         if (storedSelectedChapter) {
           setSelectedChapter(parseInt(storedSelectedChapter));
         }
       } catch (error) {
-        console.log(
-          'Error retrieving selectedChapter from AsyncStorage:',
-          error,
-        );
+        console.log('Error retrieving selectedChapter from AsyncStorage:', error);
       }
     };
 
@@ -91,7 +93,7 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({}) => {
       showsPagination={true}
       horizontal={true}
       loop={false}
-      onIndexChanged={handleSwiperIndexChanged} // Add the onIndexChanged event
+      onIndexChanged={handleSwiperIndexChanged}
       index={currentIndex} // Set the initial index of the Swiper to currentIndex
     >
       {contents?.length &&
