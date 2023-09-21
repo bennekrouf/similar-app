@@ -8,7 +8,7 @@ export async function checkDiscriminant(
   discriminant: string,
 ) {
   try {
-    // console.log('Checking : ', kalima, verse_no, chapter_no, discriminant);
+    console.log('Checking : ', kalima, verse_no, chapter_no, discriminant);
     const networkState = await NetInfo.fetch();
     // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {

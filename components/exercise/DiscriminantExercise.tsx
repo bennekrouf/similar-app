@@ -35,6 +35,8 @@ const DiscriminantExercise = ({route, _}) => {
     setSelectedValue(index);
     try {
       const alternative = alternatives[index]?.verse;
+      console.log("STATEMENT : ", JSON.stringify(statement));
+      console.log("ALTERNATIVE : ", JSON.stringify(alternative));
       const result =
         exerciseType === 'B'
           ? await checkChapter(
@@ -45,8 +47,8 @@ const DiscriminantExercise = ({route, _}) => {
             )
           : await checkDiscriminant(
               kalima,
-              statement?.verse_no,
-              statement?.chapter_no,
+              statement?.verse.verse_no,
+              statement?.verse.chapter_no,
               alternative.ungrouped_text.discriminant,
             );
       setIsValid(result[0] === true ? 'right' : 'wrong');
