@@ -4,10 +4,12 @@ import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 
-import {checkDiscriminant} from '../../api/checkDiscriminant'; // import your API function
-import {checkChapter} from '../../api/checkChapter'; // import your API function
-import {radioButtonText} from './radioButtonText'; // import your API function
+import {checkDiscriminant} from '../../api/checkDiscriminant';
+import {checkChapter} from '../../api/checkChapter';
+import {radioButtonText} from './radioButtonText';
 import CustomRadioButton from './CustomRadioButton';
+
+import { Alternative, Statement } from '../../models/interfaces';
 
 const theme = {
   ...DefaultTheme,
@@ -20,8 +22,8 @@ const theme = {
 
 const DiscriminantExercise = ({route, _}) => {
   const {t} = useTranslation();
-  const [statement, setStatement] = useState(null);
-  const [alternatives, setAternatives] = useState<[]>([]); // if answers is an array of strings
+  const [statement, setStatement] = useState<Statement>(null);
+  const [alternatives, setAternatives] = useState<Alternative[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
   const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<string>('neutral');
@@ -31,7 +33,7 @@ const DiscriminantExercise = ({route, _}) => {
 
   const navigation = useNavigation();
 
-  const handleCheck = async (index: React.SetStateAction<number>) => {
+  const handleCheck = async (index: number) => {
     setSelectedValue(index);
     try {
       const alternative = alternatives[index]?.verse;
@@ -43,7 +45,7 @@ const DiscriminantExercise = ({route, _}) => {
               kalima,
               alternative.verse_no,
               alternative.chapter_no,
-              statement?.ungrouped_text.discriminant,
+              statement?.verse.ungrouped_text.discriminant,
             )
           : await checkDiscriminant(
               kalima,

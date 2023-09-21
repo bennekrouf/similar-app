@@ -1,8 +1,3 @@
-export interface UngroupedText {
-  pre: string;
-  discriminant;
-  post;
-}
 
 export interface Verse {
   chapter_no: number;
@@ -42,3 +37,27 @@ export interface Chapter {
   count: number,
   count_ayat: number,
 }
+
+export type Alternative = {
+  verse?: VerseOutput;
+};
+
+export type VerseOutput = {
+  chapter_no: number;
+  verse_no: number;
+  sourate?: string;
+  ungrouped_text?: UngroupedText;
+};
+
+export type UngroupedText = {
+  pre?: string;
+  discriminant?: string;
+  post?: string;
+};
+
+export interface Statement {
+  kalima: string;
+  verse: VerseOutput;
+  has_opposites: boolean;
+}
+

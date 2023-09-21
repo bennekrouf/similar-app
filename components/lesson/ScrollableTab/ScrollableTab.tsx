@@ -116,8 +116,9 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 
   const loadData = useCallback(async () => {
     try {
-      const data = await loadExercise(kalima);
-      setExercises(data);
+      const exos = await loadExercise(kalima);
+      console.log(`NUMBER OF EXERCISES for ${kalima}: ${exos?.length}`);
+      setExercises(exos);
     } catch (error) {
       console.error(error);
     }
@@ -155,7 +156,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           </View>
 
           <TouchableOpacity style={styles.navigationButton} onPress={handlePress}>
-            <Text style={styles.navigationText}>{t('test')}</Text>
+            <Text style={styles.navigationText}>{t('test')}({exercises.length})</Text>
           </TouchableOpacity>
 
             <TouchableOpacity
