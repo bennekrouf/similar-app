@@ -6479,8 +6479,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-"rn-auth-firebase@file:../rn-auth-firebase":
-  version "1.0.8"
+rn-auth-firebase@latest:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/rn-auth-firebase/-/rn-auth-firebase-1.0.9.tgz#25c2712de96498e17a801a099039adbde12d3854"
+  integrity sha512-NhowXrbR6sypqGWiUMqAgQH6M6TOuVyyBlGxQIXNE7pLvWeSVX5ju5Jo2T53Pfv7uVZMuBb/S4nQAKAKS6dP0g==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-firebase/auth" "^18.4.0"

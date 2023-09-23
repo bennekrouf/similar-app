@@ -9,7 +9,7 @@ import {checkChapter} from '../../api/checkChapter';
 import {radioButtonText} from './radioButtonText';
 import CustomRadioButton from './CustomRadioButton';
 
-import { Alternative, Statement } from '../../models/interfaces';
+import { Alternative, Statement } from '../../../models/interfaces';
 
 const theme = {
   ...DefaultTheme,
@@ -40,7 +40,7 @@ const DiscriminantExercise = ({route, _}) => {
       console.log("STATEMENT : ", JSON.stringify(statement));
       console.log("ALTERNATIVE : ", JSON.stringify(alternative));
       const result =
-        exerciseType === 'B'
+        exerciseType === 'FindSourate'
           ? await checkChapter(
               kalima,
               alternative.verse_no,
@@ -69,9 +69,9 @@ const DiscriminantExercise = ({route, _}) => {
     }
   };
 
-  const loadData = useCallback(() => {
+  const updateExerciseContent = useCallback(() => {
     try {
-      console.log('Inside loadData : ', exercises);
+      console.log('Inside updateExerciseContent : ', exercises);
       if (exercises && exercises[exerciseIndex]) {
         const data = exercises[exerciseIndex];
         // console.log('Inside setStatement : ', data[0]);
@@ -98,8 +98,8 @@ const DiscriminantExercise = ({route, _}) => {
   }, [exerciseIndex, exercises, currentChapterName, navigation]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData, kalima]);
+    updateExerciseContent();
+  }, [updateExerciseContent, kalima]);
 
   return (
     <Provider theme={theme}>
@@ -107,7 +107,7 @@ const DiscriminantExercise = ({route, _}) => {
         <View style={styles.container}>
           <Card style={styles.card}>
             <Card.Content>
-              {exerciseType !== 'B' && (
+              {exerciseType !== 'FindSourate' && (
                 <View style={styles.headerLine}>
                   <Text style={styles.leftText}>
                     {statement
@@ -123,7 +123,7 @@ const DiscriminantExercise = ({route, _}) => {
               <Text style={styles.rightAlignedText}>
                 {statement
                   ? `${statement.verse?.ungrouped_text?.pre} ${
-                      exerciseType === 'A'
+                      exerciseType === 'FindDiscriminant'
                         ? '...'
                         : statement.verse?.ungrouped_text?.discriminant
                     } ${statement.verse?.ungrouped_text?.post}`
@@ -157,7 +157,7 @@ const DiscriminantExercise = ({route, _}) => {
               onPress={() => {
                 // Increment the exercise index and load the next one
                 setExerciseIndex(prevIndex => prevIndex + 1);
-                loadData();
+                updateExerciseContent();
               }}
               disabled={isValid !== 'right'}>
               {t('continue')}

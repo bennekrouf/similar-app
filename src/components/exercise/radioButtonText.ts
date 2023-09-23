@@ -7,14 +7,14 @@ export const radioButtonText = (
 ) => {
   alternative = alternative.verse;
   switch (type) {
-    case 'A':
-      return `${alternative.ungrouped_text?.discriminant}`;
-    case 'B':
+    case 'FindDiscriminant':
+      return `${alternative.ungrouped_text?.discriminant} ${
+        isOk === 'wrong' ? '(' + alternative.sourate + ')' : ''
+      }`;
+    case 'FindSourate':
       const sourate = `${alternative.sourate} [${alternative.verse_no}]`;
       if (alternative.sourate && selectedValue === index) {
-        return `${sourate} ${
-          isOk === 'wrong' ? '(' + alternative.sourate + ')' : ''
-        }`;
+        return `${sourate}`;
       }
       return `${sourate}`;
     default:
@@ -24,7 +24,7 @@ export const radioButtonText = (
   const sourate = `${alternative.sourate} [${alternative.verse_no}]`;
   if (alternative.sourate && selectedValue === index) {
     return `${sourate} ${
-      type === 'A' && isOk === 'wrong'
+      type === 'FindDiscriminant' && isOk === 'wrong'
         ? '(' + alternative.sourate + ')'
         : ''
     }`;

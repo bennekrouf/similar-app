@@ -10,6 +10,7 @@ const useFetchLessons = (selectedChapter) => {
     const fetchData = async () => {
       try {
         const lessons = await loadLessons(selectedChapter);
+        console.log(`Chapter :  ${selectedChapter} | lessons : ${JSON.stringify(lessons)} `);
 
         setContents(() => {
           return lessons?.length && lessons?.map(lesson => {

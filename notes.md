@@ -1,4 +1,4 @@
-A Case :
+FindDiscriminant Case :
 
 [
         [
@@ -15,11 +15,11 @@ A Case :
                 "ayah": null
             }
         ],
-        "A"
+        "FindDiscriminant"
     ],
 
 
-B Case :
+FindSourate Case :
 
     [
         [
@@ -36,5 +36,5 @@ B Case :
                 "ayah": 94
             }
         ],
-        "B"
+        "FindSourate"
     ],

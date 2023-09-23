@@ -7,7 +7,7 @@ import SourateBox from '../SourateBox';
 import { UserContext, authEvents } from 'rn-auth-firebase';
 
 import LessonContent from './LessonContent';
-import {ScrollableTabProps} from '../../../models/interfaces';
+import {ScrollableTabProps} from '../../../../models/interfaces';
 import ChapterSelectionModal from '../ChapterSelectionModal'; // Import the TypeScript declaration file
 import {
   View,

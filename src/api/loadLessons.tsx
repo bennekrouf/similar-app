@@ -5,6 +5,7 @@ import Config from 'react-native-config';
 const key = (chapterNo) => `lessons-${chapterNo}`;
 
 export async function loadLessons(chapterNo = 59) {
+  console.log('IN LOAD LESSONS');
   AsyncStorage.removeItem(key(chapterNo));
   try {
     let lessons: any[];

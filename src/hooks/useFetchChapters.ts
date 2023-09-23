@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {loadChapters} from '../api/loadChapters';
-import { Chapter } from '../models/interfaces';
+import { Chapter } from '../../models/interfaces';
 
 const useFetchChapters = (): { chapters: Chapter[]; isLoading: boolean } => {
   const [chapters, setChapters] = useState<Chapter[]>([]);

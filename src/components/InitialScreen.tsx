@@ -4,7 +4,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
 import { signInFirebase } from 'rn-write-firestone';
 
-import { firebaseConf } from '../firebaseConfig';
+import { firebaseConf } from '../../firebaseConfig';
 import { RootStackParamList } from './NavigationTypes';
 
 const InitialScreen = () => {
