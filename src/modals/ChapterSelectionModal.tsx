@@ -9,8 +9,8 @@ import {
   PanResponderInstance,
   // GestureResponderEvent,
 } from 'react-native';
-import SourateBox from './SourateBox';
-import useFetchChapters from '../../hooks/useFetchChapters';
+import SourateBox from '../components/SourateBox';
+import useFetchChapters from '../hooks/useFetchChapters';
 
 interface CustomModalProps {
   visible: boolean;

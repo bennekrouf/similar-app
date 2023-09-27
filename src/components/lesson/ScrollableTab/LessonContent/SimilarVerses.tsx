@@ -4,7 +4,7 @@ import {Text, StyleSheet} from 'react-native';
 import {VerseListProps} from '../../../../models/interfaces';
 import {View} from 'react-native';
 import FormattedVerse from '../../FormattedVerse';
-import SourateBox from '../../SourateBox';
+import SourateBox from '../../../SourateBox';
 
 const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => {
 

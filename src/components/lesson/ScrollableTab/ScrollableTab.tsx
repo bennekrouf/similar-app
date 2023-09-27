@@ -2,14 +2,14 @@ import React, {useContext, useEffect, useState, useCallback} from 'react';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import SourateBox from '../SourateBox';
-import OptionsMenuModal from './OptionsMenuModal';
+import SourateBox from '../../SourateBox';
+import OptionsMenuModal from '../../../modals/OptionsMenuModal';
 
 import { useLogout, UserContext, UserContextType } from 'rn-auth-firebase';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../../models/interfaces';
-import ChapterSelectionModal from '../ChapterSelectionModal'; // Import the TypeScript declaration file
+import ChapterSelectionModal from '../../../modals/ChapterSelectionModal'; // Import the TypeScript declaration file
 import {View, Text, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loadExercise} from '../../../api/loadExercisesList'; // import your API function

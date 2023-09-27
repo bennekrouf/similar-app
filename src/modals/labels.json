@@ -1,0 +1,22 @@
+{
+  "chapters": [
+    {"name": "البقرة", "number": 2},
+    {"name": "آل عمران", "number": 3},
+    {"name": "الكهف", "number": 18},
+    {"name": "مريم", "number": 19},
+    {"name": "يس", "number": 36}
+  ],
+  "otherDivisions": [
+    {"name": "حزب سبح", "start": 87, "end": 114},
+    {"name": "جزء عمّ", "start": 78, "end": 114},
+    {"name": "جزء تبارك", "start": 67, "end": 114},
+    {"name": "المفصّل", "start": 50, "end": 114}
+  ],
+  "quarters": [
+    {"name": "الربع الأول", "start": 1, "end": 6},
+    {"name": "الربع الثاني", "start": 7, "end": 16},
+    {"name": "الربع الثالث", "start": 17, "end": 39},
+    {"name": "الربع الرابع", "start": 40, "end": 114},
+    {"name": "حافظ"}
+  ]
+}

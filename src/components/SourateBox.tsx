@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import useFetchChapters from '../../hooks/useFetchChapters';
+import useFetchChapters from '../hooks/useFetchChapters';
 
 const sourateColor = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.background_color
 const sourateName = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.sourate

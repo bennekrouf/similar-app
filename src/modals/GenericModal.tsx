@@ -1,13 +1,8 @@
 import React from 'react';
 import {View, ScrollView, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {OptionsMenuModalProps} from './OptionsMenuModalProps';
 
-interface OptionsMenuModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onLogout: () => void;
-}
-
-const OptionsMenuModal: React.FC<OptionsMenuModalProps> = ({ visible, onClose, onLogout }) => {
+const GenericModal: React.FC<OptionsMenuModalProps> = ({ visible, onClose, onLogout, children, showFooter }) => {
   return (
     <Modal
       visible={visible}
@@ -27,12 +22,15 @@ const OptionsMenuModal: React.FC<OptionsMenuModalProps> = ({ visible, onClose, o
           
           {/* Modal Content */}
           <ScrollView style={modalStyles.content}>
+            {children}
           </ScrollView>
           
           {/* Footer with Logout */}
-          <TouchableOpacity style={modalStyles.logoutButton} onPress={onLogout}>
-            <Text style={{color: 'red', fontSize: 16}}>Logout</Text>
-          </TouchableOpacity>
+          {showFooter && (
+            <TouchableOpacity style={modalStyles.logoutButton} onPress={onLogout}>
+              <Text style={{color: 'red', fontSize: 16}}>Logout</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </Modal>
@@ -67,13 +65,13 @@ const modalStyles = StyleSheet.create({
   closeButton: {
     position: 'absolute',
     right: 15,
-    top: 10,
-    width: 30, // Define a fixed width
-    height: 30, // Define a fixed height
-    backgroundColor: 'rgba(200,200,200,0.3)', // Light gray background color with a little transparency
-    borderRadius: 15, // Half of the width and height to make it round
-    justifyContent: 'center', // Center the "X" vertically
-    alignItems: 'center', // Center the "X" horizontally
+    top: 7,
+    width: 30,
+    height: 30,
+    backgroundColor: 'rgba(200,200,200,0.3)',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   closeButtonText: {
     color: 'black',
@@ -84,7 +82,9 @@ const modalStyles = StyleSheet.create({
     padding: 10,
   },
   logoutButton: {
-    padding: 30,
+    padding: 15,
+    paddingLeft: 30,
+    paddingBottom: 20,
     borderTopWidth: 1,
     borderColor: '#e0e0e0',
   },
@@ -95,4 +95,4 @@ const modalStyles = StyleSheet.create({
   },
 });
 
-export default OptionsMenuModal;
+export default GenericModal;
