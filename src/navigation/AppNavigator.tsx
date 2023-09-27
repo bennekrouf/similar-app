@@ -22,7 +22,6 @@ type RootStackParamList = {
 // Create the application stack
 const Stack = createStackNavigator<RootStackParamList>();
 
-
 export const MainApp: React.FC = () => {
   return (
     <UserProvider>
