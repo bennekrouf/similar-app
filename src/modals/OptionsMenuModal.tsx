@@ -5,47 +5,51 @@ import GenericModal from './GenericModal';
 import {OptionsMenuModalProps} from './OptionsMenuModalProps';
 
 import labels from './labels.json';
+import {handleLabelSelect} from './handleLabelSelect';
 
 const OptionsMenuModal: React.FC<OptionsMenuModalProps> = ({ visible, onClose, onLogout }) => {
   const [selectedLabels, setSelectedLabels] = useState<{ [key: string]: boolean }>({});
-
-  const handleLabelPress = (label: string) => {
-    console.log(`${label} selected`);
-    setSelectedLabels((prevLabels) => {
-      return { ...prevLabels, [label]: !prevLabels[label] };
-    });
-  };
-
-  const renderLabel = (label: string) => {
-    const isSelected = selectedLabels[label];
-
-    return (
-      <TouchableOpacity
-        key={label}
-        style={[styles.entry, isSelected ? styles.selectedLabel : null]}
-        onPress={() => handleLabelPress(label)}
-      >
-        <Text style={styles.labelText}>{label}</Text>
-      </TouchableOpacity>
-    );
-  };
   
   return (
     <GenericModal visible={visible} onClose={onClose} onLogout={onLogout} showFooter={true}>
       {/* Rendering the Other Divisions */}
       <View style={styles.section}>
-        {labels?.otherDivisions.map((division, index) => renderLabel(division.name))}
+      {labels?.otherDivisions.map((chapter, index) => (
+          <TouchableOpacity 
+            key={index} 
+            style={[styles.entry, selectedLabels[chapter.name] ? styles.selectedLabel : {}]}
+            onPress={() => handleLabelSelect(selectedLabels, setSelectedLabels, chapter.name)}
+            >
+            <Text style={styles.labelText}>{chapter.name}</Text>
+        </TouchableOpacity>
+        ))}
       </View>
 
       {/* Rendering the Chapters */}
       <View style={styles.section}>
-        {labels?.chapters.map((chapter, index) => renderLabel(chapter.name))}
+      {labels?.chapters.map((chapter, index) => (
+        <TouchableOpacity 
+          key={index} 
+          style={[styles.entry, selectedLabels[chapter.name] ? styles.selectedLabel : {}]} 
+          onPress={() => handleLabelSelect(selectedLabels, setSelectedLabels, chapter.name)}
+        >
+          <Text style={styles.labelText}>{chapter.name}</Text>
+        </TouchableOpacity>
+      ))}
       </View>
       {/* <View style={styles.separator} /> */}
 
       {/* Rendering the Quarters */}
       <View style={styles.section}>
-        {labels?.quarters.map((quarter, index) => renderLabel(quarter.name))}
+      {labels?.quarters.map((quarter, index) => (
+        <TouchableOpacity 
+          key={index} 
+          style={[styles.entry, selectedLabels[quarter.name] ? styles.selectedLabel : {}]} 
+          onPress={() => handleLabelSelect(selectedLabels, setSelectedLabels, quarter.name, quarter.start, quarter.end)}
+        >
+          <Text style={styles.labelText}>{quarter.name}</Text>
+        </TouchableOpacity>
+      ))}
       </View>
     </GenericModal>
   );
@@ -80,6 +84,9 @@ const styles = StyleSheet.create({
   selectedLabel: {
     backgroundColor: '#b0b0b0',
     borderColor: '#8a8a8a',
+    color: 'white'
+  },
+  selectedLabelTextColor: {
     color: 'white'
   }
 });
