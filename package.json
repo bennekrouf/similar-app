@@ -32,6 +32,7 @@
     "react-i18next": "^13.0.3",
     "react-native": "0.72.3",
     "react-native-config": "^1.5.1",
+    "react-native-device-info": "^10.11.0",
     "react-native-gesture-handler": "^2.12.1",
     "react-native-hyperlink": "^0.0.22",
     "react-native-localize": "^3.0.2",
@@ -42,8 +43,8 @@
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0",
-    "rn-auth-firebase": "latest",
-    "rn-write-firestone": "latest"
+    "rn-auth-firebase": "^1.0.24",
+    "rn-write-firestone": "^1.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

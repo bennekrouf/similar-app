@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 
-import './locales/i18n';
+import './assets/locales/i18n';
 import 'intl';
 import 'intl/locale-data/jsonp/ar';
 import 'intl/locale-data/jsonp/en';

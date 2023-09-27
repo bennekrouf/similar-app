@@ -10,15 +10,14 @@ import { RootStackParamList } from './NavigationTypes';
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const app = 'tafseel';
 
   useEffect(() => {
-      navigation.navigate(user ? 'LessonPages':'SignIn');
+      navigation.navigate(user ? 'LessonPages' : 'SignIn');
   }, [user]);
 
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
-      const newUser = await signInFirebase(app, firebaseConf, googleCredentials);
+      const newUser = await signInFirebase(firebaseConf, googleCredentials);
       setUser(newUser);
     };
     authEvents.on('signedIn', onSignedIn);

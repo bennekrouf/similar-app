@@ -3,20 +3,14 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import SourateBox from '../SourateBox';
+import OptionsMenuModal from './OptionsMenuModal';
 
-import { UserContext, authEvents } from 'rn-auth-firebase';
+import { useLogout, UserContext, UserContextType } from 'rn-auth-firebase';
 
 import LessonContent from './LessonContent';
-import {ScrollableTabProps} from '../../../../models/interfaces';
+import {ScrollableTabProps} from '../../../models/interfaces';
 import ChapterSelectionModal from '../ChapterSelectionModal'; // Import the TypeScript declaration file
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  PanResponder,
-  PanResponderInstance,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loadExercise} from '../../../api/loadExercisesList'; // import your API function
 
@@ -38,9 +32,18 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   handleChapterSelection,
 }) => {
   const {t} = useTranslation();
-  let { user, logout } = useContext(UserContext);
-  // user = useContext(UserContext).user;
-  // console.log('After', user);
+  const { authEvents } = useContext(UserContext) as UserContextType;
+  const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
+  const { performLogout } = useLogout();
+
+  const handleOpenOptionsMenu = () => {
+    setIsOptionsMenuOpen(true);
+  };
+  
+  const handleCloseOptionsMenu = () => {
+    console.log('CALLING MODAL');
+    setIsOptionsMenuOpen(false);
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -88,10 +91,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
     });
   }
 
-  const handlePress = () => {
-    user ? goExercises() : navigation.navigate('SignIn');
-  };
-
   // useEffect(() => {
   //   // console.log('useEffect running'); // Debug line
 
@@ -125,37 +124,47 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   }, [kalima]);
 
   const handleLogout = () => {
-    if (logout) { // Make sure logout is defined
-      logout();
+    if (performLogout) {
+      console.log('CALLING hand');
+      performLogout();
+      handleCloseOptionsMenu();
     }
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={handleLogout}>
-          <Text style={{ color: 'red', marginRight: 10 }}>Logout</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation, logout]);
+    const onSignedOut = async () => {
+      navigation.navigate('SignIn');
+    };
+    authEvents.on('signedOut', onSignedOut);
+
+    return () => {
+      authEvents.off('signedOut', onSignedOut);
+    };
+  }, []);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
   // console.log('verses : ', verses[0]);
   return (
+    <>
     <ScrollableTabView>
       <View style={styles.view}>
         {/* Left section of the header */}
         <View style={styles.headerContainer}>
+
+        <TouchableOpacity onPress={handleOpenOptionsMenu}>
+          <Text style={styles.optionsMenuText}>...</Text>
+        </TouchableOpacity>
+
+
           <View>
             <Text style={styles.leftHeaderText}>
               {kalima} ({verses.length + similars.length + opposites.length})
             </Text>
           </View>
 
-          <TouchableOpacity style={styles.navigationButton} onPress={handlePress}>
+          <TouchableOpacity style={styles.navigationButton} onPress={goExercises}>
             <Text style={styles.navigationText}>{t('test')}({exercises.length})</Text>
           </TouchableOpacity>
 
@@ -182,7 +191,14 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           panResponder={panResponder}
         />
       </View>
-    </ScrollableTabView>
+      </ScrollableTabView>
+
+      <OptionsMenuModal 
+        visible={isOptionsMenuOpen} 
+        onClose={handleCloseOptionsMenu} 
+        onLogout={handleLogout}
+        />
+        </>
   );
 };
 
@@ -245,4 +261,9 @@ const styles = StyleSheet.create({
   verseList: {
     // paddingTop: 40,
   },
+  optionsMenuText: {
+    fontSize: 24,
+    padding: 5,
+    // Add more styles if needed
+  }
 });

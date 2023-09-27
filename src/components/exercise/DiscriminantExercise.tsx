@@ -1,15 +1,17 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
+import { UserContext, UserContextType } from 'rn-auth-firebase';
+import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestone';
 
 import {checkDiscriminant} from '../../api/checkDiscriminant';
 import {checkChapter} from '../../api/checkChapter';
 import {radioButtonText} from './radioButtonText';
 import CustomRadioButton from './CustomRadioButton';
 
-import { Alternative, Statement } from '../../../models/interfaces';
+import { Alternative, Statement } from '../../models/interfaces';
 
 const theme = {
   ...DefaultTheme,
@@ -21,6 +23,8 @@ const theme = {
 };
 
 const DiscriminantExercise = ({route, _}) => {
+  const { user, setUser } = useContext(UserContext) as UserContextType;
+
   const {t} = useTranslation();
   const [statement, setStatement] = useState<Statement>(null);
   const [alternatives, setAternatives] = useState<Alternative[]>([]); // if answers is an array of strings
@@ -34,36 +38,19 @@ const DiscriminantExercise = ({route, _}) => {
   const navigation = useNavigation();
 
   const handleCheck = async (index: number) => {
+    console.log(`${JSON.stringify(user.email)}`);
     setSelectedValue(index);
     try {
       const alternative = alternatives[index]?.verse;
-      console.log("STATEMENT : ", JSON.stringify(statement));
-      console.log("ALTERNATIVE : ", JSON.stringify(alternative));
-      const result =
-        exerciseType === 'FindSourate'
-          ? await checkChapter(
-              kalima,
-              alternative.verse_no,
-              alternative.chapter_no,
-              statement?.verse.ungrouped_text.discriminant,
-            )
-          : await checkDiscriminant(
-              kalima,
-              statement?.verse.verse_no,
-              statement?.verse.chapter_no,
-              alternative.ungrouped_text.discriminant,
-            );
+      const result = exerciseType === 'FindSourate'
+          ? await checkChapter(kalima, alternative.verse_no, alternative.chapter_no, statement?.verse.ungrouped_text.discriminant)
+          : await checkDiscriminant(kalima, statement?.verse.verse_no, statement?.verse.chapter_no, alternative.ungrouped_text.discriminant);
       setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
-      // console.log(
-      //   alternative.chapter_no,
-      //   alternative.verse_no,
-      //   '   discriminant :',
-      //   statement?.ungrouped_text.discriminant,
-      //   'result :',
-      //   result[0],
-      // );
-      // console.log(`handleCheck RESULT ${result}`); // Do something with the result here
+      await writeToAsyncStorage({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)});
+      await writeToFirebase({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)});
+      const user = await getUser();
+      setUser({...user});
     } catch (error) {
       console.error(error);
     }
@@ -71,12 +58,8 @@ const DiscriminantExercise = ({route, _}) => {
 
   const updateExerciseContent = useCallback(() => {
     try {
-      console.log('Inside updateExerciseContent : ', exercises);
       if (exercises && exercises[exerciseIndex]) {
         const data = exercises[exerciseIndex];
-        // console.log('Inside setStatement : ', data[0]);
-        // console.log('Inside setAternatives : ', data[1]);
-        // console.log('Inside type : ', data[2]);
 
         setStatement(data.statement);
         setAternatives(data.alternatives);

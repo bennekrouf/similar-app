@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SignInScreen, UserProvider } from 'rn-auth-firebase';
+import { SignInScreen, UserProvider,  } from 'rn-auth-firebase';
 
 import LessonPages from '../components/lesson/LessonPages';
 import DiscriminantExercise from '../components/exercise/DiscriminantExercise';
@@ -50,7 +50,7 @@ export const MainApp: React.FC = () => {
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
-              options={{title: "Sign In"}}
+              options={{title: "Sign In", headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
