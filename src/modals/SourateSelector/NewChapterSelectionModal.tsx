@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text, PanResponderInstance} from 'react-native';
 
-import GenericModal from './GenericModal';
-import useFetchChapters from '../hooks/useFetchChapters';
-
+import GenericModal from '../GenericModal';
+import useFetchChapters from '../../hooks/useFetchChapters';
 import SouratesSelector from './SouratesSelector';
 
 interface CustomModalProps {

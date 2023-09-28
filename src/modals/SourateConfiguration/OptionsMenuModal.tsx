@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import GenericModal from './GenericModal';
+import GenericModal from '../GenericModal';
 import {OptionsMenuModalProps} from './OptionsMenuModalProps';
 
 import labels from './labels.json';

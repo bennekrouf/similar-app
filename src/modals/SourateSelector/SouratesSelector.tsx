@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import SourateBox from '../components/SourateBox';
+import SourateBox from '../../components/SourateBox';
 
 interface SouratesSelectorProps {
   handleLabelPress: (chapter: {no: number | undefined}) => Promise<void>;
