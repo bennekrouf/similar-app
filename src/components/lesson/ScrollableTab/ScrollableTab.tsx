@@ -9,7 +9,7 @@ import { useLogout, UserContext, UserContextType } from 'rn-auth-firebase';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../../models/interfaces';
-import ChapterSelectionModal from '../../../modals/ChapterSelectionModal'; // Import the TypeScript declaration file
+import NewChapterSelectionModal from '../../../modals/NewChapterSelectionModal';
 import {View, Text, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loadExercise} from '../../../api/loadExercisesList'; // import your API function
@@ -184,7 +184,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           />
         </View>
 
-        <ChapterSelectionModal
+        <NewChapterSelectionModal
           visible={isModalOpen}
           onClose={handleCloseModal}
           handleLabelPress={handleLabelPress}

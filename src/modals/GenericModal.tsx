@@ -79,6 +79,7 @@ const modalStyles = StyleSheet.create({
   },
   content: {
     minHeight: 600,
+    maxHeight: 600,
     padding: 10,
   },
   logoutButton: {
