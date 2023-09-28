@@ -39,9 +39,9 @@ const handleDivisionSelection = (selectedLabels, setSelectedLabels, divisionName
     const updatedSelection = { ...selectedLabels };
     processDivisionRelatedLabels(division, isDivisionSelected, updateLabelStatus);
     setSelectedLabels(updatedSelection);
-  };
+};
 
-  const processDivisionRelatedLabels = (division, isDivisionSelected, updateLabelStatus) => {
+const processDivisionRelatedLabels = (division, isDivisionSelected, updateLabelStatus) => {
     // Update status for division
     updateLabelStatus(division.name, !isDivisionSelected);
   
@@ -50,14 +50,12 @@ const handleDivisionSelection = (selectedLabels, setSelectedLabels, divisionName
       updateLabelStatus(chapter.name, !isDivisionSelected);
     });
   
-    // Update status for overlapping divisions
+    // Update status for contained divisions
     labels.otherDivisions.filter(divisionItem => 
-      isOverlapping(divisionItem.start, divisionItem.end, division.start, division.end)).forEach(divisionItem => {
+      isContained(divisionItem.start, divisionItem.end, division.start, division.end)).forEach(divisionItem => {
       updateLabelStatus(divisionItem.name, !isDivisionSelected);
     });
   };
-  
-  
 
 const toggleLabelSelection = (setSelectedLabels, labelName: string) => {
   setSelectedLabels(prev => ({
@@ -67,9 +65,13 @@ const toggleLabelSelection = (setSelectedLabels, labelName: string) => {
 };
 
 const isQuarterOrDivision = (labelName: string) => {
-  return labels.quarters.some(quarter => quarter.name === labelName) || labels.otherDivisions.some(division => division.name === labelName);
+    return labels.quarters.some(quarter => quarter.name === labelName) || labels.otherDivisions.some(division => division.name === labelName);
 };
 
 const isOverlapping = (start1, end1, start2, end2) => {
     return start1 <= end2 && end1 >= start2;
-  };
+};
+
+const isContained = (innerStart, innerEnd, outerStart, outerEnd) => {
+    return innerStart >= outerStart && innerEnd <= outerEnd;
+};
