@@ -44,7 +44,7 @@
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0",
     "rn-auth-firebase": "^1.0.24",
-    "rn-write-firestone": "^1.0.14"
+    "rn-write-firestone": "^1.0.21"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

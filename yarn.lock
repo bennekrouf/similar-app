@@ -6522,10 +6522,10 @@ rn-auth-firebase@^1.0.24:
     "@types/react" "^18.2.22"
     events "^3.3.0"
 
-rn-write-firestone@^1.0.14:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/rn-write-firestone/-/rn-write-firestone-1.0.14.tgz#7e44552d2cb5f210280225ff8ba493ee62fef80e"
-  integrity sha512-H+whFQDKZgSQ1nWM57OBzu+O0WSdq4vKKymIntUlls8lsuLp8fTlTGbsuVqsX2sQD+cfqxmnSua8T6EcKT0Mow==
+rn-write-firestone@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/rn-write-firestone/-/rn-write-firestone-1.0.21.tgz#7e171a95cf632d81eccac27bb1e00e21b8cc5079"
+  integrity sha512-osaCvbHNruVO4sL6b+narUwNHC2hSbMYRCTb3ZrTXtfEUVM6NyHUrazREqHqx492jQWQ7cVIghk7EikUVhQrCg==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"

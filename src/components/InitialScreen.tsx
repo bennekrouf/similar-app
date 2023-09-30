@@ -17,8 +17,15 @@ const InitialScreen = () => {
 
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
-      const newUser = await signInFirebase(firebaseConf, googleCredentials);
-      setUser(newUser);
+      // console.log(`BEFORE signInFirebase with credentials: ${JSON.stringify(googleCredentials)}`);
+      try {
+        const newUser = await signInFirebase(firebaseConf, googleCredentials);
+        console.log(`${JSON.stringify(newUser)}`);
+        setUser(newUser);
+      } catch (error) {
+        console.log('OH ERROR in firebase signin', error);
+        return error;   
+      }
     };
     authEvents.on('signedIn', onSignedIn);
 

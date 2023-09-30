@@ -1,21 +1,22 @@
 import React, {useContext, useEffect, useState, useCallback} from 'react';
+import {View, Text, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import SourateBox from '../../SourateBox';
-import OptionsMenuModal from '../../../modals/SourateConfiguration/OptionsMenuModal';
 
 import { useLogout, UserContext, UserContextType } from 'rn-auth-firebase';
 
+import SourateBox from '../../SourateBox';
+import OptionsMenuModal from '../../../modals/SourateConfiguration/OptionsMenuModal';
 import LessonContent from './LessonContent';
-import {ScrollableTabProps} from '../../../models/interfaces';
 import NewChapterSelectionModal from '../../../modals/SourateSelector/NewChapterSelectionModal';
-import {View, Text, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {loadExercise} from '../../../api/loadExercisesList'; // import your API function
+import {ScrollableTabProps} from '../../../models/interfaces';
+import {loadExercise} from '../../../api/loadExercisesList';
+import { flushAllLessonKeys } from '../../../api/flushAllLessonKeys';
 
 type RootStackParamList = {
-  LessonPages: undefined; // If this route does not take any parameters
+  LessonPages: undefined;
   SignIn: undefined,
   DiscriminantExercise: {
     kalima: string;
@@ -41,7 +42,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   };
   
   const handleCloseOptionsMenu = () => {
-    console.log('CALLING MODAL');
     setIsOptionsMenuOpen(false);
   };
 
@@ -91,32 +91,10 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
     });
   }
 
-  // useEffect(() => {
-  //   // console.log('useEffect running'); // Debug line
-
-  // if (!user) {
-  //   // console.log('Attaching listener'); // Debug line
-  //   const handleSignIn = (newUser) => {
-  //     console.log('user logged : ', newUser);
-  //     goExercises();
-  //   };
-
-  //   // console.log(`Current listener count before add: ${authEvents.listenerCount('signedIn')}`); // Debug line
-  //   authEvents.on('signedIn', handleSignIn);
-  //   // console.log(`Current listener count after add: ${authEvents.listenerCount('signedIn')}`); // Debug line
-
-  //   return () => {
-  //     // console.log('Removing listener'); // Debug line
-  //     authEvents.off('signedIn', handleSignIn);
-  //     // console.log(`Current listener count after remove: ${authEvents.listenerCount('signedIn')}`); // Debug line
-  //   };
-  // }
-  // }, [kalima]);
-
   const loadData = useCallback(async () => {
     try {
       const exos = await loadExercise(kalima);
-      console.log(`NUMBER OF EXERCISES for ${kalima}: ${exos?.length}`);
+      // console.log(`NUMBER OF EXERCISES for ${kalima}: ${exos?.length}`);
       setExercises(exos);
     } catch (error) {
       console.error(error);
@@ -125,7 +103,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 
   const handleLogout = () => {
     if (performLogout) {
-      console.log('CALLING hand');
       performLogout();
       handleCloseOptionsMenu();
     }
@@ -133,6 +110,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 
   useEffect(() => {
     const onSignedOut = async () => {
+      await flushAllLessonKeys();
       navigation.navigate('SignIn');
     };
     authEvents.on('signedOut', onSignedOut);

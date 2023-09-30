@@ -24,7 +24,7 @@ export async function loadChapters() {
 
     AsyncStorage.setItem('chapters', JSON.stringify(chapters));
     AsyncStorage.setItem('chapters_dates', `${new Date()}`);
-    console.log('config.domain1 chapters: ', chapters);
+    // console.log('config.domain1 chapters: ', chapters);
 
     return chapters.filter(c => c);
   } catch (error) {
