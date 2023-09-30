@@ -11,9 +11,9 @@ export async function loadLessons(chapterNo = 59) {
     const networkState = await NetInfo.fetch();
     const cachedData = await AsyncStorage.getItem(keyLesson(chapterNo));
     if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedData) {
-      console.log('LOADING SIMILARS FROM CACHE');
+      // console.log('LOADING SIMILARS FROM CACHE');
       if (cachedData) {
-        console.log('Getting data from cache');
+        // console.log('Getting data from cache');
         lessons = JSON.parse(cachedData);
       }
       return lessons;

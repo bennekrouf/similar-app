@@ -25,13 +25,7 @@ type RootStackParamList = {
   };
 };
 
-const ScrollableTab: React.FC<ScrollableTabProps> = ({
-  kalima,
-  verses,
-  similars,
-  opposites,
-  handleChapterSelection,
-}) => {
+const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, opposites, handleChapterSelection}) => {
   const {t} = useTranslation();
   const { authEvents } = useContext(UserContext) as UserContextType;
   const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
@@ -72,7 +66,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
     handleCloseModal();
-    if (chapter.no !== undefined) {
+    if (chapter.no) {
       handleChapterSelection({no: chapter.no});
 
       try {
@@ -91,16 +85,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
     });
   }
 
-  const loadData = useCallback(async () => {
-    try {
-      const exos = await loadExercise(kalima);
-      // console.log(`NUMBER OF EXERCISES for ${kalima}: ${exos?.length}`);
-      setExercises(exos);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [kalima]);
-
   const handleLogout = () => {
     if (performLogout) {
       performLogout();
@@ -113,17 +97,17 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
       await flushAllLessonKeys();
       navigation.navigate('SignIn');
     };
+    
     authEvents.on('signedOut', onSignedOut);
-
-    return () => {
-      authEvents.off('signedOut', onSignedOut);
-    };
+    return () => authEvents.off('signedOut', onSignedOut);
   }, []);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
-  // console.log('verses : ', verses[0]);
+    (async () => {
+      setExercises(await loadExercise(kalima).catch(console.error));
+    })();
+  }, [kalima]);
+
   return (
     <>
     <ScrollableTabView>
@@ -135,15 +119,14 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
           <Text style={styles.optionsMenuText}>...</Text>
         </TouchableOpacity>
 
-
           <View>
             <Text style={styles.leftHeaderText}>
               {kalima} ({verses.length + similars.length + opposites.length})
             </Text>
           </View>
 
-          <TouchableOpacity style={styles.navigationButton} onPress={goExercises}>
-            <Text style={styles.navigationText}>{t('test')}({exercises.length})</Text>
+          <TouchableOpacity onPress={goExercises}>
+            <Text>{t('test')}({exercises.length})</Text>
           </TouchableOpacity>
 
             <TouchableOpacity
@@ -153,7 +136,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 
         </View>
 
-        <View style={styles.verseList}>
+        <View>
           <LessonContent
             verses={verses}
             key="verseList"
@@ -183,12 +166,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 export default React.memo(ScrollableTab);
 
 const styles = StyleSheet.create({
-  navigationButton: {
-    //...add your styles here
-  },
-  navigationText: {
-    //...add your styles here
-  },
   view: {
     backgroundColor: '#fff',
     elevation: 3,
@@ -223,21 +200,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Regular',
     color: '#040101',
-    // Add additional styles as needed
-  },
-  sourateHeaderView: {
-    // backgroundColor: 'green',
-    // color: 'white',
-    // borderRadius: 15,
-    // paddingHorizontal: 10,
   },
   rightHeaderText: {
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Regular',
     color: 'white',
-  },
-  verseList: {
-    // paddingTop: 40,
   },
   optionsMenuText: {
     fontSize: 24,
