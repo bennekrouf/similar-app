@@ -10,15 +10,6 @@ import useFetchLessons from '../../hooks/useFetchLessons';
 interface ScrollableSwipablePageProps {}
 
 const LessonPages: React.FC<ScrollableSwipablePageProps> = ({}) => {
-
-  useEffect(() => {
-    console.log("LessonPages component mounted");
-  
-    return () => {
-      console.log("LessonPages component will unmount");
-    };
-  }, []);
-
   const handleChapterSelection = async (chapter: any) => {
     setSelectedChapter(chapter.no);
   };

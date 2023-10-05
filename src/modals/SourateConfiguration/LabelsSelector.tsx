@@ -1,9 +1,8 @@
-// LabelsSelector.tsx
-
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const LabelsSelector = ({ labels, selectedLabels, onLabelSelect }) => {
+  // console.log(`LabelsSelector is called with 1 ${labels} 2 ${selectedLabels} 3 ${onLabelSelect}`);
   return (
     <>
       {/* Rendering the Other Divisions */}

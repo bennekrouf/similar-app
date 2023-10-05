@@ -47,8 +47,8 @@ const DiscriminantExercise = ({route, _}) => {
           : await checkDiscriminant(kalima, statement?.verse.verse_no, statement?.verse.chapter_no, alternative.ungrouped_text.discriminant);
       setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
-      await writeToAsyncStorage({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)});
-      await writeToFirebase({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)});
+      await writeToAsyncStorage({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
+      await writeToFirebase({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
       const user = await getUser();
       setUser({...user});
     } catch (error) {
