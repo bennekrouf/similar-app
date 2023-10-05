@@ -82,9 +82,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.tafseel"
+    namespace "com.mayorana.tafseel"
     defaultConfig {
-        applicationId "com.tafseel"
+        applicationId "com.mayorana.tafseel"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

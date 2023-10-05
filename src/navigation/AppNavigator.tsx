@@ -1,5 +1,5 @@
+import React from 'react'
 import { StatusBar } from 'react-native';
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -12,7 +12,7 @@ import InitialScreen from '../components/InitialScreen';
 type RootStackParamList = {
     Initial: undefined;
     LessonPages: undefined;
-    SignIn: { firebaseConf: any; app: string };
+    SignIn: { firebaseConf: any; app: string, webClientId: string };
     DiscriminantExercise: {
       kalima: string;
       chapterName: string;
@@ -23,6 +23,9 @@ type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const MainApp: React.FC = () => {
+
+  const webClientId = '581865288762-i939qkmdb7kem0bs40f7eaf1lp0sivle.apps.googleusercontent.com';
+
   return (
     <UserProvider>
       <>
@@ -50,6 +53,7 @@ export const MainApp: React.FC = () => {
               name="SignIn"
               component={SignInScreen}
               options={{title: "Sign In", headerShown: false}}
+              initialParams={{ webClientId }}
             />
           </Stack.Navigator>
         </NavigationContainer>

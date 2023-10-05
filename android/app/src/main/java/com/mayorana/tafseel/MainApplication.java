@@ -1,4 +1,4 @@
-package com.tafseel;
+package com.mayorana.tafseel;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
