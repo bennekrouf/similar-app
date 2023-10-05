@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
-import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestone';
+import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestore';
 
 import {checkDiscriminant} from '../../api/checkDiscriminant';
 import {checkChapter} from '../../api/checkChapter';
