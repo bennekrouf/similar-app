@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
-
+import "react-native-devsettings";
 import './assets/locales/i18n';
 import 'intl';
 import 'intl/locale-data/jsonp/ar';
@@ -17,5 +17,11 @@ import 'intl-pluralrules';
 
 import { name } from './app.json';
 import { MainApp } from './src/navigation/AppNavigator';
-
-AppRegistry.registerComponent(name, () => MainApp);
+import ErrorBoundary from 'rn-logging';
+const AppRoot: React.FC = () => {
+    return (
+        <ErrorBoundary><MainApp /></ErrorBoundary>
+    );
+  };
+  
+  AppRegistry.registerComponent(name, () => AppRoot);

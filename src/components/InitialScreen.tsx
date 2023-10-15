@@ -2,10 +2,10 @@ import { useEffect, useContext } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { UserContext, UserContextType } from 'rn-auth-firebase';
-import { signInFirebase } from 'rn-write-firestone';
+import { signInFirebase } from 'rn-write-firestore';
 
 import { firebaseConf } from '../../firebaseConfig';
-import { RootStackParamList } from './NavigationTypes';
+import { RootStackParamList } from '../models/interfaces';
 
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
@@ -19,6 +19,7 @@ const InitialScreen = () => {
     const onSignedIn = async (googleCredentials) => {
       // console.log(`BEFORE signInFirebase with credentials: ${JSON.stringify(googleCredentials)}`);
       try {
+        if(!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
         const newUser = await signInFirebase(firebaseConf, googleCredentials);
         console.log(`${JSON.stringify(newUser)}`);
         setUser(newUser);

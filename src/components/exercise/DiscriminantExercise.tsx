@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
-import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestone';
+import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestore';
 
 import {checkDiscriminant} from '../../api/checkDiscriminant';
 import {checkChapter} from '../../api/checkChapter';
@@ -48,7 +48,7 @@ const DiscriminantExercise = ({route, _}) => {
       setIsValid(result[0] === true ? 'right' : 'wrong');
       setOtherSourate(result[0] ? '' : result[1]);
       await writeToAsyncStorage({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
-      await writeToFirebase({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
+      // await writeToFirebase({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
       const user = await getUser();
       setUser({...user});
     } catch (error) {

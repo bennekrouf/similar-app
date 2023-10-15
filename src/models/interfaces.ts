@@ -1,3 +1,14 @@
+export type RootStackParamList = {
+  ErrorScreen: { errorMessage: string };
+  Initial: undefined;
+  LessonPages: undefined;
+  SignIn: { firebaseConf: any; app: string };
+  DiscriminantExercise: {
+    kalima: string;
+    currentChapterName: string;
+    exercises: any;
+  };
+};
 
 export interface Verse {
   chapter_no: number;

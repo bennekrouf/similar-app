@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, ScrollView, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
-import {OptionsMenuModalProps} from './SourateConfiguration/OptionsMenuModalProps';
+import {UserPreferenceModalProps} from './SourateConfiguration/UserPreferenceModalProps';
 
-const GenericModal: React.FC<OptionsMenuModalProps> = ({ visible, onClose, onLogout, children, showFooter }) => {
+const GenericModal: React.FC<UserPreferenceModalProps> = ({ visible, onClose, onLogout, children, showFooter }) => {
   return (
     <Modal
       visible={visible}

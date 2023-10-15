@@ -1,11 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, ScrollView, TouchableOpacity} from 'react-native';
 import SourateBox from '../../components/SourateBox';
 
 interface SouratesSelectorProps {

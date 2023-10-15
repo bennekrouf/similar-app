@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 // import {loadChapters} from '../api/loadChapters';
 import {loadLessons} from '../api/loadLessons';
 
-const useFetchLessons = (selectedChapter) => {
+const  useFetchLessons = (selectedChapter) => {
   const [contents, setContents] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,12 +17,7 @@ const useFetchLessons = (selectedChapter) => {
             if (!lesson.verses?.length) {
               console.log('This similar has no verses :', lesson.kalima);
             }
-            return {
-              ...lesson,
-              verses: lesson.verses,
-              opposites: lesson.opposites.filter(a => a),
-              similars: lesson.similars.filter(a => a),
-            };
+            return lesson;
           });
         });
         setIsLoading(false);

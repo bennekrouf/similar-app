@@ -1,61 +1,41 @@
-import React, {useContext, useEffect, useState, useCallback} from 'react';
-import {View, Text, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
-import { useLogout, UserContext, UserContextType } from 'rn-auth-firebase';
-
 import SourateBox from '../../SourateBox';
-import OptionsMenuModal from '../../../modals/SourateConfiguration/OptionsMenuModal';
+import { useUserPreference } from '../../../modals/SourateConfiguration/UserPreferenceContext';
 import LessonContent from './LessonContent';
 import NewChapterSelectionModal from '../../../modals/SourateSelector/NewChapterSelectionModal';
 import {ScrollableTabProps} from '../../../models/interfaces';
 import {loadExercise} from '../../../api/loadExercisesList';
-import { flushAllLessonKeys } from '../../../api/flushAllLessonKeys';
 
-type RootStackParamList = {
-  LessonPages: undefined;
-  SignIn: undefined,
-  DiscriminantExercise: {
-    kalima: string;
-    currentChapterName: string;
-    exercises: any;
-  };
-};
+import { RootStackParamList } from '../../../models/interfaces';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, opposites, handleChapterSelection}) => {
+  // console.log(`'Rendering ScrollableTab' with ${kalima} ${JSON.stringify(verses)} ${JSON.stringify(similars)} ${JSON.stringify(opposites)}`);
+  console.log(`'Rendering ScrollableTab' with ${JSON.stringify(verses[0])}`);
   const {t} = useTranslation();
-  const { authEvents } = useContext(UserContext) as UserContextType;
-  const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
-  const { performLogout } = useLogout();
-
-  const handleOpenOptionsMenu = () => {
-    setIsOptionsMenuOpen(true);
-  };
-  
-  const handleCloseOptionsMenu = () => {
-    setIsOptionsMenuOpen(false);
-  };
-
+  const { handleOpenUserPreference } = useUserPreference();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'DiscriminantExercise'>>();
 
-  const handleOpenModal = () => {
+  const handleOpenSouratesModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseSouratesModal = () => {
     setIsModalOpen(false);
   };
 
   const handlePanResponderRelease = (evt: any, gestureState: {dy: number}) => {
     // Check if the user has swiped down by a certain threshold
     if (gestureState.dy > 100) {
-      handleCloseModal();
+      handleCloseSouratesModal();
     }
   };
 
@@ -65,7 +45,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   });
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
-    handleCloseModal();
+    handleCloseSouratesModal();
     if (chapter.no) {
       handleChapterSelection({no: chapter.no});
 
@@ -85,28 +65,9 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
     });
   }
 
-  const handleLogout = () => {
-    if (performLogout) {
-      performLogout();
-      handleCloseOptionsMenu();
-    }
-  };
-
-  useEffect(() => {
-    const onSignedOut = async () => {
-      await flushAllLessonKeys();
-      navigation.navigate('SignIn');
-    };
-    
-    authEvents.on('signedOut', onSignedOut);
-    return () => authEvents.off('signedOut', onSignedOut);
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      setExercises(await loadExercise(kalima).catch(console.error));
-    })();
-  }, [kalima]);
+    // (async () => {
+    //   setExercises(await loadExercise(kalima).catch(console.error));
+    // })();
 
   return (
     <>
@@ -115,7 +76,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
         {/* Left section of the header */}
         <View style={styles.headerContainer}>
 
-        <TouchableOpacity onPress={handleOpenOptionsMenu}>
+        <TouchableOpacity onPress={handleOpenUserPreference}>
           <Text style={styles.optionsMenuText}>...</Text>
         </TouchableOpacity>
 
@@ -130,7 +91,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
           </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={handleOpenModal}>
+              onPress={handleOpenSouratesModal}>
               <SourateBox chapterNo={verses[0]?.chapter_no} />
             </TouchableOpacity>
 
@@ -147,19 +108,13 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
 
         <NewChapterSelectionModal
           visible={isModalOpen}
-          onClose={handleCloseModal}
+          onClose={handleCloseSouratesModal}
           handleLabelPress={handleLabelPress}
           panResponder={panResponder}
         />
       </View>
       </ScrollableTabView>
-
-      <OptionsMenuModal 
-        visible={isOptionsMenuOpen} 
-        onClose={handleCloseOptionsMenu} 
-        onLogout={handleLogout}
-        />
-        </>
+    </>
   );
 };
 
@@ -209,6 +164,5 @@ const styles = StyleSheet.create({
   optionsMenuText: {
     fontSize: 24,
     padding: 5,
-    // Add more styles if needed
   }
 });

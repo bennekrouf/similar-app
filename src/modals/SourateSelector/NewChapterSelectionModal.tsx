@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, PanResponderInstance} from 'react-native';
 
 import GenericModal from '../GenericModal';
-import useFetchChapters from '../../hooks/useFetchChapters';
+import { useChapters } from '../../hooks/useFetchChapters';
 import SouratesSelector from './SouratesSelector';
 
 interface CustomModalProps {
@@ -12,11 +12,10 @@ interface CustomModalProps {
   panResponder: PanResponderInstance;
 }
 
-const OptionsMenuModal: React.FC<CustomModalProps> = ({ visible,
+const NewChapterSelectionModal: React.FC<CustomModalProps> = ({ visible,
   onClose,
-  handleLabelPress,
-  panResponder, }) => {
-  const {chapters, isLoading} = useFetchChapters();
+  handleLabelPress}) => {
+  const {chapters, isLoading} = useChapters();
   if (isLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -32,4 +31,4 @@ const OptionsMenuModal: React.FC<CustomModalProps> = ({ visible,
   );
 };
 
-export default OptionsMenuModal;
+export default NewChapterSelectionModal;
