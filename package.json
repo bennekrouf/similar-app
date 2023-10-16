@@ -47,7 +47,7 @@
     "rn-auth-firebase": "^1.0.47",
     "rn-logger": "^0.0.1-0",
     "rn-logging": "^1.0.3",
-    "rn-write-firestore": "^1.0.41"
+    "rn-write-firestore": "^1.0.43"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

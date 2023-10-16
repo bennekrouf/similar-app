@@ -6558,10 +6558,10 @@ rn-logging@^1.0.5:
   resolved "https://registry.yarnpkg.com/rn-logging/-/rn-logging-1.0.5.tgz#aee4ed6c5c44630a8ba49b2e33796307ec7465ca"
   integrity sha512-BBgRWqGH3C6lwZaO1bEQz9/JkgD1H7rQCxD6VgL3iOktX8/J6MZv22MuyqTUz5VDc3IWskOSJe/5L/39I7kO4w==
 
-rn-write-firestore@^1.0.41:
-  version "1.0.41"
-  resolved "https://registry.yarnpkg.com/rn-write-firestore/-/rn-write-firestore-1.0.41.tgz#99a9506ad1390928b7b9d25938ea1c07d1fbfb13"
-  integrity sha512-+LRuHpsjGHRsyklGRbudu5Rt9zX8DQgLtICQ6FtGpEBwwNa4+uBoj++WbFMLkSn+2OR1d/haglvt9qThcXTrKQ==
+rn-write-firestore@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/rn-write-firestore/-/rn-write-firestore-1.0.43.tgz#a2078532eba5cbfd45087571238c81f7ee9bc48a"
+  integrity sha512-EHG9o8AZSzqojfBBR3ZQDxFrKqHBYmNJYNC+2MlLzuautCYNvimRa6bCOOB063kUU5ODEORVYOVwloYfpMUb4g==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"
