@@ -51,15 +51,9 @@
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0",
     "rn-auth-firebase": "^1.0.47",
-<<<<<<< HEAD
     "rn-logging": "^1.0.6",
     "rn-user-preference-modal": "^1.0.9",
     "rn-write-firestore": "^1.0.54"
-=======
-    "rn-logger": "^0.0.1-0",
-    "rn-logging": "^1.0.3",
-    "rn-write-firestore": "^1.0.43"
->>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

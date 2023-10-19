@@ -1219,6 +1219,47 @@
   resolved "https://registry.npmjs.org/@expo-google-fonts/cairo/-/cairo-0.2.3.tgz"
   integrity sha512-z4FoaGpwudrPbFTbA/QgZTn7kHXhlI7QhLLEZqeG8PkMGeHbaqufJ6W6uvsp6yK1DVCILM0o2s8JGf/I2RFwnw==
 
+"@fortawesome/fontawesome-common-types@6.4.2":
+  version "6.4.2"
+  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.2.tgz#1766039cad33f8ad87f9467b98e0d18fbc8f01c5"
+  integrity sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==
+
+"@fortawesome/fontawesome-svg-core@^6.4.2":
+  version "6.4.2"
+  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.2.tgz#37f4507d5ec645c8b50df6db14eced32a6f9be09"
+  integrity sha512-gjYDSKv3TrM2sLTOKBc5rH9ckje8Wrwgx1CxAPbN5N3Fm4prfi7NsJVWd1jklp7i5uSCVwhZS5qlhMXqLrpAIg==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.2"
+
+"@fortawesome/free-brands-svg-icons@^6.4.2":
+  version "6.4.2"
+  resolved "https://registry.npmjs.org/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.4.2.tgz#9b8e78066ea6dd563da5dfa686615791d0f7cc71"
+  integrity sha512-LKOwJX0I7+mR/cvvf6qIiqcERbdnY+24zgpUSouySml+5w8B4BJOx8EhDR/FTKAu06W12fmUIcv6lzPSwYKGGg==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.2"
+
+"@fortawesome/free-regular-svg-icons@^6.4.2":
+  version "6.4.2"
+  resolved "https://registry.npmjs.org/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.4.2.tgz#aee79ed76ce5dd04931352f9d83700761b8b1b25"
+  integrity sha512-0+sIUWnkgTVVXVAPQmW4vxb9ZTHv0WstOa3rBx9iPxrrrDH6bNLsDYuwXF9b6fGm+iR7DKQvQshUH/FJm3ed9Q==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.2"
+
+"@fortawesome/free-solid-svg-icons@^6.4.2":
+  version "6.4.2"
+  resolved "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.4.2.tgz#33a02c4cb6aa28abea7bc082a9626b7922099df4"
+  integrity sha512-sYwXurXUEQS32fZz9hVCUUv/xu49PEJEyUOsA51l6PU/qVgfbTb2glsTEaJngVVT8VqBATRIdh7XVgV1JF1LkA==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.2"
+
+"@fortawesome/react-native-fontawesome@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@fortawesome/react-native-fontawesome/-/react-native-fontawesome-0.3.0.tgz#b59c45cdae2451d15f826f937d6e1a6e9dca0c74"
+  integrity sha512-wSfetdK4+b/pvPbM2v+bZ5hfNlwtk9l3QuJo59sbMrxJalfX7BuF2WsSIWMSxfWwSsbOtY4+TUs6uw/rE59NJA==
+  dependencies:
+    humps "^2.0.1"
+    prop-types "^15.7.2"
+
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
@@ -1765,11 +1806,7 @@
 
 "@react-native-firebase/app@^18.5.0":
   version "18.5.0"
-<<<<<<< HEAD
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.5.0.tgz#198a133229d1b8710f257e76d9703dcb7e4cd6e0"
-=======
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.5.0.tgz#198a133229d1b8710f257e76d9703dcb7e4cd6e0"
->>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   integrity sha512-AhHQi5KFDlKZn/lH7rEYtLfpsGamEq+P/cXZWcNPcP0WGlmi++abk7Pxnn4MjnG7TNhEyG/C9uq//qb6VhXaZg==
   dependencies:
     opencollective-postinstall "^2.0.1"
@@ -1784,11 +1821,7 @@
 
 "@react-native-firebase/auth@^18.5.0":
   version "18.5.0"
-<<<<<<< HEAD
-  resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-18.5.0.tgz#9969d0b756c7f68b9f46813759b1f7ca0c9f2c2d"
-=======
   resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-18.5.0.tgz#9969d0b756c7f68b9f46813759b1f7ca0c9f2c2d"
->>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   integrity sha512-RGuqXVQWIRc0edomtS8JxsfEZD7PKUz95L5Q1t+kLI+4lULOFamKlYY5sadv+QnMkYmMmcbKpTeTWfnf+WvHcQ==
   dependencies:
     plist "^3.1.0"
@@ -4000,6 +4033,11 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+humps@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/humps/-/humps-2.0.1.tgz#dd02ea6081bd0568dc5d073184463957ba9ef9aa"
+  integrity sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==
 
 i18next@^23.4.4:
   version "23.4.4"
@@ -6547,11 +6585,7 @@ rimraf@~2.6.2:
 
 rn-auth-firebase@^1.0.47:
   version "1.0.47"
-<<<<<<< HEAD
-  resolved "https://registry.npmjs.org/rn-auth-firebase/-/rn-auth-firebase-1.0.47.tgz#ab3c4047804724f8df6160c9efba206231da5d7d"
-=======
   resolved "https://registry.yarnpkg.com/rn-auth-firebase/-/rn-auth-firebase-1.0.47.tgz#ab3c4047804724f8df6160c9efba206231da5d7d"
->>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   integrity sha512-LZuwsHNz4qvyGCfqJzRbWHH0FAEAwu1ncT3cKk6o3dJsnasXXIYeyYrrh7PHoisKZEORcpnajSLymQmu8rMRPQ==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
@@ -6564,8 +6598,12 @@ rn-auth-firebase@^1.0.47:
     events "^3.3.0"
     rn-logging "^1.0.5"
 
-<<<<<<< HEAD
-rn-logging@^1.0.5, rn-logging@^1.0.6:
+rn-logging@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/rn-logging/-/rn-logging-1.0.5.tgz#aee4ed6c5c44630a8ba49b2e33796307ec7465ca"
+  integrity sha512-BBgRWqGH3C6lwZaO1bEQz9/JkgD1H7rQCxD6VgL3iOktX8/J6MZv22MuyqTUz5VDc3IWskOSJe/5L/39I7kO4w==
+
+rn-logging@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/rn-logging/-/rn-logging-1.0.6.tgz#92c6f250ac05581e3243d2f40b67a3a3560e5854"
   integrity sha512-Zx4Nv7VO/XM08peAhzCR1A9uh0BbXr5LLiTcFul+DwDPLy3WfwWWluiFtheR2uRj7Qpbb/tq6MaxV1be5aA3tQ==
@@ -6581,27 +6619,6 @@ rn-write-firestore@^1.0.54:
   version "1.0.54"
   resolved "https://registry.npmjs.org/rn-write-firestore/-/rn-write-firestore-1.0.54.tgz#d3f0404de6750f49376c4c3d07bb08aa7b238118"
   integrity sha512-iFtC6mxzbBrApAkWeLbdd5pM1n+eds6W+sAdeVfykMx6ioS5OcJTLbDA+r5dWr6fnS20RB+Zq6N0Ag6+njC2Qw==
-=======
-rn-logger@^0.0.1-0:
-  version "0.0.1-0"
-  resolved "https://registry.yarnpkg.com/rn-logger/-/rn-logger-0.0.1-0.tgz#8e646fae1ba036234afdc01f341fd2623e37d121"
-  integrity sha512-pgR4ePzGLa1BNpbsORLa+/KnDzm4W2dE5D09fS2df/+QhaELVTmWmWuw9P11CDFoNg+XOIHvcErWW2u6s611uQ==
-
-rn-logging@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/rn-logging/-/rn-logging-1.0.3.tgz#0dff030d83afd3a6db6200c03cd847d335ba3a71"
-  integrity sha512-G2zAB84fua5HMeU4FDDBdX4dnF+TtGxtC1rwFqV7/haUAVu3e18KK/KMYvHxx/xOuDrl4MldB8sFS1W9lEdMPw==
-
-rn-logging@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/rn-logging/-/rn-logging-1.0.5.tgz#aee4ed6c5c44630a8ba49b2e33796307ec7465ca"
-  integrity sha512-BBgRWqGH3C6lwZaO1bEQz9/JkgD1H7rQCxD6VgL3iOktX8/J6MZv22MuyqTUz5VDc3IWskOSJe/5L/39I7kO4w==
-
-rn-write-firestore@^1.0.43:
-  version "1.0.43"
-  resolved "https://registry.yarnpkg.com/rn-write-firestore/-/rn-write-firestore-1.0.43.tgz#a2078532eba5cbfd45087571238c81f7ee9bc48a"
-  integrity sha512-EHG9o8AZSzqojfBBR3ZQDxFrKqHBYmNJYNC+2MlLzuautCYNvimRa6bCOOB063kUU5ODEORVYOVwloYfpMUb4g==
->>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"
@@ -6609,11 +6626,7 @@ rn-write-firestore@^1.0.43:
     "@react-native-firebase/auth" "^18.5.0"
     "@react-native-firebase/firestore" "^18.5.0"
     react-native-device-info "^10.11.0"
-<<<<<<< HEAD
     rn-logging "^1.0.6"
-=======
-    rn-logging "^1.0.5"
->>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
 
 run-parallel@^1.1.9:
   version "1.2.0"
