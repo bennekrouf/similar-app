@@ -12,6 +12,12 @@
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-native-fontawesome": "^0.3.0",
+
     "@expo-google-fonts/cairo": "^0.2.3",
     "@react-native-async-storage/async-storage": "^1.19.2",
     "@react-native-community/netinfo": "^9.3.10",
@@ -43,8 +49,10 @@
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.0",
-    "rn-auth-firebase": "^1.0.28",
-    "rn-write-firestore": "^1.0.29"
+    "rn-auth-firebase": "^1.0.47",
+    "rn-logging": "^1.0.6",
+    "rn-user-preference-modal": "^1.0.9",
+    "rn-write-firestore": "^1.0.54"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

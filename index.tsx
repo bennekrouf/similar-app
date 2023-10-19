@@ -1,4 +1,6 @@
 import { AppRegistry } from 'react-native';
+import "react-native-devsettings";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import './assets/locales/i18n';
 import 'intl';
@@ -17,5 +19,21 @@ import 'intl-pluralrules';
 
 import { name } from './app.json';
 import { MainApp } from './src/navigation/AppNavigator';
+import {ErrorBoundary, Logger} from 'rn-logging';
 
-AppRegistry.registerComponent(name, () => MainApp);
+const AppRoot: React.FC = () => {
+    Logger.configure({ 
+      appName: "Tafseel",
+      timestamp: true 
+    });
+  
+    return (
+      <SafeAreaProvider>
+        <ErrorBoundary>
+          <MainApp />
+        </ErrorBoundary>
+      </SafeAreaProvider>
+    );
+  };
+    
+AppRegistry.registerComponent(name, () => AppRoot);

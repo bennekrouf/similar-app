@@ -5,7 +5,7 @@ import { UserContext, UserContextType } from 'rn-auth-firebase';
 import { signInFirebase } from 'rn-write-firestore';
 
 import { firebaseConf } from '../../firebaseConfig';
-import { RootStackParamList } from './NavigationTypes';
+import { RootStackParamList } from '../models/interfaces';
 
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
@@ -20,7 +20,7 @@ const InitialScreen = () => {
       // console.log(`BEFORE signInFirebase with credentials: ${JSON.stringify(googleCredentials)}`);
       try {
         const newUser = await signInFirebase(firebaseConf, googleCredentials);
-        console.log(`${JSON.stringify(newUser)}`);
+        if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
         console.log('OH ERROR in firebase signin', error);

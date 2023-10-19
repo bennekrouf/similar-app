@@ -14,16 +14,7 @@ import NewChapterSelectionModal from '../../../modals/SourateSelector/NewChapter
 import {ScrollableTabProps} from '../../../models/interfaces';
 import {loadExercise} from '../../../api/loadExercisesList';
 import { flushAllLessonKeys } from '../../../api/flushAllLessonKeys';
-
-type RootStackParamList = {
-  LessonPages: undefined;
-  SignIn: undefined,
-  DiscriminantExercise: {
-    kalima: string;
-    currentChapterName: string;
-    exercises: any;
-  };
-};
+import { RootStackParamList } from '../../../models/interfaces';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, opposites, handleChapterSelection}) => {
   const {t} = useTranslation();

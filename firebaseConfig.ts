@@ -8,3 +8,5 @@ export const firebaseConf = {
   databaseURL: '',
   measurementId: 'G-DPK57K96HF',
 };
+
+export const webClientId = '581865288762-i939qkmdb7kem0bs40f7eaf1lp0sivle.apps.googleusercontent.com';

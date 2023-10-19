@@ -5,6 +5,8 @@ import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
 import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
 import {checkDiscriminant} from '../../api/checkDiscriminant';
 import {checkChapter} from '../../api/checkChapter';
@@ -144,6 +146,7 @@ const DiscriminantExercise = ({route, _}) => {
               }}
               disabled={isValid !== 'right'}>
               {t('continue')}
+              <FontAwesomeIcon icon={faVolumeUp } size={60}/>
             </Button>
           </Card>
         </View>

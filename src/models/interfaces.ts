@@ -61,3 +61,12 @@ export interface Statement {
   has_opposites: boolean;
 }
 
+export type RootStackParamList = {
+  Initial: undefined;
+  LessonPages: undefined;
+  SignIn: { firebaseConf: any; app: string, webClientId: string };
+  DiscriminantExercise: {
+    kalima: string;
+    chapterName: string;
+  };
+};
