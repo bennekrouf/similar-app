@@ -4,8 +4,7 @@ import { lessonsPrefix } from "./lessonsPrefix";
 const MONTH_DURATION = 1;
 const MAX_STORED_LESSONS = 20;
 
-export 
-const checkAndRemoveOldData = async (chapterNo) => {
+export const checkAndRemoveOldData = async () => {
   try {
     // Retrieve the stored date
     const storedDateString = await AsyncStorage.getItem('lessons_dates');

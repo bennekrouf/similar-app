@@ -1765,7 +1765,11 @@
 
 "@react-native-firebase/app@^18.5.0":
   version "18.5.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.5.0.tgz#198a133229d1b8710f257e76d9703dcb7e4cd6e0"
+=======
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.5.0.tgz#198a133229d1b8710f257e76d9703dcb7e4cd6e0"
+>>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   integrity sha512-AhHQi5KFDlKZn/lH7rEYtLfpsGamEq+P/cXZWcNPcP0WGlmi++abk7Pxnn4MjnG7TNhEyG/C9uq//qb6VhXaZg==
   dependencies:
     opencollective-postinstall "^2.0.1"
@@ -1780,7 +1784,11 @@
 
 "@react-native-firebase/auth@^18.5.0":
   version "18.5.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-18.5.0.tgz#9969d0b756c7f68b9f46813759b1f7ca0c9f2c2d"
+=======
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-18.5.0.tgz#9969d0b756c7f68b9f46813759b1f7ca0c9f2c2d"
+>>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   integrity sha512-RGuqXVQWIRc0edomtS8JxsfEZD7PKUz95L5Q1t+kLI+4lULOFamKlYY5sadv+QnMkYmMmcbKpTeTWfnf+WvHcQ==
   dependencies:
     plist "^3.1.0"
@@ -6197,6 +6205,11 @@ react-native-device-info@^10.11.0:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.11.0.tgz#2c9f378f1c3c5eb9aafa803d015b84325991a9aa"
   integrity sha512-qRzhuYOm5ZXQi5dhfJFjDq157oipxcEW/fo0QyMm5+TI6V6/+P/tju+Hif6z0rpLCf7MV7iDVRv2Kqha4D/yvQ==
 
+react-native-devsettings@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-devsettings/-/react-native-devsettings-1.0.5.tgz#3ee079fea99338a2b00de293340c8d11629f16dd"
+  integrity sha512-JFdE3/oqIqtAi1HgdseMB+zRHVG9CQpsxMUVd+GXmaQQIyY+Kh2bWB3wdSA8+ojTunaahZkvb9fIFRrLUWdROQ==
+
 react-native-gesture-handler@^2.12.1:
   version "2.12.1"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.12.1.tgz"
@@ -6534,7 +6547,11 @@ rimraf@~2.6.2:
 
 rn-auth-firebase@^1.0.47:
   version "1.0.47"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/rn-auth-firebase/-/rn-auth-firebase-1.0.47.tgz#ab3c4047804724f8df6160c9efba206231da5d7d"
+=======
+  resolved "https://registry.yarnpkg.com/rn-auth-firebase/-/rn-auth-firebase-1.0.47.tgz#ab3c4047804724f8df6160c9efba206231da5d7d"
+>>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   integrity sha512-LZuwsHNz4qvyGCfqJzRbWHH0FAEAwu1ncT3cKk6o3dJsnasXXIYeyYrrh7PHoisKZEORcpnajSLymQmu8rMRPQ==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
@@ -6547,6 +6564,7 @@ rn-auth-firebase@^1.0.47:
     events "^3.3.0"
     rn-logging "^1.0.5"
 
+<<<<<<< HEAD
 rn-logging@^1.0.5, rn-logging@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/rn-logging/-/rn-logging-1.0.6.tgz#92c6f250ac05581e3243d2f40b67a3a3560e5854"
@@ -6563,6 +6581,27 @@ rn-write-firestore@^1.0.54:
   version "1.0.54"
   resolved "https://registry.npmjs.org/rn-write-firestore/-/rn-write-firestore-1.0.54.tgz#d3f0404de6750f49376c4c3d07bb08aa7b238118"
   integrity sha512-iFtC6mxzbBrApAkWeLbdd5pM1n+eds6W+sAdeVfykMx6ioS5OcJTLbDA+r5dWr6fnS20RB+Zq6N0Ag6+njC2Qw==
+=======
+rn-logger@^0.0.1-0:
+  version "0.0.1-0"
+  resolved "https://registry.yarnpkg.com/rn-logger/-/rn-logger-0.0.1-0.tgz#8e646fae1ba036234afdc01f341fd2623e37d121"
+  integrity sha512-pgR4ePzGLa1BNpbsORLa+/KnDzm4W2dE5D09fS2df/+QhaELVTmWmWuw9P11CDFoNg+XOIHvcErWW2u6s611uQ==
+
+rn-logging@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/rn-logging/-/rn-logging-1.0.3.tgz#0dff030d83afd3a6db6200c03cd847d335ba3a71"
+  integrity sha512-G2zAB84fua5HMeU4FDDBdX4dnF+TtGxtC1rwFqV7/haUAVu3e18KK/KMYvHxx/xOuDrl4MldB8sFS1W9lEdMPw==
+
+rn-logging@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/rn-logging/-/rn-logging-1.0.5.tgz#aee4ed6c5c44630a8ba49b2e33796307ec7465ca"
+  integrity sha512-BBgRWqGH3C6lwZaO1bEQz9/JkgD1H7rQCxD6VgL3iOktX8/J6MZv22MuyqTUz5VDc3IWskOSJe/5L/39I7kO4w==
+
+rn-write-firestore@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/rn-write-firestore/-/rn-write-firestore-1.0.43.tgz#a2078532eba5cbfd45087571238c81f7ee9bc48a"
+  integrity sha512-EHG9o8AZSzqojfBBR3ZQDxFrKqHBYmNJYNC+2MlLzuautCYNvimRa6bCOOB063kUU5ODEORVYOVwloYfpMUb4g==
+>>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"
@@ -6570,7 +6609,11 @@ rn-write-firestore@^1.0.54:
     "@react-native-firebase/auth" "^18.5.0"
     "@react-native-firebase/firestore" "^18.5.0"
     react-native-device-info "^10.11.0"
+<<<<<<< HEAD
     rn-logging "^1.0.6"
+=======
+    rn-logging "^1.0.5"
+>>>>>>> 891817b25a227ac9a19ac9cbcf79e450d112b9f0
 
 run-parallel@^1.1.9:
   version "1.2.0"

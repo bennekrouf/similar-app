@@ -3,13 +3,13 @@ import { StatusBar, Platform } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { ChapterProvider } from '../hooks/useFetchChapters';
 import { SignInScreen, UserProvider,  } from 'rn-auth-firebase';
 
+import ErrorScreen from './ErrorScreen';
 import LessonPages from '../components/lesson/LessonPages';
 import DiscriminantExercise from '../components/exercise/DiscriminantExercise';
 import InitialScreen from '../components/InitialScreen';
-
 import { RootStackParamList } from '../models/interfaces';
 import { webClientId } from '../../firebaseConfig';
 import { UserPreferenceProvider } from 'rn-user-preference-modal';

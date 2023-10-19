@@ -14,15 +14,11 @@ const LessonContent: React.FC<LessonListProps> = ({
     {verses.length > 0 && (
       <MainVerses key="mainVerses" verses={verses} isOpposite={false} />
     )}
+    {similars.length > 0 && (
+      <SimilarVerses key="similars" verses={similars} isOpposite={!opposites.length} />
+    )}
     {opposites.length > 0 && (
       <SimilarVerses key="opposites" verses={opposites} isOpposite={true} />
-    )}
-    {similars.length > 0 && (
-      <SimilarVerses
-        key="similars"
-        verses={similars}
-        isOpposite={!opposites.length}
-      />
     )}
   </ScrollView>
 );

@@ -14,6 +14,7 @@ import {radioButtonText} from './radioButtonText';
 import CustomRadioButton from './CustomRadioButton';
 
 import { Alternative, Statement } from '../../models/interfaces';
+import { Logger } from 'rn-logging';
 
 const theme = {
   ...DefaultTheme,
@@ -40,45 +41,45 @@ const DiscriminantExercise = ({route, _}) => {
   const navigation = useNavigation();
 
   const handleCheck = async (index: number) => {
-    console.log(`${JSON.stringify(user.email)}`);
+    Logger.info('Starting handleCheck...');
     setSelectedValue(index);
     try {
       const alternative = alternatives[index]?.verse;
       const result = exerciseType === 'FindSourate'
           ? await checkChapter(kalima, alternative.verse_no, alternative.chapter_no, statement?.verse.ungrouped_text.discriminant)
           : await checkDiscriminant(kalima, statement?.verse.verse_no, statement?.verse.chapter_no, alternative.ungrouped_text.discriminant);
-      setIsValid(result[0] === true ? 'right' : 'wrong');
-      setOtherSourate(result[0] ? '' : result[1]);
+      
+      const validationOutcome = result[0] === true ? 'right' : 'wrong';
+      setIsValid(validationOutcome);
+      Logger.info(`Validation outcome: ${validationOutcome}`);
+      
       await writeToAsyncStorage({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
-      await writeToFirebase({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
-      const user = await getUser();
-      setUser({...user});
+      
+      const retrievedUser = await getUser();
+      setUser({...retrievedUser});
     } catch (error) {
-      console.error(error);
+      Logger.error('Error during handleCheck', error);
     }
   };
 
   const updateExerciseContent = useCallback(() => {
+    Logger.info('Updating exercise content...');
     try {
       if (exercises && exercises[exerciseIndex]) {
         const data = exercises[exerciseIndex];
-
         setStatement(data.statement);
         setAternatives(data.alternatives);
         setSelectedValue(undefined); // Reset the selected value
         setIsValid('neutral'); // Reset the validation flag
         setExerciseType(data.exercise_type);
-
-        // Set the back button title after updating the statement
         navigation.setOptions({
           headerBackTitle: currentChapterName,
         });
       } else {
-        // Handle the end of exercises if needed
-        console.log('No more exercises!');
+        Logger.warn('No more exercises available!');
       }
     } catch (error) {
-      console.error(error);
+      Logger.error('Error updating exercise content', error);
     }
   }, [exerciseIndex, exercises, currentChapterName, navigation]);
 

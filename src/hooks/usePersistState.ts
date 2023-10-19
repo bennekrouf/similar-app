@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import { writeToAsyncStorage, writeToFirebase } from 'rn-write-firestone';
+import { writeToAsyncStorage, loadFromAsyncStorage } from 'rn-write-firestore';
 
-const storageKey = 'known-sourates';
+const storageKey = 'knownSourates';
+
 export const usePersistedState = <T>(initialState: T) => {
   const [state, setState] = useState<T>(initialState);
   const [isLoading, setLoading] = useState(true);
@@ -10,13 +10,11 @@ export const usePersistedState = <T>(initialState: T) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const savedStateString = await AsyncStorage.getItem(storageKey);
-        const savedState = savedStateString ? JSON.parse(savedStateString)[storageKey] : null;
-        if (savedState !== null) {
-          setState(savedState);
-        } else {
-            setState(initialState);
-          }
+        const savedState = await loadFromAsyncStorage();
+        console.log(`Saved state : ${JSON.stringify(savedState)}`);
+  
+        // Here, we'll use savedState?.data if it exists, otherwise fall back to initialState
+        setState((savedState && savedState[storageKey]) ?? initialState);
       } catch (error) {
         console.error('Failed to fetch the data from storage', error);
         setState(initialState);
@@ -24,19 +22,24 @@ export const usePersistedState = <T>(initialState: T) => {
         setLoading(false);
       }
     };
-
     loadData();
   }, [storageKey, initialState]);
+  
 
   const setPersistedState = async (data: T) => {
     if (data === undefined) {
         console.warn(`Attempting to save undefined value to storage. Ignored. With the key ${JSON.stringify(storageKey)}`);
         return;
-      }
+    }
     try {
-    //   await writeToAsyncStorage({ [storageKey]: data }, false);
-      await writeToFirebase({ [storageKey]: data }, false);
-      setState(data);
+      await writeToAsyncStorage({data : { [storageKey]: data }}, false);
+      setState(prevState => {
+        // Avoid unnecessary re-renders
+        if (JSON.stringify(prevState) !== JSON.stringify(data)) {
+          return data;
+        }
+        return prevState;
+      });
     } catch (error) {
       console.error('Failed to save the data to storage', error);
     }

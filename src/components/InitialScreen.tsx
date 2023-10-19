@@ -19,6 +19,7 @@ const InitialScreen = () => {
     const onSignedIn = async (googleCredentials) => {
       // console.log(`BEFORE signInFirebase with credentials: ${JSON.stringify(googleCredentials)}`);
       try {
+        if(!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
         const newUser = await signInFirebase(firebaseConf, googleCredentials);
         if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);

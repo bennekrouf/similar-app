@@ -14,7 +14,7 @@ export async function loadChapters() {
       return chapters;
     }
 
-    // console.log('config.domain11 : ', Config.DOMAIN);
+    console.log('config.domain11 : ', Config.DOMAIN);
     const chaptersAPI = await fetch(`${Config.DOMAIN}/chapters`, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import useFetchChapters from '../hooks/useFetchChapters';
+import { useChapters } from '../hooks/useFetchChapters';
 
 const sourateColor = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.background_color
 const sourateName = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.sourate
@@ -10,11 +10,7 @@ const SourateBox: React.FC<{
   count_ayat?: number, 
   additionalStyles?: object;
 }> = ({ chapterNo, count_ayat, additionalStyles }) => {
-  useEffect(() => {
-
-  }, []);
-
-  const { chapters, isLoading } = useFetchChapters();
+  const { chapters, isLoading } = useChapters();
   // console.log('const SourateBox: React.FC chapters:', chapters);
   if (isLoading) {
     return (

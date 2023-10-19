@@ -1,4 +1,4 @@
-export interface OptionsMenuModalProps {
+export interface UserPreferenceModalProps {
     visible: boolean;
     onClose: () => void;
     onLogout?: () => void;
