@@ -7,8 +7,8 @@ import Swiper from 'react-native-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
 import useFetchLessons from '../../hooks/useFetchLessons';
-import { useUserPreference } from '../../modals/SourateConfiguration/UserPreferenceContext';
-import UserPreferenceModal from '../../modals/SourateConfiguration/UserPreferenceModal';
+// import UserPreferenceModal from '../../modals/SourateConfiguration/UserPreferenceModal';
+import { useUserPreference, UserPreferenceModal } from 'rn-user-preference-modal';
 
 interface ScrollableSwipablePageProps {}
 

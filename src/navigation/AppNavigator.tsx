@@ -13,7 +13,6 @@ import InitialScreen from '../components/InitialScreen';
 import { RootStackParamList } from '../models/interfaces';
 import { webClientId } from '../../firebaseConfig';
 import { UserPreferenceProvider } from 'rn-user-preference-modal';
-
 // Create the application stack
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -21,6 +20,7 @@ export const MainApp: React.FC = () => {
   return (
     <NavigationContainer>
       <UserProvider>
+        <ChapterProvider>
         <UserPreferenceProvider>
           <StatusBar hidden={false} backgroundColor="black" barStyle="dark-content" />
             <Stack.Navigator>
@@ -50,6 +50,7 @@ export const MainApp: React.FC = () => {
             />
             </Stack.Navigator>
         </UserPreferenceProvider>
+        </ChapterProvider>
       </UserProvider>
     </NavigationContainer>
     );
