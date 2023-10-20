@@ -1,12 +1,12 @@
-export const firebaseConf = {
-  apiKey: 'AIzaSyDdQFw-79rwKy1nuyU0ZqTshaQr1e3w04U',
-  authDomain: 'tafseel-7f242.firebaseapp.com',
-  projectId: 'tafseel-7f242',
-  storageBucket: 'tafseel-7f242.appspot.com',
-  messagingSenderId: '581865288762',
-  appId: '1:581865288762:ios:fe7f738065c08e8f253103',
-  databaseURL: '',
-  measurementId: 'G-DPK57K96HF',
+export const firebaseConfig = {
+  apiKey: "AIzaSyDdQFw-79rwKy1nuyU0ZqTshaQr1e3w04U",
+  authDomain: "tafseel-7f242.firebaseapp.com",
+  projectId: "tafseel-7f242",
+  storageBucket: "tafseel-7f242.appspot.com",
+  messagingSenderId: "581865288762",
+  appId: "1:581865288762:web:a47fb8d74166b1a4253103",
+  measurementId: "G-K5VNYMM8JC",
+  databaseURL: ""
 };
 
-export const webClientId = '581865288762-i939qkmdb7kem0bs40f7eaf1lp0sivle.apps.googleusercontent.com';
+export const webClientId = '581865288762-pn1dvg84mtf77v2qjsm2r40k7p7gj4qb.apps.googleusercontent.com';

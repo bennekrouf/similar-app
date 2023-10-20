@@ -43,7 +43,7 @@
     "react-native-gesture-handler": "^2.12.1",
     "react-native-hyperlink": "^0.0.22",
     "react-native-localize": "^3.0.2",
-    "react-native-pager-view": "^6.2.0",
+    "react-native-pager-view": "^6.2.2",
     "react-native-paper": "^5.10.3",
     "react-native-safe-area-context": "^4.7.1",
     "react-native-screens": "^3.25.0",
@@ -54,7 +54,7 @@
     "rn-auth-firebase": "^1.0.47",
     "rn-logging": "^1.0.6",
     "rn-user-preference-modal": "^1.0.9",
-    "rn-write-firestore": "^1.0.54"
+    "rn-write-firestore": "^1.0.56"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
