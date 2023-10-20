@@ -4,28 +4,45 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
 import { signInFirebase } from 'rn-write-firestore';
 
-import { firebaseConf } from '../../firebaseConfig';
+import { firebaseConfig } from '../../firebaseConfig';
 import { RootStackParamList } from '../models/interfaces';
+import { Logger } from 'rn-logging'; // Assuming Logger is available from this path
 
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
-      navigation.navigate(user ? 'LessonPages' : 'SignIn');
+    navigation.navigate(user ? 'LessonPages' : 'SignIn');
   }, [user]);
 
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
-      // console.log(`BEFORE signInFirebase with credentials: ${JSON.stringify(googleCredentials)}`);
+      Logger.info('Attempting Firebase signIn with provided credentials.', 
+                  { googleCredentials },
+                  { tag: 'InitialScreen' }
+      );
+
       try {
-        if(!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        const newUser = await signInFirebase(firebaseConf, googleCredentials);
-        if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
+        if(!googleCredentials || !firebaseConfig) {
+          throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
+        }
+
+        const newUser = await signInFirebase(firebaseConfig, googleCredentials);
+        if(!newUser) {
+          throw Error('InitialScreen - Firebase sign do not return any user !');
+        }
+
         setUser(newUser);
+        Logger.info('Firebase signIn successful.', 
+                    { newUser },
+                    { tag: 'InitialScreen' }
+        );
       } catch (error) {
-        console.log('OH ERROR in firebase signin', error);
-        return error;   
+        Logger.error('Error occurred during Firebase signIn.', 
+                     error,
+                     { tag: 'InitialScreen' }
+        );
       }
     };
     authEvents.on('signedIn', onSignedIn);
