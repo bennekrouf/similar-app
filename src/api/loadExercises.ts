@@ -1,28 +1,32 @@
 import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
+import { Logger } from 'rn-logging'; 
 
-export async function loadExercise(kalima) {
+export async function loadExercise(kalima: string) {
   try {
+    Logger.info('Initiating exercise load', { kalima }, { tag: 'ExerciseLoad' });
+
     const networkState = await NetInfo.fetch();
-
-    // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
-      throw new Error('No internet connection');
+      const errorMessage = 'No internet connection';
+      Logger.error(errorMessage, null, { tag: 'ExerciseLoad' });
+      throw new Error(errorMessage);
     }
-    // console.log('Calling:', kalima);
-    // console.log('config.domain2 : ', config.domain);
 
-    const exerciseAPI = await fetch(`${Config.DOMAIN}/exercise/${kalima}`, {
+    const url = `${Config.DOMAIN}/exercise/${kalima}`;
+    const exerciseAPI = await fetch(url, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
     });
+
     const exercise = await exerciseAPI.json();
-    // console.log('Parsed json exo 0:', exercise[0]);
-    // console.log('Parsed json exo 1:', exercise[1]);
+    Logger.info('Received exercise data', { exercise }, { tag: 'ExerciseLoad' });
+    
     return exercise;
   } catch (error) {
-    console.error('Error fetching data3:', error);
+    const errorMessage = 'Error occurred during exercise load.';
+    Logger.error(errorMessage, error, { tag: 'ExerciseLoad' });
     throw error;
   }
 }

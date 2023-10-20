@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { Chapter } from '../models/interfaces';
 import { loadChapters } from '../api/loadChapters';
+import { Logger } from 'rn-logging'; 
 
 interface ChapterContextProps {
   chapters: Chapter[];
@@ -24,8 +25,10 @@ export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) =>
         setIsLoading(true);
         const chaptersData = await loadChapters();
         setChapters(chaptersData);
+        Logger.info('Chapters data successfully fetched and set.', null, { tag: 'ChapterContext' });
       } catch (error) {
-        console.log('Error fetching data:', error);
+        const errorMessage = 'Error occurred while fetching chapters data.';
+        Logger.error(errorMessage, error, { tag: 'ChapterContext' });
       } finally {
         setIsLoading(false);
       }
@@ -44,7 +47,9 @@ export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) =>
 export const useChapters = () => {
   const context = useContext(ChapterContext);
   if (!context) {
-    throw new Error("useChapters must be used within a ChapterProvider");
+    const errorMessage = "useChapters must be used within a ChapterProvider";
+    Logger.error(errorMessage, null, { tag: 'ChapterContext' });
+    throw new Error(errorMessage);
   }
   return context;
 };

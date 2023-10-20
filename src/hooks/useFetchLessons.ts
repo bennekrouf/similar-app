@@ -1,28 +1,31 @@
 import { useState, useEffect } from 'react';
-// import {loadChapters} from '../api/loadChapters';
-import {loadLessons} from '../api/loadLessons';
+import { loadLessons } from '../api/loadLessons';
+import { Logger } from 'rn-logging'; 
 
-const  useFetchLessons = (selectedChapter) => {
+const useFetchLessons = (selectedChapter) => {
   const [contents, setContents] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lessons = await loadLessons(selectedChapter);
-        // console.log(`Chapter :  ${selectedChapter} | lessons : ${JSON.stringify(lessons)} `);
+        Logger.info('Fetching lessons', { selectedChapter }, { tag: 'LessonsFetch' });
 
+        const lessons = await loadLessons(selectedChapter);
+        
         setContents(() => {
           return lessons?.length && lessons?.map(lesson => {
             if (!lesson.verses?.length) {
-              console.log('This similar has no verses :', lesson.kalima);
+              Logger.warn('Lesson without verses', { lessonKalima: lesson.kalima }, { tag: 'LessonsFetch' });
             }
             return lesson;
           });
         });
-        setIsLoading(false);
+
       } catch (error) {
-        console.log('Error fetching data7:', error);
+        const errorMessage = 'Error occurred during lessons fetching.';
+        Logger.error(errorMessage, error, { tag: 'LessonsFetch' });
+      } finally {
         setIsLoading(false);
       }
     };

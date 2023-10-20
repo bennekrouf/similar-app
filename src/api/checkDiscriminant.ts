@@ -1,5 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
+import { Logger } from 'rn-logging'; 
 
 export async function checkDiscriminant(
   kalima: string,
@@ -8,26 +9,34 @@ export async function checkDiscriminant(
   discriminant: string,
 ) {
   try {
-    console.log('Checking : ', kalima, verse_no, chapter_no, discriminant);
+    const logPayload = {
+      kalima,
+      verse_no,
+      chapter_no,
+      discriminant
+    };
+    Logger.info('Initiating discriminant check', logPayload, { tag: 'DiscriminantCheck' });
+
     const networkState = await NetInfo.fetch();
-    // If there's no internet connection
     if (!networkState.isConnected && !networkState.isInternetReachable) {
-      throw new Error('No internet connection');
+      const errorMessage = 'No internet connection';
+      Logger.error(errorMessage, null, { tag: 'DiscriminantCheck' });
+      throw new Error(errorMessage);
     }
 
-    const response = await fetch(
-      `${Config.DOMAIN}/check_discriminant?kalima=${kalima}&verse_no=${verse_no}&chapter_no=${chapter_no}&discriminant=${discriminant}`,
-      {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        },
+    const url = `${Config.DOMAIN}/check_discriminant?kalima=${kalima}&verse_no=${verse_no}&chapter_no=${chapter_no}&discriminant=${discriminant}`;
+    const response = await fetch(url, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
       },
-    );
+    });
+
     const result = await response.json();
-    // console.log('Result : ', result);
+    Logger.info('Received discriminant check result', { result }, { tag: 'DiscriminantCheck' });
     return result;
   } catch (error) {
-    console.error('Error fetching data2:', error);
+    const errorMessage = 'Error occurred during discriminant check.';
+    Logger.error(errorMessage, error, { tag: 'DiscriminantCheck' });
     throw error;
   }
 }
