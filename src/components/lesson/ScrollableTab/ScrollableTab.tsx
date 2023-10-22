@@ -63,7 +63,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   const goExercises = () => {
     navigation.navigate('DiscriminantExercise', {
       kalima,
-      currentChapterName: verses[0]?.sourate,
+      chapterName: verses[0]?.sourate,
       exercises,
     });
   }

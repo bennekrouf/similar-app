@@ -50,6 +50,7 @@ export const MainApp: React.FC = () => {
             />
             </Stack.Navigator>
         </UserPreferenceProvider>
+          initialParams={Platform.OS === 'android' ? { webClientId } : undefined}
         </ChapterProvider>
       </UserProvider>
     </NavigationContainer>

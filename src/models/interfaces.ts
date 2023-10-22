@@ -2,11 +2,11 @@ export type RootStackParamList = {
   ErrorScreen: { errorMessage: string };
   Initial: undefined;
   LessonPages: undefined;
-  SignIn: { firebaseConf: any; app: string };
+  SignIn: { firebaseConf: any; app: string, webClientId: string };
   DiscriminantExercise: {
     kalima: string;
-    currentChapterName: string;
     exercises: any;
+    chapterName: string;
   };
 };
 
@@ -37,7 +37,7 @@ export interface ScrollableTabProps {
   verses: Verse[];
   similars: Verse[];
   opposites: Verse[];
-  handleChapterSelection: (chapterNo: {no: number | undefined}) => void; // Add the handleChapterSelection function to the interface
+  handleChapterSelection: (chapterNo: {no: number | undefined}) => void;
 }
 export interface Chapter {
   sourate: string,
@@ -71,13 +71,3 @@ export interface Statement {
   verse: VerseOutput;
   has_opposites: boolean;
 }
-
-export type RootStackParamList = {
-  Initial: undefined;
-  LessonPages: undefined;
-  SignIn: { firebaseConf: any; app: string, webClientId: string };
-  DiscriminantExercise: {
-    kalima: string;
-    chapterName: string;
-  };
-};
