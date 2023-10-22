@@ -1,5 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
+import { Logger } from 'rn-logging'; 
 
 export async function checkChapter(
   kalima: string,
@@ -8,22 +9,34 @@ export async function checkChapter(
   discriminant: string,
 ) {
   try {
-    // console.log('Checking : ', kalima, verse_no, chapter_no, discriminant);
+    const logPayload = {
+      kalima,
+      verse_no,
+      chapter_no,
+      discriminant
+    };
+    Logger.info('Initiating chapter check', logPayload, { tag: 'ChapterCheck' });
+
     const networkState = await NetInfo.fetch();
     if (!networkState.isConnected && !networkState.isInternetReachable) {
-      throw new Error('No internet connection');
+      const errorMessage = 'No internet connection';
+      Logger.error(errorMessage, null, { tag: 'ChapterCheck' });
+      throw new Error(errorMessage);
     }
+
     const url = `${Config.DOMAIN}/check_chapter?kalima=${kalima}&verse_no=${verse_no}&selected_chapter_no=${chapter_no}&discriminant=${discriminant}`;
     const response = await fetch(url, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
     });
+
     const result = await response.json();
-    // console.log('API check chapter result : ', result);
+    Logger.info('Received chapter check result', { result }, { tag: 'ChapterCheck' });
     return result;
   } catch (error) {
-    console.error('Error fetching data1:', error);
+    const errorMessage = 'Error occurred during chapter check.';
+    Logger.error(errorMessage, error, { tag: 'ChapterCheck' });
     throw error;
   }
 }
