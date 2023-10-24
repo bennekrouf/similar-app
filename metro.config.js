@@ -1,4 +1,5 @@
 const {getDefaultConfig} = require('metro-config');
+const defaultConfig = getDefaultConfig(__dirname);
 
 module.exports = async () => {
   const {
@@ -6,6 +7,7 @@ module.exports = async () => {
   } = await getDefaultConfig();
 
   return {
+    ...defaultConfig,
     transformer: {
       getTransformOptions: async () => ({
         transform: {

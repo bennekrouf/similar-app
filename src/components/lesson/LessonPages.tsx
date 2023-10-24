@@ -3,12 +3,12 @@
 import ScrollableTab from './ScrollableTab/ScrollableTab';
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text } from 'react-native';
-import Swiper from 'react-native-swiper';
+import ViewPager from '@react-native-community/viewpager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext, UserContextType } from 'rn-auth-firebase';
 import useFetchLessons from '../../hooks/useFetchLessons';
 import { useUserPreference, UserPreferenceModal } from 'rn-user-preference-modal';
-import { Logger } from 'rn-logging'; 
+import { Logger } from 'rn-logging';
 
 interface ScrollableSwipablePageProps {}
 
@@ -80,32 +80,30 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
   }
 
   return (
-    <View>
-      <Swiper
-        showsPagination={true}
-        horizontal={true}
-        loop={false}
-        onIndexChanged={handleSwiperIndexChanged}
-        index={currentIndex}
-      >
-        {contents?.length &&
-          contents?.map(({ kalima, verses, similars, opposites }: any, index) => (
-            <View key={index} style={{ flex: 1 }}>
-              <ScrollableTab
-                kalima={kalima}
-                verses={verses}
-                similars={similars}
-                opposites={opposites}
-                handleChapterSelection={handleChapterSelection}
-              />
-            </View>
-          ))}
-      </Swiper>
-      <UserPreferenceModal
-        visible={isUserPreferenceOpen}
-        onClose={handleCloseUserPreference}
-      />
-    </View>
+    <View style={{ flex: 1 }}>
+    <ViewPager
+      style={{ flex: 1 }}
+      initialPage={currentIndex}
+      onPageSelected={e => handleSwiperIndexChanged(e.nativeEvent.position)}
+    >
+      {contents?.length &&
+        contents?.map(({ kalima, verses, similars, opposites }: any, index) => (
+          <View key={index} style={{ flex: 1 }}>
+            <ScrollableTab
+              kalima={kalima}
+              verses={verses}
+              similars={similars}
+              opposites={opposites}
+              handleChapterSelection={handleChapterSelection}
+            />
+          </View>
+        ))}
+    </ViewPager>
+    <UserPreferenceModal
+      visible={isUserPreferenceOpen}
+      onClose={handleCloseUserPreference}
+    />
+  </View>
   );
 };
 

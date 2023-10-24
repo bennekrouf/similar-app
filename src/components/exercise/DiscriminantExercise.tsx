@@ -3,8 +3,6 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
-import { UserContext, UserContextType } from 'rn-auth-firebase';
-import { writeToAsyncStorage, getUser, writeToFirebase } from 'rn-write-firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,7 +24,6 @@ const theme = {
 };
 
 const DiscriminantExercise = ({route, _}) => {
-  const { user, setUser } = useContext(UserContext) as UserContextType;
 
   const {t} = useTranslation();
   const [statement, setStatement] = useState<Statement>(null);
@@ -52,11 +49,6 @@ const DiscriminantExercise = ({route, _}) => {
       const validationOutcome = result[0] === true ? 'right' : 'wrong';
       setIsValid(validationOutcome);
       Logger.info(`Validation outcome: ${validationOutcome}`);
-      
-      await writeToAsyncStorage({[`${alternative.chapter_no}-${alternative.verse_no}`]: (result[0] === true ? 1 : -1)}, true);
-      
-      const retrievedUser = await getUser();
-      setUser({...retrievedUser});
     } catch (error) {
       Logger.error('Error during handleCheck', error);
     }
@@ -141,7 +133,6 @@ const DiscriminantExercise = ({route, _}) => {
             <Button
               mode="contained"
               onPress={() => {
-                // Increment the exercise index and load the next one
                 setExerciseIndex(prevIndex => prevIndex + 1);
                 updateExerciseContent();
               }}
@@ -165,7 +156,7 @@ const styles = StyleSheet.create({
   radioContainer: {
     margin: 20,
     alignItems: 'flex-end',
-    alignSelf: 'stretch', // make sure the container takes the full width
+    alignSelf: 'stretch',
   },
   radioButton: {
     alignSelf: 'flex-end',

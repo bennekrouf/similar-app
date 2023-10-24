@@ -46,11 +46,10 @@ export const MainApp: React.FC = () => {
               headerLeft: () => null,  // Hide back button
               headerShown: false,
             }}
-            initialParams={Platform.OS === 'android' ? { webClientId } : undefined}
+            initialParams={{ webClientId }}
             />
             </Stack.Navigator>
         </UserPreferenceProvider>
-          initialParams={Platform.OS === 'android' ? { webClientId } : undefined}
         </ChapterProvider>
       </UserProvider>
     </NavigationContainer>
