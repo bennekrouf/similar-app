@@ -4,39 +4,63 @@ import Config from 'react-native-config';
 import { Logger } from 'rn-logging'; 
 
 export async function loadChapters() {
-  try {
-    let chapters: any;
-    const networkState = await NetInfo.fetch();
-    const cachedChapters = await AsyncStorage.getItem('chapters');
+  let chapters: any;
 
-    if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedChapters) {
-      Logger.info('Retrieving chapter data from cache.', null, { tag: 'Cache' });
-      chapters = JSON.parse(cachedChapters);
-      return chapters;
-    }
+  try {
+    const networkState = await NetInfo.fetch();
 
     if (!Config.DOMAIN) {
       throw new Error("Missing configuration parameter. Please ensure all necessary parameters are set and restart the application.");
     }
 
-    Logger.info(`Fetching chapter data from API: ${Config.DOMAIN}/chapters`, null, { tag: 'API' });
+    if (networkState.isConnected && networkState.isInternetReachable) {
+      Logger.info(`Fetching chapter data from API: ${Config.DOMAIN}/chapters`, null, { tag: 'loadChapters' });
 
-    const chaptersAPI = await fetch(`${Config.DOMAIN}/chapters`, {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    });
+      const chaptersAPI = await fetch(`${Config.DOMAIN}/chapters`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      });
 
-    chapters = await chaptersAPI.json();
+      if (!chaptersAPI.ok) {
+        throw new Error(`Failed fetching chapter data from API: ${chaptersAPI.statusText}`);
+      } else {
+        Logger.info(`Successfully fetched chapter data from API.`, null, { tag: 'loadChapters' });
+      }
 
-    AsyncStorage.setItem('chapters', JSON.stringify(chapters));
-    AsyncStorage.setItem('chapters_dates', new Date().toISOString());
+      chapters = await chaptersAPI.json();
+
+      Logger.info(`Successfully parsed chapter data from API. Caching for offline use.`, null, { tag: 'loadChapters' });
+
+      // Save the chapters to AsyncStorage for offline access later.
+      await AsyncStorage.setItem('chapters', JSON.stringify(chapters));
+      await AsyncStorage.setItem('chapters_dates', new Date().toISOString());
+
+      Logger.info(`Chapter data cached successfully.`, null, { tag: 'loadChapters' });
+
+    } else {
+      throw new Error('No internet connection available.');  // This will lead to the catch block where cached chapters will be retrieved.
+    }
 
     return chapters.filter(c => c);
-  } catch (error) {
-    const errorMessage = `Chapter API call failed using endpoint: ${Config.DOMAIN}/chapters`;
-    Logger.error(errorMessage, error, { tag: 'API' });
 
-    return error;
+  } catch (apiError) {
+    Logger.error(`Issue accessing or processing API data.`, apiError, { tag: 'loadChapters' });
+
+    try {
+      const cachedChapters = await AsyncStorage.getItem('chapters');
+
+      if (cachedChapters) {
+        Logger.info('Retrieving chapter data from cache due to API error.', null, { tag: 'loadChapters' });
+        chapters = JSON.parse(cachedChapters);
+        return chapters.filter(c => c);
+      } else {
+        throw new Error('No cached data available.');
+      }
+
+    } catch (storageError) {
+      Logger.error(`Failed retrieving chapters from cache.`, storageError, { tag: 'loadChapters' });
+      throw storageError;  // Propagate the error for further handling, if needed.
+    }
   }
 }

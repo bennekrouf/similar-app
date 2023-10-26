@@ -101,10 +101,10 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
             </View>
           ))}
       </Swiper>
-      <UserPreferenceModal
+      {/* <UserPreferenceModal
         visible={isUserPreferenceOpen}
         onClose={handleCloseUserPreference}
-      />
+      /> */}
     </View>
   );
 };

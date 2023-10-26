@@ -14,7 +14,7 @@ export async function loadLessons(chapterNo = 59) {
 
     if ((!networkState.isConnected && !networkState.isInternetReachable) || cachedData) {
       if (cachedData) {
-        Logger.info('Retrieving lesson data from cache.', { chapterNo }, { tag: 'Cache' });
+        Logger.info('Retrieving lesson data from cache.', { chapterNo }, { tag: 'loadLessons' });
         lessons = JSON.parse(cachedData);
       }
       return lessons;
@@ -24,7 +24,7 @@ export async function loadLessons(chapterNo = 59) {
       throw new Error("Missing configuration parameter. Please ensure all necessary parameters are set and restart the application.");
     }
 
-    Logger.info(`Fetching lesson data from API: ${Config.DOMAIN}/similars/${chapterNo}`, null, { tag: 'API' });
+    Logger.info(`Attempting to fetch lesson data from API: ${Config.DOMAIN}/similars/${chapterNo}`, null, { tag: 'loadLessons' });
 
     const lessonsAPI = await fetch(`${Config.DOMAIN}/similars/${chapterNo}`, {
       headers: {
@@ -32,16 +32,28 @@ export async function loadLessons(chapterNo = 59) {
       },
     });
 
+    if (lessonsAPI.ok) {
+      Logger.info(`Successfully fetched lesson data from API.`, null, { tag: 'loadLessons' });
+    } else {
+      Logger.warn(`Fetching lesson data returned status ${lessonsAPI.status}: ${lessonsAPI.statusText}`, null, { tag: 'loadLessons' });
+    }
+
+    Logger.info(`Attempting to parse fetched data from API.`, null, { tag: 'loadLessons' });
+
     lessons = await lessonsAPI.json();
 
-    AsyncStorage.setItem(keyLesson(chapterNo), JSON.stringify(lessons));
-    AsyncStorage.setItem('lessons_dates', new Date().toISOString());
+    Logger.info(`Successfully parsed lesson data from API. Attempting to cache data for offline use.`, null, { tag: 'loadLessons' });
+
+    await AsyncStorage.setItem(keyLesson(chapterNo), JSON.stringify(lessons));
+    await AsyncStorage.setItem('lessons_dates', new Date().toISOString());
+
+    Logger.info(`Lesson data cached successfully.`, null, { tag: 'loadLessons' });
 
     return lessons.filter(s => s);
   } catch (error) {
     const errorMessage = `Lesson API call failed for chapter ${chapterNo} using endpoint: ${Config.DOMAIN}/similars/${chapterNo}`;
-    Logger.error(errorMessage, error, { tag: 'API' });
-    Logger.info(`Ensure you've set the correct environment file or try running 'yarn dev' or 'ENVFILE=.env.local yarn ios' or 'android'`, null, { tag: 'API' });
+    Logger.error(errorMessage, error, { tag: 'loadLessons' });
+    Logger.info(`Ensure you've set the correct environment file or try running 'yarn dev' or 'ENVFILE=.env.local yarn ios' or 'android'`, null, { tag: 'loadLessons' });
 
     return error;
   }
