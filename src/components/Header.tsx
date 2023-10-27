@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { useUserPreference } from 'rn-user-preference-modal';
+import { useUserPreference } from 'mayo-user-preference-modal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Header = ({ count, goodCount, wrongCount }) => {

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { loadLessons } from '../api/loadLessons';
-import { Logger } from 'rn-logging'; 
+import { Logger } from 'mayo-logger'; 
 
-const useFetchLessons = (selectedChapter) => {
+const useFetchLessons = (selectedChapter:number) => {
   const [contents, setContents] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 

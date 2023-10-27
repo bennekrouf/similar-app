@@ -19,7 +19,7 @@ import 'intl-pluralrules';
 
 import { name } from './app.json';
 import { MainApp } from './src/navigation/AppNavigator';
-import {ErrorBoundary, Logger} from 'rn-logging';
+import {ErrorBoundary, Logger} from 'mayo-logger';
 
 const AppRoot: React.FC = () => {
     Logger.configure({ 

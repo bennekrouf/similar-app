@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { Chapter } from '../models/interfaces';
 import { loadChapters } from '../api/loadChapters';
-import { Logger } from 'rn-logging'; 
+import { Logger } from 'mayo-logger'; 
 
 interface ChapterContextProps {
   chapters: Chapter[];

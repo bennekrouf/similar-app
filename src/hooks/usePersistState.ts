@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { writeToAsyncStorage, loadFromAsyncStorage } from 'rn-write-firestore';
+import { writeToAsyncStorage, loadFromAsyncStorage } from 'mayo-firestore-write';
 
 const storageKey = 'knownSourates';
 

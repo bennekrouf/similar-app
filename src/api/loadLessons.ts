@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
 import { keyLesson } from './keyLesson';
 import { checkAndRemoveOldData } from './checkAndRemoveOldData';
-import { Logger } from 'rn-logging'; 
+import { Logger } from 'mayo-logger'; 
 
 export async function loadLessons(chapterNo = 59) {
   checkAndRemoveOldData();

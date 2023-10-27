@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { writeToAsyncStorage, syncAsyncStorageToFirestore } from 'rn-write-firestore';
-import { Logger } from 'rn-logging';
+import { writeToAsyncStorage, syncAsyncStorageToFirestore } from 'mayo-firestore-write';
+import { Logger } from 'mayo-logger';
 import Config from 'react-native-config';
 
 const LAST_SYNC_DATE_KEY = 'LAST_SYNC_DATE';

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import Config from 'react-native-config';
-import { Logger } from 'rn-logging'; 
+import { Logger } from 'mayo-logger'; 
 
 export async function loadChapters() {
   let chapters: any;

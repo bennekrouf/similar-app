@@ -1,6 +1,6 @@
-import { flushFromAsyncStorage, syncAsyncStorageToFirestore } from 'rn-write-firestore';
-import { useLogout } from 'rn-auth-firebase';
-import { Logger } from 'rn-logging';
+import { flushFromAsyncStorage, syncAsyncStorageToFirestore } from 'mayo-firestore-write';
+import { useLogout } from 'mayo-firebase-auth';
+import { Logger } from 'mayo-logger';
 
 export const handleLogout = async () => {
     const { performLogout } = useLogout();

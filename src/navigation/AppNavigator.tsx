@@ -1,18 +1,16 @@
 import React from 'react';
-import { StatusBar, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ChapterProvider } from '../hooks/useFetchChapters';
-import { SignInScreen, UserProvider,  } from 'rn-auth-firebase';
+import { SignInScreen, UserProvider,  } from 'mayo-firebase-auth';
 
-import ErrorScreen from './ErrorScreen';
 import LessonPages from '../components/lesson/LessonPages';
 import DiscriminantExercise from '../components/exercise/DiscriminantExercise';
 import InitialScreen from '../components/InitialScreen';
 import { RootStackParamList } from '../models/interfaces';
-import { webClientId } from '../../firebaseConfig';
-import { UserPreferenceProvider } from 'rn-user-preference-modal';
+import { UserPreferenceProvider } from 'mayo-user-preference-modal';
 // Create the application stack
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -46,7 +44,6 @@ export const MainApp: React.FC = () => {
               headerLeft: () => null,  // Hide back button
               headerShown: false,
             }}
-            initialParams={Platform.OS === 'android' ? { webClientId } : undefined}
             />
             </Stack.Navigator>
         </UserPreferenceProvider>

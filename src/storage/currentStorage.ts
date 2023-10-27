@@ -1,5 +1,5 @@
-import { loadFromAsyncStorage, loadFromFirebase } from 'rn-write-firestore';
-import { Logger } from 'rn-logging';
+import { loadFromAsyncStorage, loadFromFirebase } from 'mayo-firestore-write';
+import { Logger } from 'mayo-logger';
 
 export const currentStorage = async () => {
     try {

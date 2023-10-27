@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 
 import SourateBox from '../../SourateBox';
 // import { useUserPreference } from '../../../modals/SourateConfiguration/UserPreferenceContext';
-import { useUserPreference, UserPreferenceModal } from 'rn-user-preference-modal';
+import { useUserPreference, UserPreferenceModal } from 'mayo-user-preference-modal';
 
 import LessonContent from './LessonContent';
 import NewChapterSelectionModal from '../../../modals/SourateSelector/NewChapterSelectionModal';
@@ -63,7 +63,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   const goExercises = () => {
     navigation.navigate('DiscriminantExercise', {
       kalima,
-      currentChapterName: verses[0]?.sourate,
+      chapterName: verses[0]?.sourate,
       exercises,
     });
   }
