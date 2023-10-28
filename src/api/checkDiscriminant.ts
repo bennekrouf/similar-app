@@ -1,6 +1,5 @@
-import NetInfo from '@react-native-community/netinfo';
-import Config from 'react-native-config';
 import { Logger } from 'mayo-logger'; 
+import { apiClient } from './apiClient';
 
 export async function checkDiscriminant(
   kalima: string,
@@ -15,25 +14,17 @@ export async function checkDiscriminant(
       chapter_no,
       discriminant
     };
+
     Logger.info('Initiating discriminant check', logPayload, { tag: 'DiscriminantCheck' });
 
-    const networkState = await NetInfo.fetch();
-    if (!networkState.isConnected && !networkState.isInternetReachable) {
-      const errorMessage = 'No internet connection';
-      Logger.error(errorMessage, null, { tag: 'DiscriminantCheck' });
-      throw new Error(errorMessage);
-    }
+    const endpoint = `check_discriminant?kalima=${kalima}&verse_no=${verse_no}&chapter_no=${chapter_no}&discriminant=${discriminant}`;
 
-    const url = `${Config.DOMAIN}/check_discriminant?kalima=${kalima}&verse_no=${verse_no}&chapter_no=${chapter_no}&discriminant=${discriminant}`;
-    const response = await fetch(url, {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    });
+    // Using the apiClient with caching disabled.
+    const result = await apiClient.get(endpoint, false);
 
-    const result = await response.json();
     Logger.info('Received discriminant check result', { result }, { tag: 'DiscriminantCheck' });
     return result;
+
   } catch (error) {
     const errorMessage = 'Error occurred during discriminant check.';
     Logger.error(errorMessage, error, { tag: 'DiscriminantCheck' });

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { useUserPreference } from 'mayo-user-preference-modal';
+import { useUserPreference } from 'mayo-settings';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Header = ({ count, goodCount, wrongCount }) => {
     const insets = useSafeAreaInsets();
-    const { handleOpenUserPreference } = useUserPreference();
+    // const { handleOpenUserPreference } = useUserPreference();
 
     return (
       <View style={{ paddingTop: insets.top }}>
@@ -15,9 +15,9 @@ const Header = ({ count, goodCount, wrongCount }) => {
                 <Text style={styles.headerText}>G{goodCount} W{wrongCount} T{count}</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleOpenUserPreference}>
+          {/* <TouchableOpacity onPress={handleOpenUserPreference}>
             <Text style={styles.optionsMenuText}>...</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.headerSeparator} />
       </View>

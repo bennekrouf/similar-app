@@ -4,9 +4,9 @@ export type RootStackParamList = {
   LessonPages: undefined;
   SignIn: { app: string };
   DiscriminantExercise: {
-    kalima: string;
-    exercises: any;
-    chapterName: string;
+    kalima?: string;
+    exercises?: any;
+    chapterName?: string;
   };
 };
 

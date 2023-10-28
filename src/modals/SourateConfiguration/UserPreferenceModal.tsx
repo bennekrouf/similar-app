@@ -9,7 +9,7 @@ import LabelsSelector from './LabelsSelector';
 
 const initialState = [];
 
-const UserPreferenceModal: React.FC<UserPreferenceModalProps> = ({ visible, onClose, onLogout }) => {
+const MayoSettingsModal: React.FC<UserPreferenceModalProps> = ({ visible, onClose, onLogout }) => {
   const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState);
   console.log('Initial selectedLabels:', selectedLabels);
 
@@ -29,4 +29,4 @@ const UserPreferenceModal: React.FC<UserPreferenceModalProps> = ({ visible, onCl
   );
 };
 
-export default UserPreferenceModal;
+export default MayoSettingsModal;

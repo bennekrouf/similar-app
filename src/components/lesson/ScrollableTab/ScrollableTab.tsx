@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, Button, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import SourateBox from '../../SourateBox';
 // import { useUserPreference } from '../../../modals/SourateConfiguration/UserPreferenceContext';
-import { useUserPreference, UserPreferenceModal } from 'mayo-user-preference-modal';
+import { useUserPreference, MayoSettingsModal } from 'mayo-settings';
 
 import LessonContent from './LessonContent';
 import NewChapterSelectionModal from '../../../modals/SourateSelector/NewChapterSelectionModal';
@@ -16,12 +15,15 @@ import {loadExercise} from '../../../api/loadExercisesList';
 import { flushAllLessonKeys } from '../../../api/flushAllLessonKeys';
 
 import { RootStackParamList } from '../../../models/interfaces';
+import { useCollapsibleStyle } from 'react-native-collapsible-tab-view';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, opposites, handleChapterSelection}) => {
   // console.log(`'Rendering ScrollableTab' with ${kalima} ${JSON.stringify(verses)} ${JSON.stringify(similars)} ${JSON.stringify(opposites)}`);
   console.log(`'Rendering ScrollableTab' with ${JSON.stringify(verses[0])}`);
+  const LessonContentScene = useCollapsibleStyle();
+
   const {t} = useTranslation();
-  const { handleOpenUserPreference } = useUserPreference();
+  // const { handleOpenUserPreference } = useUserPreference();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
   const navigation =
@@ -74,14 +76,18 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
 
   return (
     <>
-    <ScrollableTabView>
-      <View style={styles.view}>
+     <CollapsibleTabView
+        navigationState={{ index: 0, routes: [{ key: 'verseList', title: 'Verse List' }] }}
+        renderScene={LessonContentScene}
+        // You can use renderHeader to render custom headers
+      >
+        <View key="verseList" style={styles.view}>
         {/* Left section of the header */}
         <View style={styles.headerContainer}>
 
-        <TouchableOpacity onPress={handleOpenUserPreference}>
+        {/* <TouchableOpacity onPress={handleOpenUserPreference}>
           <Text style={styles.optionsMenuText}>...</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
           <View>
             <Text style={styles.leftHeaderText}>
@@ -93,10 +99,10 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
             <Text>{t('test')}({exercises.length})</Text>
           </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={handleOpenSouratesModal}>
-              <SourateBox chapterNo={verses[0]?.chapter_no} />
-            </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleOpenSouratesModal}>
+            <SourateBox chapterNo={verses[0]?.chapter_no} />
+          </TouchableOpacity>
 
         </View>
 
@@ -115,8 +121,8 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
           handleLabelPress={handleLabelPress}
           panResponder={panResponder}
         />
-      </View>
-      </ScrollableTabView>
+       </View>
+      </CollapsibleTabView>
     </>
   );
 };

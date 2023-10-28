@@ -1,110 +1,110 @@
-/* eslint-disable radix */
-/* eslint-disable react-native/no-inline-styles */
-import ScrollableTab from './ScrollableTab/ScrollableTab';
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text } from 'react-native';
-import ViewPager from 'react-native-pager-view';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserContext, UserContextType } from 'mayo-firebase-auth';
-import useFetchLessons from '../../hooks/useFetchLessons';
-import { useUserPreference, UserPreferenceModal } from 'mayo-user-preference-modal';
-import { Logger } from 'mayo-logger';
+  /* eslint-disable radix */
+  /* eslint-disable react-native/no-inline-styles */
+  import ScrollableTab from './ScrollableTab/ScrollableTab';
+  import React, { useEffect, useState, useContext } from 'react';
+  import { View, Text } from 'react-native';
+  import ViewPager from 'react-native-pager-view';
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+  import { UserContext, UserContextType } from 'mayo-firebase-auth';
+  import useFetchLessons from '../../hooks/useFetchLessons';
+  // import { useUserPreference, MayoSettingsModal } from 'mayo-settings';
+  import { Logger } from 'mayo-logger';
 
-interface ScrollableSwipablePageProps {}
+  interface ScrollableSwipablePageProps {}
 
-const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
-  const { user } = useContext(UserContext) as UserContextType;
-  const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
-  const { contents, isLoading } = useFetchLessons(selectedChapter);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
+    const { user } = useContext(UserContext) as UserContextType;
+    const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
+    const { contents, isLoading } = useFetchLessons(selectedChapter);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const {
-    isUserPreferenceOpen,
-    handleOpenUserPreference,
-    handleCloseUserPreference,
-  } = useUserPreference();
+    // const {
+    //   isUserPreferenceOpen,
+    //   handleOpenUserPreference,
+    //   handleCloseUserPreference,
+    // } = useUserPreference();
 
-  const handleChapterSelection = (chapter: any) => {
-    setSelectedChapter(chapter.no);
-  };
+    const handleChapterSelection = (chapter: any) => {
+      setSelectedChapter(chapter.no);
+    };
 
-  useEffect(() => {
-    const getSelectedChapterFromStorage = async () => {
-      try {
-        Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
-        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
-        if (storedSelectedChapter) {
-          setSelectedChapter(parseInt(storedSelectedChapter));
+    useEffect(() => {
+      const getSelectedChapterFromStorage = async () => {
+        try {
+          Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
+          const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
+          if (storedSelectedChapter) {
+            setSelectedChapter(parseInt(storedSelectedChapter));
+          }
+        } catch (error) {
+          Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
         }
+      };
+
+      if (user) {
+        getSelectedChapterFromStorage();
+      }
+    }, []);
+
+    const handleSwiperIndexChanged = async (index: number) => {
+      try {
+        if (!selectedChapter) return;
+        await AsyncStorage.setItem('selectedChapter', selectedChapter.toString());
+        await AsyncStorage.setItem('currentIndex', index.toString());
       } catch (error) {
-        Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
+        Logger.error('Error storing data in AsyncStorage', error, { tag: 'LessonPages' });
       }
     };
 
-    if (user) {
-      getSelectedChapterFromStorage();
-    }
-  }, []);
-
-  const handleSwiperIndexChanged = async (index: number) => {
-    try {
-      if (!selectedChapter) return;
-      await AsyncStorage.setItem('selectedChapter', selectedChapter.toString());
-      await AsyncStorage.setItem('currentIndex', index.toString());
-    } catch (error) {
-      Logger.error('Error storing data in AsyncStorage', error, { tag: 'LessonPages' });
-    }
-  };
-
-  useEffect(() => {
-    const getCurrentIndexFromStorage = async () => {
-      try {
-        Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
-        const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
-        if (storedCurrentIndex) {
-          setCurrentIndex(parseInt(storedCurrentIndex));
+    useEffect(() => {
+      const getCurrentIndexFromStorage = async () => {
+        try {
+          Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
+          const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
+          if (storedCurrentIndex) {
+            setCurrentIndex(parseInt(storedCurrentIndex));
+          }
+        } catch (error) {
+          Logger.error('Error retrieving currentIndex from AsyncStorage', error, { tag: 'LessonPages' });
         }
-      } catch (error) {
-        Logger.error('Error retrieving currentIndex from AsyncStorage', error, { tag: 'LessonPages' });
-      }
-    };
-    getCurrentIndexFromStorage();
-  }, []);
+      };
+      getCurrentIndexFromStorage();
+    }, []);
 
-  if (isLoading) {
+    if (isLoading) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
+
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading...</Text>
-      </View>
+      <View style={{ flex: 1 }}>
+      <ViewPager
+        style={{ flex: 1 }}
+        initialPage={currentIndex}
+        onPageSelected={e => handleSwiperIndexChanged(e.nativeEvent.position)}
+      >
+        {contents?.length &&
+          contents?.map(({ kalima, verses, similars, opposites }: any, index) => (
+            <View key={index} style={{ flex: 1 }}>
+              <ScrollableTab
+                kalima={kalima}
+                verses={verses}
+                similars={similars}
+                opposites={opposites}
+                handleChapterSelection={handleChapterSelection}
+              />
+            </View>
+          ))}
+      </ViewPager>
+      {/* <MayoSettingsModal
+        visible={isUserPreferenceOpen}
+        onClose={handleCloseUserPreference}
+      /> */}
+    </View>
     );
-  }
+  };
 
-  return (
-    <View style={{ flex: 1 }}>
-    <ViewPager
-      style={{ flex: 1 }}
-      initialPage={currentIndex}
-      onPageSelected={e => handleSwiperIndexChanged(e.nativeEvent.position)}
-    >
-      {contents?.length &&
-        contents?.map(({ kalima, verses, similars, opposites }: any, index) => (
-          <View key={index} style={{ flex: 1 }}>
-            <ScrollableTab
-              kalima={kalima}
-              verses={verses}
-              similars={similars}
-              opposites={opposites}
-              handleChapterSelection={handleChapterSelection}
-            />
-          </View>
-        ))}
-    </ViewPager>
-    <UserPreferenceModal
-      visible={isUserPreferenceOpen}
-      onClose={handleCloseUserPreference}
-    />
-  </View>
-  );
-};
-
-export default LessonPages;
+  export default LessonPages;

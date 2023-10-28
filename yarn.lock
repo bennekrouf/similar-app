@@ -770,6 +770,13 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-numeric-separator" "^7.10.4"
 
+"@babel/plugin-transform-object-assign@^7.16.7":
+  version "7.22.5"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-object-assign/-/plugin-transform-object-assign-7.22.5.tgz#290c1b9555dcea48bb2c29ad94237777600d04f9"
+  integrity sha512-iDhx9ARkXq4vhZ2CYOSnQXkmxkDgosLi3J8Z17mKz7LyzthtkdVchLD7WZ3aXeCuvJDOW3+1I5TpJmwIbF9MKQ==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.22.5"
+
 "@babel/plugin-transform-object-rest-spread@^7.22.15":
   version "7.22.15"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-object-rest-spread/-/plugin-transform-object-rest-spread-7.22.15.tgz#21a95db166be59b91cde48775310c0df6e1da56f"
@@ -1078,7 +1085,7 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/preset-typescript@^7.13.0":
+"@babel/preset-typescript@^7.13.0", "@babel/preset-typescript@^7.16.7":
   version "7.23.2"
   resolved "https://registry.npmjs.org/@babel/preset-typescript/-/preset-typescript-7.23.2.tgz#c8de488130b7081f7e1482936ad3de5b018beef4"
   integrity sha512-u4UJc1XsS1GhIGteM8rnGiIvf9rJpiVgMEeCnwlLA7WJPC+jcXWJAGxYmeqs5hOZD8BbAfnV5ezBOxQbb4OUxA==
@@ -1763,11 +1770,6 @@
   resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.4.1.tgz#7b880758adca65fe47ee866cf7b00416b9dcc192"
   integrity sha512-dAbY5mfw+6Kas/GJ6QX9AZyY+K+eq9ad4Su6utoph/nxyH3whp5cMSgRNgE2VhGQVRZ/OG0qq3IaD3+wzoqJXw==
 
-"@react-native-community/viewpager@^2.0.1":
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/@react-native-community/viewpager/-/viewpager-2.0.2.tgz#622b190294b1310c4825c98daeaee1c8443f7124"
-  integrity sha512-CKVhIZdX/Cmb80muog8sKpi5vM8npwFp4tx4Dj1IvTBidZweuO22+VH2rDOj7E0LzdV9IYRJ4FGBwcPBD2qUrQ==
-
 "@react-native-firebase/app@^18.5.0", "@react-native-firebase/app@^18.6.0":
   version "18.6.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.6.0.tgz#939c92fda17c2641079314f30d52797db43a673e"
@@ -1954,7 +1956,7 @@
   resolved "https://registry.npmjs.org/@react-native/normalize-colors/-/normalize-colors-0.73.2.tgz#cc8e48fbae2bbfff53e12f209369e8d2e4cf34ec"
   integrity sha512-bRBcb2T+I88aG74LMVHaKms2p/T8aQd8+BZ7LuuzXlRfog1bMWWn/C5i0HVuvW4RPtXQYgIlGiXVDy9Ir1So/w==
 
-"@react-native/virtualized-lists@^0.72.4", "@react-native/virtualized-lists@^0.72.8":
+"@react-native/virtualized-lists@^0.72.8":
   version "0.72.8"
   resolved "https://registry.npmjs.org/@react-native/virtualized-lists/-/virtualized-lists-0.72.8.tgz#a2c6a91ea0f1d40eb5a122fb063daedb92ed1dc3"
   integrity sha512-J3Q4Bkuo99k7mu+jPS9gSUSgq+lLRSI/+ahXNwV92XgJ/8UgOTxu2LPwhJnBk/sQKxq7E8WkZBnBiozukQMqrw==
@@ -2139,22 +2141,6 @@
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.2.14.tgz#c01ba40e5bb57fc1dc41569bb3ccdb19eab1c539"
   integrity sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==
   dependencies:
-    "@types/react" "*"
-
-"@types/react-native-scrollable-tab-view@^0.10.3":
-  version "0.10.5"
-  resolved "https://registry.npmjs.org/@types/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.10.5.tgz#625bb40dc524d7f5ed70dfc5c71d4602707c7960"
-  integrity sha512-1OSqRO87aR1A6/tDHJ/84u6OfVUWXkaOmrxnLHZmkYtM8wUWE0UQic1otn41eGaG0W9HBWhFy+0wOQgiWaVINw==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-
-"@types/react-native@*":
-  version "0.72.5"
-  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.72.5.tgz#33a0d0c3c724395ee05bb37255937dcb3fae6d5f"
-  integrity sha512-HAt+EC576kbyg3+qruzbOLgVhgDHTHJ3d3rTkWRJ0wukze+l3ldWUkh1IarERHqsUlWwmkuYu0+4TQE5y1EjwA==
-  dependencies:
-    "@react-native/virtualized-lists" "^0.72.4"
     "@types/react" "*"
 
 "@types/react-test-renderer@^18.0.0":
@@ -3124,14 +3110,6 @@ create-jest@^29.7.0:
     jest-util "^29.7.0"
     prompts "^2.0.1"
 
-create-react-class@^15.6.2:
-  version "15.7.0"
-  resolved "https://registry.npmjs.org/create-react-class/-/create-react-class-15.7.0.tgz#7499d7ca2e69bb51d13faf59bd04f0c65a1d6c1e"
-  integrity sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==
-  dependencies:
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
 cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -3283,6 +3261,11 @@ deprecated-react-native-prop-types@^5.0.0:
     "@react-native/normalize-colors" "^0.73.0"
     invariant "^2.2.4"
     prop-types "^15.8.1"
+
+dequal@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-1.0.0.tgz#41c6065e70de738541c82cdbedea5292277a017e"
+  integrity sha512-/Nd1EQbQbI9UbSHrMiKZjFLrXSnU328iQdZKPQf78XQI6C+gutkFUeoHpG5J08Ioa6HeRbRNFpSIclh1xyG0mw==
 
 destroy@1.2.0:
   version "1.2.0"
@@ -5322,7 +5305,7 @@ logkitty@^0.7.1:
     dayjs "^1.8.15"
     yargs "^15.1.0"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -5365,10 +5348,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-mayo-firebase-auth@^1.0.54:
-  version "1.0.54"
-  resolved "https://registry.yarnpkg.com/mayo-firebase-auth/-/mayo-firebase-auth-1.0.54.tgz#87f5d7d0411666e6a8ce3648dbbc38e03d4acd19"
-  integrity sha512-2BPB32mZ29i3Fc9128kedr2wgWItCUh2XQ1zd7DYscactOZcKJJZgJYyempj2L8avwtAD9cmy3d083Oyf4QNLA==
+mayo-firebase-auth@^1.0.55:
+  version "1.0.55"
+  resolved "https://registry.yarnpkg.com/mayo-firebase-auth/-/mayo-firebase-auth-1.0.55.tgz#3fafbf8c7923da950f9aed6ac1e37c473be32be1"
+  integrity sha512-d8Pls/xAPZYsyKgkjzTPN/Rdj49YdU5232CFMCDqdwecb8SxGoWJAlppzCX+pn0+mEYt4HHlFtfqzIF1VWLxpA==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-firebase/auth" "^18.5.0"
@@ -5378,27 +5361,27 @@ mayo-firebase-auth@^1.0.54:
     "@types/node" "^20.6.2"
     "@types/react" "^18.2.22"
     events "^3.3.0"
-    mayo-firebase-config "^1.0.12"
+    mayo-firebase-config "^1.1.0"
     mayo-logger "^1.0.8"
 
-mayo-firebase-config@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/mayo-firebase-config/-/mayo-firebase-config-1.0.12.tgz#f60f27ed5868f76a3811952475d12177abfca6e7"
-  integrity sha512-Bn0leWj9nn47lp2Zb1NFeKMCBU7O9wWLrG9AAKSz9TbvnSJIclgRKrxHNZRLHGayhluvJt5CW5VGO/w6E/7WKw==
+mayo-firebase-config@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mayo-firebase-config/-/mayo-firebase-config-1.1.0.tgz#962986767f3cd11ce5294040865d956b2dae9023"
+  integrity sha512-L6p0r3Qy4OL/yTduK9xDDCu2zIBJ5+4eh62o+GQh8TUV8pO6ARjsxBobWjzzCS1dAOC/p7mMkqiHEsknOrV7uQ==
   dependencies:
     mayo-logger "^1.0.8"
 
-mayo-firestore-write@^1.1.10:
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/mayo-firestore-write/-/mayo-firestore-write-1.1.10.tgz#47555a9f741ec2bae2727f79aabfec54235f2fde"
-  integrity sha512-sy1GSmYAfq3GOeGM5Rm60unk3yo7145cYMk5rRSCvtcEeLq8pcl7Duo4ddUpkH+I2TWIXJcn3weVkP4ly3gr3Q==
+mayo-firestore-write@^1.1.11:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/mayo-firestore-write/-/mayo-firestore-write-1.1.11.tgz#6f9938dab0c121f22a7d019034286850f0600bee"
+  integrity sha512-axM8NRonyQ0r3BVGo+nmP3LvFvbfsWFAUm/a5kVsOYvVupsuU8mRp+yJsJYf3zHPZvujM4iiZ11yFDUV7JKQxA==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"
     "@react-native-firebase/app" "^18.5.0"
     "@react-native-firebase/auth" "^18.5.0"
     "@react-native-firebase/firestore" "^18.5.0"
-    mayo-firebase-config "^1.0.12"
+    mayo-firebase-config "^1.1.0"
     mayo-logger "^1.0.8"
     react-native-device-info "^10.11.0"
 
@@ -6668,7 +6651,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -6755,6 +6738,13 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-collapsible-tab-view@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible-tab-view/-/react-native-collapsible-tab-view-6.2.1.tgz#b48760cd98c0156bc89300516ae10ff55f7df298"
+  integrity sha512-pgmpZYSg6TPYmhv3Dw/czFJHk4AzcYN2df3EMlKwFqbu1ifmlA866hBUVDX3mlbRaros75U5S1wpGCwlqqXLTQ==
+  dependencies:
+    use-deep-compare "^1.1.0"
+
 react-native-config@^1.5.1:
   version "1.5.1"
   resolved "https://registry.npmjs.org/react-native-config/-/react-native-config-1.5.1.tgz#73c94f511493e9b7ff9350cdf351d203a1b05acc"
@@ -6801,7 +6791,7 @@ react-native-localize@^3.0.2:
 
 react-native-pager-view@^6.2.2:
   version "6.2.2"
-  resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.2.2.tgz#4c1c45d5f3f622c0922ef96ac114666392ebf5ec"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.2.2.tgz#4c1c45d5f3f622c0922ef96ac114666392ebf5ec"
   integrity sha512-MLkJB7iP6v0Hd4/B4/R/gLCSE+YBtjxG/vHZYBDU+fI3U7HBYgKAg4o6ad8HxbKVcWWyRDNeeVRGISw1MUjlHw==
 
 react-native-paper@^5.11.1:
@@ -6812,6 +6802,16 @@ react-native-paper@^5.11.1:
     "@callstack/react-theme-provider" "^3.0.9"
     color "^3.1.2"
     use-latest-callback "^0.1.5"
+
+react-native-reanimated@^3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.5.4.tgz#a6c2b0c43b6dad246f5d276213974afedb8e3fc7"
+  integrity sha512-8we9LLDO1o4Oj9/DICeEJ2K1tjfqkJagqQUglxeUAkol/HcEJ6PGxIrpBcNryLqCDYEcu6FZWld/FzizBIw6bg==
+  dependencies:
+    "@babel/plugin-transform-object-assign" "^7.16.7"
+    "@babel/preset-typescript" "^7.16.7"
+    convert-source-map "^2.0.0"
+    invariant "^2.2.4"
 
 react-native-safe-area-context@^4.7.4:
   version "4.7.4"
@@ -6825,16 +6825,6 @@ react-native-screens@^3.27.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
-
-react-native-scrollable-tab-view@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-1.0.0.tgz#87319896067f7bb643ecd7fba2cba4d6d8f9e18b"
-  integrity sha512-lpZ9xz+PBdgSzpk93VjCIfxV0zvJDX9iEUP8ImDg3p1QJGHOWbWyfDx+lcx5VCDVrrdZdtuVAAdc0tkYXZyQDw==
-  dependencies:
-    "@react-native-community/viewpager" "^2.0.1"
-    create-react-class "^15.6.2"
-    prop-types "^15.6.0"
-    react-timer-mixin "^0.13.3"
 
 react-native-svg@^13.14.0:
   version "13.14.0"
@@ -6927,11 +6917,6 @@ react-test-renderer@18.2.0:
     react-is "^18.2.0"
     react-shallow-renderer "^16.15.0"
     scheduler "^0.23.0"
-
-react-timer-mixin@^0.13.3:
-  version "0.13.4"
-  resolved "https://registry.npmjs.org/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
-  integrity sha512-4+ow23tp/Tv7hBM5Az5/Be/eKKF7DIvJ09voz5LyHGQaqqz9WV8YMs31eFvcYQs7d451LSg7kDJV70XYN/Ug/Q==
 
 react@18.2.0:
   version "18.2.0"
@@ -7849,6 +7834,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-deep-compare@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/use-deep-compare/-/use-deep-compare-1.1.0.tgz#85580dde751f68400bf6ef7e043c7f986595cef8"
+  integrity sha512-6yY3zmKNCJ1jjIivfZMZMReZjr8e6iC6Uqtp701jvWJ6ejC/usXD+JjmslZDPJQgX8P4B1Oi5XSLHkOLeYSJsA==
+  dependencies:
+    dequal "1.0.0"
 
 use-latest-callback@^0.1.5, use-latest-callback@^0.1.7:
   version "0.1.7"

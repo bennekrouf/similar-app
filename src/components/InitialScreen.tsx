@@ -1,12 +1,8 @@
-import { useEffect, useContext } from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-
+import React, { useEffect, useContext } from 'react';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { signInFirebase } from 'mayo-firestore-write';
-
-import { firebaseConfig } from '../../_firebaseConfig';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../models/interfaces';
-import { Logger } from 'mayo-logger';
 import { handleLogout } from '../storage/handleLogout';
 
 const InitialScreen = () => {
@@ -16,9 +12,9 @@ const InitialScreen = () => {
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
       try {
-        if(!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        const newUser = await signInFirebase(firebaseConfig, googleCredentials);
-        if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
+        if (!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
+        const newUser = await signInFirebase(googleCredentials);
+        if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
         handleLogout();
@@ -29,11 +25,15 @@ const InitialScreen = () => {
     return () => {
       authEvents.off('signedIn', onSignedIn);
     };
-    
   }, []);
 
   useEffect(() => {
-    navigation.navigate(user ? 'LessonPages' : 'SignIn');
+    if (user) {
+      // Navigate to MenuScreen once user is authenticated
+      navigation.navigate('Menu');
+    } else {
+      navigation.navigate('SignIn');
+    }
   }, [user]);
 
   return null;
