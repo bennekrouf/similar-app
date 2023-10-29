@@ -3605,9 +3605,9 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8.19.0:
+eslint@^8.51.0:
   version "8.52.0"
-  resolved "https://registry.npmjs.org/eslint/-/eslint-8.52.0.tgz#d0cd4a1fac06427a61ef9242b9353f36ea7062fc"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.52.0.tgz#d0cd4a1fac06427a61ef9242b9353f36ea7062fc"
   integrity sha512-zh/JHnaixqHZsolRB/w9/02akBk9EPrOs9JwcTP2ek7yL5bVvXuRariiaAjjoJ5DvuwQ1WAE/HsMz+w17YgBCg==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
@@ -5348,10 +5348,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-mayo-firebase-auth@^1.0.55:
-  version "1.0.55"
-  resolved "https://registry.yarnpkg.com/mayo-firebase-auth/-/mayo-firebase-auth-1.0.55.tgz#3fafbf8c7923da950f9aed6ac1e37c473be32be1"
-  integrity sha512-d8Pls/xAPZYsyKgkjzTPN/Rdj49YdU5232CFMCDqdwecb8SxGoWJAlppzCX+pn0+mEYt4HHlFtfqzIF1VWLxpA==
+mayo-firebase-auth@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/mayo-firebase-auth/-/mayo-firebase-auth-1.2.1.tgz#fd1cfaeb80fcd38bdc89a1ace82804c86b3f45b3"
+  integrity sha512-PXL/xHCN6Lh6q+71LDQQ+1sbdz5EGJ/H9Ikr2H0uRK+B8DjkvkWnOg8+DVAp951Ge1Q9bPBk+Ei4NfiB7P0MBA==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-firebase/auth" "^18.5.0"
@@ -5371,10 +5371,17 @@ mayo-firebase-config@^1.1.0:
   dependencies:
     mayo-logger "^1.0.8"
 
-mayo-firestore-write@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/mayo-firestore-write/-/mayo-firestore-write-1.1.11.tgz#6f9938dab0c121f22a7d019034286850f0600bee"
-  integrity sha512-axM8NRonyQ0r3BVGo+nmP3LvFvbfsWFAUm/a5kVsOYvVupsuU8mRp+yJsJYf3zHPZvujM4iiZ11yFDUV7JKQxA==
+mayo-firebase-config@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mayo-firebase-config/-/mayo-firebase-config-1.2.0.tgz#32f4cdfac7a822809f70ff3ac965b3190c6076ed"
+  integrity sha512-x9uwizK6jbzJi/EI6yD2ZGlaxgHKPdN+VbpLpeyIGbTGKlsYa+YBZTrP2Juzkr5cijgBi1eU7UdisXTrvDYiPg==
+  dependencies:
+    mayo-logger "^1.0.8"
+
+mayo-firestore-write@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mayo-firestore-write/-/mayo-firestore-write-1.2.0.tgz#79ecda3bb026ccbee20f776c0826cba91fd34c2a"
+  integrity sha512-/rVVub96uiOGUYmO+uNvdEQsYYVQGXldFFbZ0CAo5IXsG88fASjOz5c5WNs0iPkBLtzE922qVHKd7/0liBIMUw==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"
@@ -5390,10 +5397,10 @@ mayo-logger@^1.0.8:
   resolved "https://registry.npmjs.org/mayo-logger/-/mayo-logger-1.0.8.tgz#57123a32e3673f2bc368dbe22d5bc34b6af98560"
   integrity sha512-hR3JiImAJUMcY9BZtpgtGsgvOJ0EnpO5vj35gkExaXLmZ1jtPMp2/30+WUM8XDTIH9LqWQ6RKYMmZ9KsJi5goQ==
 
-mayo-settings@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/mayo-settings/-/mayo-settings-1.2.0.tgz#15d2bdf6401c677924c9126e0e3cf45e72b4106d"
-  integrity sha512-MgUL/SuvhVSjgbMYWRgEnPE6HWfTppeeL+Rz5LtNgilygg68SHBDJxhKm0wCGr5plaPq0k0Q/nso7GNacr2i/w==
+mayo-settings@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/mayo-settings/-/mayo-settings-1.2.2.tgz#9cce204697601ffc911025583ac44c69bd34efb3"
+  integrity sha512-/nhP+9SkIb/7gNabQtWXUp2vZvo4D1fFGuPh8C85EfdG9WGJdBtMmrSfTHeFoxdCuf4mbveB2cFyWi+8ogmzAA==
   dependencies:
     "@types/react" "^18.2.27"
     mayo-logger "^1.0.8"
@@ -6767,7 +6774,7 @@ react-native-fontawesome@^7.0.0:
 
 react-native-gesture-handler@^2.13.4:
   version "2.13.4"
-  resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.13.4.tgz#6a99384330278c4488bcfc7f1814be3e0d7401fd"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.13.4.tgz#6a99384330278c4488bcfc7f1814be3e0d7401fd"
   integrity sha512-smpYOVbvWABpq2H+lmDnfOLCTH934aUPO1w2/pQXvm1j+M/vmGQmvgRDJOpXcks17HLtNNKXD6tcODf3aPqDfA==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"

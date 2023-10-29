@@ -2,14 +2,15 @@
   /* eslint-disable react-native/no-inline-styles */
   import ScrollableTab from './ScrollableTab/ScrollableTab';
   import React, { useEffect, useState, useContext } from 'react';
-  import { View, Text } from 'react-native';
-  import ViewPager from 'react-native-pager-view';
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import { UserContext, UserContextType } from 'mayo-firebase-auth';
   import useFetchLessons from '../../hooks/useFetchLessons';
-  // import { useUserPreference, MayoSettingsModal } from 'mayo-settings';
   import { Logger } from 'mayo-logger';
 
+  import { View, Text, StyleSheet } from 'react-native';
+  import { Tabs } from 'react-native-collapsible-tab-view';
+
+  const HEADER_HEIGHT = 0;
   interface ScrollableSwipablePageProps {}
 
   const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
@@ -17,12 +18,6 @@
     const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
     const { contents, isLoading } = useFetchLessons(selectedChapter);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-    // const {
-    //   isUserPreferenceOpen,
-    //   handleOpenUserPreference,
-    //   handleCloseUserPreference,
-    // } = useUserPreference();
 
     const handleChapterSelection = (chapter: any) => {
       setSelectedChapter(chapter.no);
@@ -71,6 +66,11 @@
       getCurrentIndexFromStorage();
     }, []);
 
+    const Header = () => {
+      // Place your header component here
+      return <View style={styles.header} />;
+    };
+  
     if (isLoading) {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -78,33 +78,33 @@
         </View>
       );
     }
-
+  
     return (
-      <View style={{ flex: 1 }}>
-      <ViewPager
-        style={{ flex: 1 }}
-        initialPage={currentIndex}
-        onPageSelected={e => handleSwiperIndexChanged(e.nativeEvent.position)}
-      >
+      <Tabs.Container renderHeader={Header}>
         {contents?.length &&
-          contents?.map(({ kalima, verses, similars, opposites }: any, index) => (
-            <View key={index} style={{ flex: 1 }}>
-              <ScrollableTab
-                kalima={kalima}
-                verses={verses}
-                similars={similars}
-                opposites={opposites}
-                handleChapterSelection={handleChapterSelection}
-              />
-            </View>
+          contents.map(({ kalima, verses, similars, opposites }: any, index) => (
+            <Tabs.Tab name={`Tab${index}`} key={index}>
+              <Tabs.ScrollView>
+                <ScrollableTab
+                  kalima={kalima}
+                  verses={verses}
+                  similars={similars}
+                  opposites={opposites}
+                  handleChapterSelection={handleChapterSelection}
+                />
+              </Tabs.ScrollView>
+            </Tabs.Tab>
           ))}
-      </ViewPager>
-      {/* <MayoSettingsModal
-        visible={isUserPreferenceOpen}
-        onClose={handleCloseUserPreference}
-      /> */}
-    </View>
+      </Tabs.Container>
     );
   };
-
+  
+  const styles = StyleSheet.create({
+    header: {
+      height: HEADER_HEIGHT,
+      width: '100%',
+      backgroundColor: '#2196f3',
+    },
+  });
+  
   export default LessonPages;

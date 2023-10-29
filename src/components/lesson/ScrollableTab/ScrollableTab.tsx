@@ -5,27 +5,25 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import SourateBox from '../../SourateBox';
-// import { useUserPreference } from '../../../modals/SourateConfiguration/UserPreferenceContext';
-import { useUserPreference, MayoSettingsModal } from 'mayo-settings';
+import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 
 import LessonContent from './LessonContent';
-import NewChapterSelectionModal from '../../../modals/SourateSelector/NewChapterSelectionModal';
 import {ScrollableTabProps} from '../../../models/interfaces';
 import {loadExercise} from '../../../api/loadExercisesList';
 import { flushAllLessonKeys } from '../../../api/flushAllLessonKeys';
-
+import { useChapters } from '../../../hooks/useFetchChapters';
 import { RootStackParamList } from '../../../models/interfaces';
-import { useCollapsibleStyle } from 'react-native-collapsible-tab-view';
+import SouratesSelector from '../../../modals/SourateSelector/SouratesSelector';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, opposites, handleChapterSelection}) => {
   // console.log(`'Rendering ScrollableTab' with ${kalima} ${JSON.stringify(verses)} ${JSON.stringify(similars)} ${JSON.stringify(opposites)}`);
-  console.log(`'Rendering ScrollableTab' with ${JSON.stringify(verses[0])}`);
-  const LessonContentScene = useCollapsibleStyle();
-
+  // console.log(`'Rendering ScrollableTab' with ${JSON.stringify(verses[0])}`);
   const {t} = useTranslation();
-  // const { handleOpenUserPreference } = useUserPreference();
+  // const { handleOpenMayoSettings } = useMayoSettings();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [exercises, setExercises] = useState([]);
+  // const { isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
+  const {chapters, isLoading} = useChapters();
+
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'DiscriminantExercise'>>();
 
@@ -62,32 +60,15 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
     }
   };
 
-  const goExercises = () => {
-    navigation.navigate('DiscriminantExercise', {
-      kalima,
-      chapterName: verses[0]?.sourate,
-      exercises,
-    });
-  }
-
     // (async () => {
     //   setExercises(await loadExercise(kalima).catch(console.error));
     // })();
 
   return (
     <>
-     <CollapsibleTabView
-        navigationState={{ index: 0, routes: [{ key: 'verseList', title: 'Verse List' }] }}
-        renderScene={LessonContentScene}
-        // You can use renderHeader to render custom headers
-      >
-        <View key="verseList" style={styles.view}>
+      <View style={styles.view}>
         {/* Left section of the header */}
-        <View style={styles.headerContainer}>
-
-        {/* <TouchableOpacity onPress={handleOpenUserPreference}>
-          <Text style={styles.optionsMenuText}>...</Text>
-        </TouchableOpacity> */}
+        {/* <View style={styles.headerContainer}>
 
           <View>
             <Text style={styles.leftHeaderText}>
@@ -95,16 +76,12 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
             </Text>
           </View>
 
-          <TouchableOpacity onPress={goExercises}>
-            <Text>{t('test')}({exercises.length})</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity
             onPress={handleOpenSouratesModal}>
             <SourateBox chapterNo={verses[0]?.chapter_no} />
           </TouchableOpacity>
 
-        </View>
+        </View> */}
 
         <View>
           <LessonContent
@@ -115,14 +92,16 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
           />
         </View>
 
-        <NewChapterSelectionModal
-          visible={isModalOpen}
-          onClose={handleCloseSouratesModal}
-          handleLabelPress={handleLabelPress}
-          panResponder={panResponder}
-        />
-       </View>
-      </CollapsibleTabView>
+        {/* <MayoSettingsModal
+          visible={isMayoSettingsOpen}
+          onClose={handleCloseMayoSettings}
+          config={{
+            headerTitle: 'Select sourate',
+          }}
+        >
+          <SouratesSelector handleLabelPress={handleLabelPress} chapters={chapters} />
+        </MayoSettingsModal> */}
+      </View>
     </>
   );
 };

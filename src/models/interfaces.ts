@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   ErrorScreen: { errorMessage: string };
   Initial: undefined;
+  Menu: undefined;
   LessonPages: undefined;
   SignIn: { app: string };
   DiscriminantExercise: {

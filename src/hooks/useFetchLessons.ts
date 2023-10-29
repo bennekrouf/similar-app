@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { loadLessons } from '../api/loadLessons';
-import { Logger } from 'mayo-logger'; 
+import { Logger } from 'mayo-logger';
+import { Statement, RootStackParamList } from '../models/interfaces';
 
-const useFetchLessons = (selectedChapter:number) => {
-  const [contents, setContents] = useState(null);
+const useFetchLessons = (selectedChapter: number) => {
+  const [contents, setContents] = useState<Statement[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<RootStackParamList["ErrorScreen"] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,19 +14,19 @@ const useFetchLessons = (selectedChapter:number) => {
         Logger.info('Fetching lessons', { selectedChapter }, { tag: 'LessonsFetch' });
 
         const lessons = await loadLessons(selectedChapter);
-        
-        setContents(() => {
-          return lessons?.length && lessons?.map(lesson => {
-            if (!lesson.verses?.length) {
-              Logger.warn('Lesson without verses', { lessonKalima: lesson.kalima }, { tag: 'LessonsFetch' });
-            }
-            return lesson;
-          });
+        setContents(lessons);
+
+        // Log lessons (Statements) with missing verses if needed
+        lessons.forEach(lesson => {
+          if (!lesson.verses) {
+            Logger.warn('Lesson without verse', { lessonKalima: lesson.kalima }, { tag: 'LessonsFetch' });
+          }
         });
 
-      } catch (error) {
+      } catch (err) {
         const errorMessage = 'Error occurred during lessons fetching.';
-        Logger.error(errorMessage, error, { tag: 'LessonsFetch' });
+        setError({ errorMessage });
+        Logger.error(errorMessage, err, { tag: 'LessonsFetch' });
       } finally {
         setIsLoading(false);
       }
@@ -33,7 +35,7 @@ const useFetchLessons = (selectedChapter:number) => {
     fetchData();
   }, [selectedChapter]);
 
-  return { contents, isLoading };
+  return { contents, isLoading, error };
 };
 
 export default useFetchLessons;
