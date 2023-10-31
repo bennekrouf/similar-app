@@ -20,11 +20,9 @@ module.exports = async () => {
     resolver: {
       sourceExts: [...sourceExts, 'cjs', 'svg'],
       extraNodeModules: {
-        "mayo-settings": path.resolve(__dirname, "../mayo-settings")
       }
     },
     watchFolders: [
-      path.resolve(__dirname, "../mayo-settings")
     ]
   };
 };

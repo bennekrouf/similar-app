@@ -5371,10 +5371,10 @@ mayo-firebase-config@^1.1.0:
   dependencies:
     mayo-logger "^1.0.8"
 
-mayo-firebase-config@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/mayo-firebase-config/-/mayo-firebase-config-1.2.0.tgz#32f4cdfac7a822809f70ff3ac965b3190c6076ed"
-  integrity sha512-x9uwizK6jbzJi/EI6yD2ZGlaxgHKPdN+VbpLpeyIGbTGKlsYa+YBZTrP2Juzkr5cijgBi1eU7UdisXTrvDYiPg==
+mayo-firebase-config@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/mayo-firebase-config/-/mayo-firebase-config-1.2.2.tgz#00ca431bc290226cea06ff0777e53c56ea06bd02"
+  integrity sha512-miXwoUF+Hw+vwCMgC39oZt3dCOCDTCkZYe2WXhQQ1BpXyEl7aD+zT5qqCjrbps/R+CpR7IUguk4DiKiIq3TGfw==
   dependencies:
     mayo-logger "^1.0.8"
 

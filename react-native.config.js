@@ -1,7 +1,9 @@
 module.exports = {
   project: {
     ios: {},
-    android: {},
+    android: {
+      packageInstance: "new FirebaseConfigExtractorModule()"
+    },
   },
   assets: ['./assets/fonts/'],
 };
