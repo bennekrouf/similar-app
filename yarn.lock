@@ -5373,7 +5373,7 @@ mayo-firebase-config@^1.1.0:
 
 mayo-firebase-config@^1.2.0:
   version "1.2.0"
-  resolved "https://registry.yarnpkg.com/mayo-firebase-config/-/mayo-firebase-config-1.2.0.tgz#32f4cdfac7a822809f70ff3ac965b3190c6076ed"
+  resolved "https://registry.npmjs.org/mayo-firebase-config/-/mayo-firebase-config-1.2.0.tgz#32f4cdfac7a822809f70ff3ac965b3190c6076ed"
   integrity sha512-x9uwizK6jbzJi/EI6yD2ZGlaxgHKPdN+VbpLpeyIGbTGKlsYa+YBZTrP2Juzkr5cijgBi1eU7UdisXTrvDYiPg==
   dependencies:
     mayo-logger "^1.0.8"
@@ -5399,7 +5399,7 @@ mayo-logger@^1.0.8:
 
 mayo-settings@^1.2.2:
   version "1.2.2"
-  resolved "https://registry.yarnpkg.com/mayo-settings/-/mayo-settings-1.2.2.tgz#9cce204697601ffc911025583ac44c69bd34efb3"
+  resolved "https://registry.npmjs.org/mayo-settings/-/mayo-settings-1.2.2.tgz#9cce204697601ffc911025583ac44c69bd34efb3"
   integrity sha512-/nhP+9SkIb/7gNabQtWXUp2vZvo4D1fFGuPh8C85EfdG9WGJdBtMmrSfTHeFoxdCuf4mbveB2cFyWi+8ogmzAA==
   dependencies:
     "@types/react" "^18.2.27"
