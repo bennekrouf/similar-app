@@ -9,6 +9,8 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import com.facebook.react.modules.i18nmanager.I18nUtil;
+// import com.mayorana.mayofirebaseconfig.FirebaseConfigExtractorPackage;
+
 import java.util.List;
 // import com.reactcommunity.rnlocalize.RNLocalizePackage;
 
@@ -31,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           // packages.add(new RNGestureHandlerPackage());
           // packages.add(new RNLocalizePackage());
+          // packages.add(new FirebaseConfigExtractorPackage());
           return packages;
         }
 
