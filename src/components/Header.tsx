@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-// import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
+import { useMayoSettings } from 'mayo-settings';
 
-const Header = ({ count, goodCount, wrongCount, handleOpenMayoSettings }) => {
+const Header = ({ count, goodCount, wrongCount }) => {
     const insets = useSafeAreaInsets();
+    const { handleOpenMayoSettings } = useMayoSettings();
 
     return (
       <View style={{ paddingTop: insets.top, backgroundColor: 'white' }}>

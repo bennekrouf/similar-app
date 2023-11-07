@@ -1,24 +1,41 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Logger } from 'mayo-logger';
 
 import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
-import { MenuStackParamList } from '../models/interfaces';
+import { RootStackParamList } from '../models/interfaces';
 import SourateBox from './SourateBox';
 import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
 import { usePersistedState } from '../hooks/usePersistState';
 import { handleLabelSelect } from '../modals/SourateConfiguration/handleLabelSelect/handleLabelSelect';
 import labels from '../modals/SourateConfiguration/labels.json';
 import Header from '../components/Header';
+import { handleLogout } from '../storage/handleLogout';
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 const initialState = [];
 
 const MenuScreen = () => {
-  const navigation = useNavigation<NavigationProp<MenuStackParamList>>();
-  const { handleOpenMayoSettings, isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
+  const { authEvents } = useContext(UserContext) as UserContextType;
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
   const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState);
   console.log('Initial selectedLabels:', selectedLabels);
+
+  useEffect(() => {
+    const onSignedOut = async () => {
+      Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
+      navigation.navigate('SignIn');
+    };
+    
+    authEvents.on('signedOut', onSignedOut);
+    
+    return () => {
+      Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
+      authEvents.off('signedOut', onSignedOut);
+    };
+  }, []);
 
   // Retrieve the necessary data for your header
   // This can be fetched from a context, state, or props
@@ -41,7 +58,6 @@ const MenuScreen = () => {
           count={count}
           goodCount={goodCount}
           wrongCount={wrongCount}
-          handleOpenMayoSettings={handleOpenMayoSettings}
         />
 
         <View style={styles.container}>
@@ -54,7 +70,12 @@ const MenuScreen = () => {
         <MayoSettingsModal
           visible={isMayoSettingsOpen}
           onClose={handleCloseMayoSettings}
-          config={{ headerTitle: 'Custom Settings'}} >
+          onLogout={handleLogout}
+          config={{
+            headerTitle: 'Settings',
+            logoutButtonText: 'Custom Logout',
+            showFooter: true,
+          }} >
           <LabelsSelector labels={labels} selectedLabels={selectedLabels} onLabelSelect={onLabelClicked} />
         </MayoSettingsModal>
 
