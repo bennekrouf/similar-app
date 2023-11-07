@@ -5,7 +5,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import SourateBox from '../../SourateBox';
-import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
+// import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../../models/interfaces';
@@ -148,9 +148,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Regular',
     color: 'white',
-  },
-  optionsMenuText: {
-    fontSize: 24,
-    padding: 5,
   }
 });

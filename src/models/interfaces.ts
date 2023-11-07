@@ -2,8 +2,26 @@ export type RootStackParamList = {
   ErrorScreen: { errorMessage: string };
   Initial: undefined;
   Menu: undefined;
-  LessonPages: undefined;
   SignIn: { app: string };
+  LessonPages: {
+    count?: number;
+    goodCount?: number;
+    wrongCount?: number;
+  };
+  DiscriminantExercise: {
+    kalima?: string;
+    exercises?: any;
+    chapterName?: string;
+  };
+};
+
+
+export type MenuStackParamList = {
+  LessonPages: {
+    count?: number;
+    goodCount?: number;
+    wrongCount?: number;
+  };
   DiscriminantExercise: {
     kalima?: string;
     exercises?: any;

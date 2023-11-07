@@ -5397,10 +5397,10 @@ mayo-logger@^1.0.8:
   resolved "https://registry.npmjs.org/mayo-logger/-/mayo-logger-1.0.8.tgz#57123a32e3673f2bc368dbe22d5bc34b6af98560"
   integrity sha512-hR3JiImAJUMcY9BZtpgtGsgvOJ0EnpO5vj35gkExaXLmZ1jtPMp2/30+WUM8XDTIH9LqWQ6RKYMmZ9KsJi5goQ==
 
-mayo-settings@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/mayo-settings/-/mayo-settings-1.2.2.tgz#9cce204697601ffc911025583ac44c69bd34efb3"
-  integrity sha512-/nhP+9SkIb/7gNabQtWXUp2vZvo4D1fFGuPh8C85EfdG9WGJdBtMmrSfTHeFoxdCuf4mbveB2cFyWi+8ogmzAA==
+mayo-settings@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/mayo-settings/-/mayo-settings-1.2.3.tgz#6456104bd360d2ec71c8a1f52932c7659404bf80"
+  integrity sha512-xt/aF08D3d6Tw1ZpKggQHTr32jKghjnxwqV7/B/uQQKfSwMvPl9uZt8O8sC4xMHxdJxBb22z+zzl2rfdWkokjA==
   dependencies:
     "@types/react" "^18.2.27"
     mayo-logger "^1.0.8"

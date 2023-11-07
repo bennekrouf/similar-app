@@ -1,14 +1,15 @@
   /* eslint-disable radix */
   /* eslint-disable react-native/no-inline-styles */
-  import ScrollableTab from './ScrollableTab/ScrollableTab';
-  import React, { useEffect, useState, useContext } from 'react';
-  import AsyncStorage from '@react-native-async-storage/async-storage';
-  import { UserContext, UserContextType } from 'mayo-firebase-auth';
-  import useFetchLessons from '../../hooks/useFetchLessons';
-  import { Logger } from 'mayo-logger';
-
   import { View, Text, StyleSheet } from 'react-native';
   import { Tabs } from 'react-native-collapsible-tab-view';
+  import React, { useEffect, useState, useContext } from 'react';
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+
+  import { UserContext, UserContextType } from 'mayo-firebase-auth';
+  import { Logger } from 'mayo-logger';
+
+  import ScrollableTab from './ScrollableTab/ScrollableTab';
+  import useFetchLessons from '../../hooks/useFetchLessons';
 
   const HEADER_HEIGHT = 0;
   interface ScrollableSwipablePageProps {}

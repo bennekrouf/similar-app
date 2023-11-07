@@ -1,25 +1,30 @@
 import React, {useEffect} from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../models/interfaces';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Logger } from 'mayo-logger';
+
+import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
+import { MenuStackParamList } from '../models/interfaces';
 import SourateBox from './SourateBox';
-// import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
 import { usePersistedState } from '../hooks/usePersistState';
 import { handleLabelSelect } from '../modals/SourateConfiguration/handleLabelSelect/handleLabelSelect';
-import { Logger } from 'mayo-logger';
 import labels from '../modals/SourateConfiguration/labels.json';
+import Header from '../components/Header';
 
 const initialState = [];
 
 const MenuScreen = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  // const { handleOpenMayoSettings } = useMayoSettings();
+  const navigation = useNavigation<NavigationProp<MenuStackParamList>>();
+  const { handleOpenMayoSettings, isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
   const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState);
   console.log('Initial selectedLabels:', selectedLabels);
 
-  // const { isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
+  // Retrieve the necessary data for your header
+  // This can be fetched from a context, state, or props
+  const count = 10; // example count
+  const goodCount = 5; // example good count
+  const wrongCount = 2; // example wrong count
   // Logger.info('User Preference Modal State:', { isOpen: isMayoSettingsOpen }, { tag: 'HomeScreen:ModalState' });
 
   const onLabelClicked = (labelName: string) => {
@@ -32,37 +37,26 @@ const MenuScreen = () => {
 
   return (
       <View style={styles.view}>
-        {/* Left section of the header */}
-        <View style={styles.headerContainer}>
-
-          {/* <TouchableOpacity onPress={handleOpenMayoSettings}>
-            <Text style={styles.optionsMenuText}>...</Text>
-          </TouchableOpacity> */}
-
-          {/* <TouchableOpacity
-            onPress={handleOpenSouratesModal}>
-            <SourateBox chapterNo={verses[0]?.chapter_no} />
-          </TouchableOpacity> */}
-
-        </View>
+        <Header
+          count={count}
+          goodCount={goodCount}
+          wrongCount={wrongCount}
+          handleOpenMayoSettings={handleOpenMayoSettings}
+        />
 
         <View style={styles.container}>
-          <Button title="Lessons" onPress={() => navigation.navigate('LessonPages')} />
-          <Button 
-            title="Exercises" 
-            onPress={() => navigation.navigate('DiscriminantExercise')}
-          />
+          <Button title="Lessons" 
+          onPress={() => navigation.navigate('LessonPages')} />
+          <Button title="Exercises" 
+          onPress={() => navigation.navigate('DiscriminantExercise')}/>
         </View>
 
-        {/* <MayoSettingsModal
+        <MayoSettingsModal
           visible={isMayoSettingsOpen}
           onClose={handleCloseMayoSettings}
-          config={{
-            headerTitle: 'Custom Settings',
-          }}
-        >
+          config={{ headerTitle: 'Custom Settings'}} >
           <LabelsSelector labels={labels} selectedLabels={selectedLabels} onLabelSelect={onLabelClicked} />
-        </MayoSettingsModal> */}
+        </MayoSettingsModal>
 
       </View>
   );
@@ -104,3 +98,16 @@ const styles = StyleSheet.create({
 });
 
 export default MenuScreen;
+
+
+// <View style={styles.headerContainer}>
+// <TouchableOpacity onPress={handleOpenMayoSettings}>
+//   <Text style={styles.optionsMenuText}>...</Text>
+// </TouchableOpacity>
+
+// {/* <TouchableOpacity
+//   onPress={handleOpenSouratesModal}>
+//   <SourateBox chapterNo={verses[0]?.chapter_no} />
+// </TouchableOpacity> */}
+
+// </View>
