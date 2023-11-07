@@ -2,7 +2,7 @@ import { isInternetReachable } from './netUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 
-const BASE_URL = Config.DOMAIN;
+const BASE_URL = Config.DOMAIN || 'http://localhost:8000';
 
 async function request(endpoint: string, method = 'GET', body?: any, cache?: boolean) {
   const cacheKey = `${method}_${endpoint}`;
