@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, Button, TouchableOpacity, PanResponder, PanResponderInstance, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import SourateBox from '../../SourateBox';
-// import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
+import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../../models/interfaces';
@@ -19,9 +19,8 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   // console.log(`'Rendering ScrollableTab' with ${kalima} ${JSON.stringify(verses)} ${JSON.stringify(similars)} ${JSON.stringify(opposites)}`);
   // console.log(`'Rendering ScrollableTab' with ${JSON.stringify(verses[0])}`);
   const {t} = useTranslation();
-  // const { handleOpenMayoSettings } = useMayoSettings();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const { isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
+  const { handleOpenMayoSettings, isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
   const {chapters, isLoading} = useChapters();
 
   const navigation =
@@ -34,18 +33,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   const handleCloseSouratesModal = () => {
     setIsModalOpen(false);
   };
-
-  const handlePanResponderRelease = (evt: any, gestureState: {dy: number}) => {
-    // Check if the user has swiped down by a certain threshold
-    if (gestureState.dy > 100) {
-      handleCloseSouratesModal();
-    }
-  };
-
-  const panResponder: PanResponderInstance = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderRelease: handlePanResponderRelease,
-  });
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
     handleCloseSouratesModal();
@@ -92,7 +79,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
           />
         </View>
 
-        {/* <MayoSettingsModal
+        <MayoSettingsModal
           visible={isMayoSettingsOpen}
           onClose={handleCloseMayoSettings}
           config={{
@@ -100,7 +87,7 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
           }}
         >
           <SouratesSelector handleLabelPress={handleLabelPress} chapters={chapters} />
-        </MayoSettingsModal> */}
+        </MayoSettingsModal>
       </View>
     </>
   );

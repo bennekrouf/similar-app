@@ -61,10 +61,8 @@ const MenuScreen = () => {
         />
 
         <View style={styles.container}>
-          <Button title="Lessons" 
-          onPress={() => navigation.navigate('LessonPages')} />
-          <Button title="Exercises" 
-          onPress={() => navigation.navigate('DiscriminantExercise')}/>
+          <Button title="Lessons" onPress={() => navigation.navigate('LessonPages')} />
+          <Button title="Exercises" onPress={() => navigation.navigate('DiscriminantExercise')}/>
         </View>
 
         <MayoSettingsModal
