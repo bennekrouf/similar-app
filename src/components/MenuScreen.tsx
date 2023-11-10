@@ -1,11 +1,8 @@
-import React, {useEffect, useState, useContext} from 'react';
-import { View, Button, StyleSheet, Text } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import { View, Button, StyleSheet } from 'react-native';
 import { Logger } from 'mayo-logger';
 
-import { RootStackParamList } from '../models/interfaces';
 import Header from '../components/Header';
-import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LessonPages from './lesson/LessonPages';
@@ -14,15 +11,9 @@ import useFetchLessons from '../hooks/useFetchLessons';
 import {loadExercise} from '../api/loadExercisesList';
 
 const MenuScreen = () => {
-  const { authEvents } = useContext(UserContext) as UserContextType;
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const { contents, isLoading } = useFetchLessons(selectedChapter);
   const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleChapterSelection = (chapter: any) => {
-    setSelectedChapter(chapter.no);
-  };
 
   useEffect(() => {
     const getSelectedChapterFromStorage = async () => {
@@ -42,25 +33,11 @@ const MenuScreen = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const onSignedOut = async () => {
-      Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
-      navigation.navigate('SignIn');
-    };
-    
-    authEvents.on('signedOut', onSignedOut);
-    
-    return () => {
-      Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
-      authEvents.off('signedOut', onSignedOut);
-    };
-  }, []);
-
-  // Retrieve the necessary data for your header
-  // This can be fetched from a context, state, or props
-  const count = 10; // example count
-  const goodCount = 5; // example good count
-  const wrongCount = 2; // example wrong count
+  const stats = {
+    count: 10,
+    goodCount: 5,
+    wrongCount: 2,
+  }
   // Logger.info('User Preference Modal State:', { isOpen: isMayoSettingsOpen }, { tag: 'HomeScreen:ModalState' });
 
   let content;
@@ -82,12 +59,7 @@ const MenuScreen = () => {
 
   return (
       <View style={styles.view}>
-        <Header
-          count={count}
-          goodCount={goodCount}
-          wrongCount={wrongCount}
-          content={contents}
-        />
+        <Header stats={stats} contents={contents}/>
         {content}
       </View>
   );

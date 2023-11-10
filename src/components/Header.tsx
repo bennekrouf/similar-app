@@ -1,23 +1,45 @@
-import React, {useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import React, {useContext, useState, useEffect} from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Logger } from 'mayo-logger';
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
+
+import { RootStackParamList } from '../models/interfaces';
 import { handleLogout } from '../storage/handleLogout';
+
 import labels from '../modals/SourateConfiguration/labels.json';
 import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
-import { usePersistedState } from '../hooks/usePersistState';
 import { handleLabelSelect } from '../modals/SourateConfiguration/handleLabelSelect/handleLabelSelect';
 import SouratesSelector from '../modals/SourateSelector/SouratesSelector';
 import SourateBox from './SourateBox';
+import { usePersistedState } from '../hooks/usePersistState';
+import { useChapters } from '../hooks/useFetchChapters';
 
 const initialState = [];
 
-const Header = ({ count, goodCount, wrongCount, contents }) => {
+const useModalState = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const openModal = () => setIsVisible(true);
+  const closeModal = () => setIsVisible(false);
+
+  return { isVisible, openModal, closeModal };
+};
+
+const Header = ({ stats, contents }) => {
   const insets = useSafeAreaInsets();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const souratesModal = useModalState();
+  const settingsModal = useModalState();
+
+  // const [isSouratesModalOpen, setIsSouratesModalOpen] = useState(false);
   const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { authEvents } = useContext(UserContext) as UserContextType;
+  const {chapters, isLoading} = useChapters();
 
   const { handleOpenMayoSettings, isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
   const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState);
@@ -25,16 +47,12 @@ const Header = ({ count, goodCount, wrongCount, contents }) => {
     handleLabelSelect(selectedLabels, setSelectedLabels, labelName);
   };
 
-  const handleOpenSouratesModal = () => {
-    setIsModalOpen(true);
-  };
-
   const handleChapterSelection = (chapter: any) => {
     setSelectedChapter(chapter.no);
   };
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
-    handleCloseSouratesModal();
+    souratesModal.closeModal();
     if (chapter.no) {
       handleChapterSelection({no: chapter.no});
 
@@ -46,52 +64,63 @@ const Header = ({ count, goodCount, wrongCount, contents }) => {
     }
   };
 
-  const handleCloseSouratesModal = () => {
-    setIsModalOpen(false);
-  };
+  useEffect(() => {
+    const onSignedOut = async () => {
+      Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
+      navigation.navigate('SignIn');
+    };
+    
+    authEvents.on('signedOut', onSignedOut);
+    
+    return () => {
+      Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
+      authEvents.off('signedOut', onSignedOut);
+    };
+  }, []);
 
   return (
     <View style={{ paddingTop: insets.top, backgroundColor: 'white' }}>
       <View style={styles.headerContainer}>
         <View style={styles.placeholderBox}></View>
 
-        {contents?.length && <TouchableOpacity onPress={handleOpenSouratesModal}>
+        {contents?.length && <TouchableOpacity onPress={souratesModal.openModal}>
           <SourateBox chapterNo={contents[0]?.chapter_no} />
         </TouchableOpacity>}
 
         {/* Header Box for the counts */}
         <View style={styles.headerBox}>
-            <Text style={styles.headerText}>G{goodCount} W{wrongCount} T{count}</Text>
+            <Text style={styles.headerText}>G{stats.goodCount} W{stats.wrongCount} T{stats.count}</Text>
         </View>
 
         {/* TouchableOpacity for the settings button */}
-        <TouchableOpacity style={styles.optionsButton} onPress={handleOpenMayoSettings}>
+        <TouchableOpacity style={styles.optionsButton} onPress={settingsModal.openModal}>
             <Text style={styles.optionsMenuText}>...</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.headerSeparator} />
 
+      {/* MayoSettingsModal for Settings */}
       <MayoSettingsModal
-        visible={isMayoSettingsOpen}
-        onClose={handleCloseMayoSettings}
+        visible={settingsModal.isVisible}
+        onClose={settingsModal.closeModal}
         onLogout={handleLogout}
         config={{
           headerTitle: 'Settings',
-          logoutButtonText: 'Custom Logout',
+          logoutButtonText: 'Logout',
           showFooter: true,
-        }} >
+        }}>
         <LabelsSelector labels={labels} selectedLabels={selectedLabels} onLabelSelect={onLabelClicked} />
       </MayoSettingsModal>
 
+      {/* MayoSettingsModal for Selecting Sourates */}
       <MayoSettingsModal
-          visible={isMayoSettingsOpen}
-          onClose={handleCloseMayoSettings}
-          config={{
-            headerTitle: 'Select sourate',
-          }}
-        >
-          <SouratesSelector handleLabelPress={handleLabelPress} chapters={chapters} />
-        </MayoSettingsModal>
+        visible={souratesModal.isVisible}
+        onClose={souratesModal.closeModal}
+        config={{
+          headerTitle: 'Select Sourate',
+        }}>
+        <SouratesSelector handleLabelPress={handleLabelPress} chapters={chapters} />
+      </MayoSettingsModal>
     </View>
   );
 };
