@@ -10,15 +10,9 @@ import { Logger } from 'mayo-logger';
 
 import ScrollableTab from './ScrollableTab/ScrollableTab';
 import useFetchLessons from '../../hooks/useFetchLessons';
-import Header from '../Header';
+
 const HEADER_HEIGHT = 0;
 interface ScrollableSwipablePageProps {}
-
-const HeaderComponent = () => {
-  return (
-    <Header count={10} goodCount={12} wrongCount={3}/>
-  );
-};
 
 const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
   const { user } = useContext(UserContext) as UserContextType;
@@ -30,23 +24,7 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
     setSelectedChapter(chapter.no);
   };
 
-  useEffect(() => {
-    const getSelectedChapterFromStorage = async () => {
-      try {
-        Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
-        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
-        if (storedSelectedChapter) {
-          setSelectedChapter(parseInt(storedSelectedChapter));
-        }
-      } catch (error) {
-        Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
-      }
-    };
 
-    if (user) {
-      getSelectedChapterFromStorage();
-    }
-  }, []);
 
   const handleSwiperIndexChanged = async (index: number) => {
     try {
@@ -82,7 +60,7 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
   }
 
   return (
-    <Tabs.Container renderHeader={HeaderComponent}>
+    <Tabs.Container>
       {contents?.length &&
         contents.map(({ kalima, verses, similars, opposites }: any, index) => (
           <Tabs.Tab name={`Tab${index}`} key={index}>

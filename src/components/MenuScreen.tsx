@@ -1,27 +1,46 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Logger } from 'mayo-logger';
 
-import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 import { RootStackParamList } from '../models/interfaces';
-import SourateBox from './SourateBox';
-import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
-import { usePersistedState } from '../hooks/usePersistState';
-import { handleLabelSelect } from '../modals/SourateConfiguration/handleLabelSelect/handleLabelSelect';
-import labels from '../modals/SourateConfiguration/labels.json';
 import Header from '../components/Header';
-import { handleLogout } from '../storage/handleLogout';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const initialState = [];
+import LessonPages from './lesson/LessonPages';
+import DiscriminantExercise from './exercise/DiscriminantExercise';
+import useFetchLessons from '../hooks/useFetchLessons';
+import {loadExercise} from '../api/loadExercisesList';
 
 const MenuScreen = () => {
   const { authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
-  const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState);
-  console.log('Initial selectedLabels:', selectedLabels);
+  const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
+  const { contents, isLoading } = useFetchLessons(selectedChapter);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleChapterSelection = (chapter: any) => {
+    setSelectedChapter(chapter.no);
+  };
+
+  useEffect(() => {
+    const getSelectedChapterFromStorage = async () => {
+      try {
+        Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
+        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
+        if (storedSelectedChapter) {
+          setSelectedChapter(parseInt(storedSelectedChapter));
+        }
+      } catch (error) {
+        Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
+      }
+    };
+
+    if (user) {
+      getSelectedChapterFromStorage();
+    }
+  }, []);
 
   useEffect(() => {
     const onSignedOut = async () => {
@@ -44,13 +63,22 @@ const MenuScreen = () => {
   const wrongCount = 2; // example wrong count
   // Logger.info('User Preference Modal State:', { isOpen: isMayoSettingsOpen }, { tag: 'HomeScreen:ModalState' });
 
-  const onLabelClicked = (labelName: string) => {
-    handleLabelSelect(selectedLabels, setSelectedLabels, labelName);
-  };
-
-  useEffect(() => {
-    console.log('Current selectedLabels:', selectedLabels);
-  }, [selectedLabels]);
+  let content;
+  switch (selectedOption) {
+    case 'Lessons':
+      content = <LessonPages />;
+      break;
+    case 'Exercises':
+      content = <DiscriminantExercise />;
+      break;
+    default:
+      content = (
+        <View style={styles.container}>
+          <Button title="Lessons" onPress={() => setSelectedOption('Lessons')} />
+          <Button title="Exercises" onPress={() => setSelectedOption('Exercises')} />
+        </View>
+      );
+  }
 
   return (
       <View style={styles.view}>
@@ -58,25 +86,9 @@ const MenuScreen = () => {
           count={count}
           goodCount={goodCount}
           wrongCount={wrongCount}
+          content={contents}
         />
-
-        <View style={styles.container}>
-          <Button title="Lessons" onPress={() => navigation.navigate('LessonPages')} />
-          <Button title="Exercises" onPress={() => navigation.navigate('DiscriminantExercise')}/>
-        </View>
-
-        <MayoSettingsModal
-          visible={isMayoSettingsOpen}
-          onClose={handleCloseMayoSettings}
-          onLogout={handleLogout}
-          config={{
-            headerTitle: 'Settings',
-            logoutButtonText: 'Custom Logout',
-            showFooter: true,
-          }} >
-          <LabelsSelector labels={labels} selectedLabels={selectedLabels} onLabelSelect={onLabelClicked} />
-        </MayoSettingsModal>
-
+        {content}
       </View>
   );
 };
@@ -117,16 +129,3 @@ const styles = StyleSheet.create({
 });
 
 export default MenuScreen;
-
-
-// <View style={styles.headerContainer}>
-// <TouchableOpacity onPress={handleOpenMayoSettings}>
-//   <Text style={styles.optionsMenuText}>...</Text>
-// </TouchableOpacity>
-
-// {/* <TouchableOpacity
-//   onPress={handleOpenSouratesModal}>
-//   <SourateBox chapterNo={verses[0]?.chapter_no} />
-// </TouchableOpacity> */}
-
-// </View>

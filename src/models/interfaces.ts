@@ -15,20 +15,6 @@ export type RootStackParamList = {
   };
 };
 
-
-export type MenuStackParamList = {
-  LessonPages: {
-    count?: number;
-    goodCount?: number;
-    wrongCount?: number;
-  };
-  DiscriminantExercise: {
-    kalima?: string;
-    exercises?: any;
-    chapterName?: string;
-  };
-};
-
 export interface Verse {
   chapter_no: number;
   verse_no: number;

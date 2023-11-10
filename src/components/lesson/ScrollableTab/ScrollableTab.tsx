@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
-import SourateBox from '../../SourateBox';
 import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 
 import LessonContent from './LessonContent';
@@ -26,26 +24,8 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'DiscriminantExercise'>>();
 
-  const handleOpenSouratesModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseSouratesModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleLabelPress = async (chapter: {no: number | undefined}) => {
-    handleCloseSouratesModal();
-    if (chapter.no) {
-      handleChapterSelection({no: chapter.no});
-
-      try {
-        await AsyncStorage.setItem('selectedChapter', chapter.no.toString());
-      } catch (error) {
-        console.log('Error saving selectedChapter:', error);
-      }
-    }
-  };
+  
+  
 
     // (async () => {
     //   setExercises(await loadExercise(kalima).catch(console.error));
@@ -78,16 +58,6 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
             opposites={opposites}
           />
         </View>
-
-        <MayoSettingsModal
-          visible={isMayoSettingsOpen}
-          onClose={handleCloseMayoSettings}
-          config={{
-            headerTitle: 'Select sourate',
-          }}
-        >
-          <SouratesSelector handleLabelPress={handleLabelPress} chapters={chapters} />
-        </MayoSettingsModal>
       </View>
     </>
   );
@@ -106,7 +76,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'ScheherazadeNew-Medium',
     color: '#040101',
-    // Add additional styles as needed
   },
 
   headerContainer: {
