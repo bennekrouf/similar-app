@@ -29,9 +29,9 @@ const MenuScreen = () => {
       }
     };
 
-    if (user) {
+    // if (user) {
       getSelectedChapterFromStorage();
-    }
+    // }
   }, []);
 
   const stats = {

@@ -3,11 +3,8 @@ import {View, StyleSheet} from 'react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
-import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
-
 import LessonContent from './LessonContent';
 import {ScrollableTabProps} from '../../../models/interfaces';
-import {loadExercise} from '../../../api/loadExercisesList';
 import { flushAllLessonKeys } from '../../../api/flushAllLessonKeys';
 import { useChapters } from '../../../hooks/useFetchChapters';
 import { RootStackParamList } from '../../../models/interfaces';
@@ -18,14 +15,10 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({kalima, verses, similars, 
   // console.log(`'Rendering ScrollableTab' with ${JSON.stringify(verses[0])}`);
   const {t} = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { handleOpenMayoSettings, isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
   const {chapters, isLoading} = useChapters();
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'DiscriminantExercise'>>();
-
-  
-  
 
     // (async () => {
     //   setExercises(await loadExercise(kalima).catch(console.error));

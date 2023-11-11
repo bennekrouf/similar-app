@@ -21,20 +21,9 @@ import { useChapters } from '../hooks/useFetchChapters';
 
 const initialState = [];
 
-const useModalState = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const openModal = () => setIsVisible(true);
-  const closeModal = () => setIsVisible(false);
-
-  return { isVisible, openModal, closeModal };
-};
-
 const Header = ({ stats, contents }) => {
   const insets = useSafeAreaInsets();
-  
-  const souratesModal = useModalState();
-  const settingsModal = useModalState();
-
+  const { openModal, closeModal } = useMayoSettings();
   // const [isSouratesModalOpen, setIsSouratesModalOpen] = useState(false);
   const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -83,8 +72,8 @@ const Header = ({ stats, contents }) => {
       <View style={styles.headerContainer}>
         <View style={styles.placeholderBox}></View>
 
-        {contents?.length && <TouchableOpacity onPress={souratesModal.openModal}>
-          <SourateBox chapterNo={contents[0]?.chapter_no} />
+        {contents?.length && <TouchableOpacity onPress={() => openModal('souratesModal')}>
+          <SourateBox chapterNo={contents[0]?.verses[0]?.chapter_no} />
         </TouchableOpacity>}
 
         {/* Header Box for the counts */}
@@ -93,7 +82,7 @@ const Header = ({ stats, contents }) => {
         </View>
 
         {/* TouchableOpacity for the settings button */}
-        <TouchableOpacity style={styles.optionsButton} onPress={settingsModal.openModal}>
+        <TouchableOpacity style={styles.optionsButton} onPress={() => openModal('settingsModal')}>
             <Text style={styles.optionsMenuText}>...</Text>
         </TouchableOpacity>
       </View>
@@ -101,8 +90,8 @@ const Header = ({ stats, contents }) => {
 
       {/* MayoSettingsModal for Settings */}
       <MayoSettingsModal
-        visible={settingsModal.isVisible}
-        onClose={settingsModal.closeModal}
+        id='settingsModal'
+        onClose={() => closeModal('settingsModal')}
         onLogout={handleLogout}
         config={{
           headerTitle: 'Settings',
@@ -114,8 +103,8 @@ const Header = ({ stats, contents }) => {
 
       {/* MayoSettingsModal for Selecting Sourates */}
       <MayoSettingsModal
-        visible={souratesModal.isVisible}
-        onClose={souratesModal.closeModal}
+        id='souratesModal'
+        onClose={() => closeModal('souratesModal')}
         config={{
           headerTitle: 'Select Sourate',
         }}>
