@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useChapters } from '../hooks/useFetchChapters';
+import { I18nManager } from 'react-native';
 
 const sourateColor = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.background_color
 const sourateName = (chapterNo, chapters) => chapters?.find(c => c.no === chapterNo)?.sourate
@@ -11,6 +12,9 @@ const SourateBox: React.FC<{
   additionalStyles?: object;
 }> = ({ chapterNo, count_ayat, additionalStyles }) => {
   const { chapters, isLoading } = useChapters();
+  I18nManager.forceRTL(true);
+  I18nManager.allowRTL(true);
+
   // console.log('const SourateBox: React.FC chapters:', chapters);
   if (isLoading) {
     return (
@@ -44,6 +48,7 @@ const styles = StyleSheet.create({
   columnContainer: {
     padding: 3,
     borderRadius: 5,
+    alignSelf: 'flex-start', // For aligning to the right in RTL
   },
   leftColumn: {
     backgroundColor: 'black',

@@ -18,20 +18,22 @@ import SouratesSelector from '../modals/SourateSelector/SouratesSelector';
 import SourateBox from './SourateBox';
 import { usePersistedState } from '../hooks/usePersistState';
 import { useChapters } from '../hooks/useFetchChapters';
+import { currentStorage } from '../storage/currentStorage';
 
 const initialState = [];
+const souratesModal = 'souratesModal';
+const settingsModal = 'settingsModal';
 
-const Header = ({ stats, contents }) => {
+const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
   const insets = useSafeAreaInsets();
   const { openModal, closeModal } = useMayoSettings();
-  // const [isSouratesModalOpen, setIsSouratesModalOpen] = useState(false);
-  const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
+  // const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { authEvents } = useContext(UserContext) as UserContextType;
   const {chapters, isLoading} = useChapters();
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const { handleOpenMayoSettings, isMayoSettingsOpen, handleCloseMayoSettings } = useMayoSettings();
-  const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState);
+  const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState as string[]);
   const onLabelClicked = (labelName: string) => {
     handleLabelSelect(selectedLabels, setSelectedLabels, labelName);
   };
@@ -41,7 +43,7 @@ const Header = ({ stats, contents }) => {
   };
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
-    souratesModal.closeModal();
+    closeModal(souratesModal);
     if (chapter.no) {
       handleChapterSelection({no: chapter.no});
 
@@ -52,6 +54,57 @@ const Header = ({ stats, contents }) => {
       }
     }
   };
+
+  useEffect(() => {
+    const fetchInitialSettings = async () => {
+      try {
+        const res = await currentStorage();
+        if(res?.knownSourates) {
+          setSelectedLabels(res.knownSourates);
+        }
+        Logger.info('Fetched initial settings.', selectedLabels, { tag: 'Header:useEffect' });
+        // setAnswerStats(initialStats);
+      } catch (error) {
+        Logger.error('Error fetching initial settings.', error, { tag: 'Header:useEffect' });
+        throw error;
+      }
+    };
+
+    fetchInitialSettings();
+  }, []);
+
+  useEffect(() => {
+    const getCurrentIndexFromStorage = async () => {
+      try {
+        Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
+        const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
+        if (storedCurrentIndex) {
+          setCurrentIndex(parseInt(storedCurrentIndex));
+        }
+      } catch (error) {
+        Logger.error('Error retrieving currentIndex from AsyncStorage', error, { tag: 'LessonPages' });
+      }
+    };
+    getCurrentIndexFromStorage();
+  }, []);
+
+  useEffect(() => {
+    const getSelectedChapterFromStorage = async () => {
+      try {
+        Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
+        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
+        if (storedSelectedChapter) {
+          setSelectedChapter(parseInt(storedSelectedChapter));
+        }
+      } catch (error) {
+        Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
+      }
+    };
+
+    // if (user) {
+      getSelectedChapterFromStorage();
+    // }
+  }, []);
 
   useEffect(() => {
     const onSignedOut = async () => {
@@ -72,9 +125,9 @@ const Header = ({ stats, contents }) => {
       <View style={styles.headerContainer}>
         <View style={styles.placeholderBox}></View>
 
-        {contents?.length && <TouchableOpacity onPress={() => openModal('souratesModal')}>
-          <SourateBox chapterNo={contents[0]?.verses[0]?.chapter_no} />
-        </TouchableOpacity>}
+        <TouchableOpacity onPress={() => openModal(souratesModal)}>
+          <SourateBox chapterNo={selectedChapter} />
+        </TouchableOpacity>
 
         {/* Header Box for the counts */}
         <View style={styles.headerBox}>
@@ -82,7 +135,7 @@ const Header = ({ stats, contents }) => {
         </View>
 
         {/* TouchableOpacity for the settings button */}
-        <TouchableOpacity style={styles.optionsButton} onPress={() => openModal('settingsModal')}>
+        <TouchableOpacity style={styles.optionsButton} onPress={() => openModal(settingsModal)}>
             <Text style={styles.optionsMenuText}>...</Text>
         </TouchableOpacity>
       </View>
@@ -90,8 +143,8 @@ const Header = ({ stats, contents }) => {
 
       {/* MayoSettingsModal for Settings */}
       <MayoSettingsModal
-        id='settingsModal'
-        onClose={() => closeModal('settingsModal')}
+        id={settingsModal}
+        onClose={() => closeModal(settingsModal)}
         onLogout={handleLogout}
         config={{
           headerTitle: 'Settings',
@@ -103,8 +156,8 @@ const Header = ({ stats, contents }) => {
 
       {/* MayoSettingsModal for Selecting Sourates */}
       <MayoSettingsModal
-        id='souratesModal'
-        onClose={() => closeModal('souratesModal')}
+        id={souratesModal}
+        onClose={() => closeModal(souratesModal)}
         config={{
           headerTitle: 'Select Sourate',
         }}>
@@ -125,7 +178,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Adjusts items to the start and end of the container
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: 10,
   },
@@ -139,8 +192,8 @@ const styles = StyleSheet.create({
   },
   headerBox: {
     flex: 1,
-    justifyContent: 'center', // Center items horizontally
-    alignItems: 'center', // Center items vertically
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 5,
     borderRadius: 5,
   },
@@ -160,6 +213,8 @@ const styles = StyleSheet.create({
     elevation: 5, // for Android shadow
   },
   optionsButton: {
+    flex: 1, // Equal flex to the placeholderBox for symmetry
+    alignItems: 'flex-end', // Align the button to the end of the container
     padding: 10,
   },
   optionsMenuText: {

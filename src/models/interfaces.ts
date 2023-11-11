@@ -9,6 +9,7 @@ export type RootStackParamList = {
     wrongCount?: number;
   };
   DiscriminantExercise: {
+    settings: any,
     kalima?: string;
     exercises?: any;
     chapterName?: string;
@@ -38,11 +39,8 @@ export interface SimilarListProps {
 }
 
 export interface ScrollableTabProps {
-  kalima: string;
-  verses: Verse[];
-  similars: Verse[];
-  opposites: Verse[];
-  handleChapterSelection: (chapterNo: {no: number | undefined}) => void;
+  content: LessonListProps;
+  // handleChapterSelection: (chapterNo: {no: number | undefined}) => void;
 }
 export interface Chapter {
   sourate: string,

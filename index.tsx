@@ -1,6 +1,7 @@
 import { AppRegistry } from 'react-native';
 import "react-native-devsettings";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { I18nManager } from 'react-native';
 
 import './assets/locales/i18n';
 import 'intl';
@@ -22,18 +23,19 @@ import { MainApp } from './src/navigation/AppNavigator';
 import {ErrorBoundary, Logger} from 'mayo-logger';
 
 const AppRoot: React.FC = () => {
-    Logger.configure({ 
-      appName: "Tafseel",
-      timestamp: true 
-    });
-  
-    return (
-      <SafeAreaProvider>
-        <ErrorBoundary>
-          <MainApp />
-        </ErrorBoundary>
-      </SafeAreaProvider>
-    );
-  };
+  I18nManager.forceRTL(true);
+  Logger.configure({ 
+    appName: "Tafseel",
+    timestamp: true 
+  });
+
+  return (
+    <SafeAreaProvider>
+      <ErrorBoundary>
+        <MainApp />
+      </ErrorBoundary>
+    </SafeAreaProvider>
+  );
+};
     
 AppRegistry.registerComponent(name, () => AppRoot);

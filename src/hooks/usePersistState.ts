@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { writeToAsyncStorage, loadFromAsyncStorage } from 'mayo-firestore-write';
+import { writeToAsyncStorage, loadFromAsyncStorage, syncAsyncStorageToFirestore } from 'mayo-firestore-write';
 
 const storageKey = 'knownSourates';
 
-export const usePersistedState = <T>(initialState: T) => {
+export const usePersistedState = <T,>(initialState: T): [T, (data: T) => Promise<void>, boolean] => {
   const [state, setState] = useState<T>(initialState);
   const [isLoading, setLoading] = useState(true);
 
@@ -32,7 +32,8 @@ export const usePersistedState = <T>(initialState: T) => {
         return;
     }
     try {
-      await writeToAsyncStorage({data : { [storageKey]: data }}, false);
+      await writeToAsyncStorage({[storageKey]: data }, false);
+      await syncAsyncStorageToFirestore();
       setState(prevState => {
         // Avoid unnecessary re-renders
         if (JSON.stringify(prevState) !== JSON.stringify(data)) {

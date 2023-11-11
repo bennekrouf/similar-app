@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { signInFirebase } from 'mayo-firestore-write';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -29,7 +29,7 @@ const InitialScreen = () => {
 
   useEffect(() => {
     if (user) {
-      // Navigate to MenuScreen once user is authenticated
+      // Navigate to MainScreen once user is authenticated
       navigation.navigate('Menu');
     } else {
       navigation.navigate('SignIn');

@@ -23,13 +23,13 @@ const theme = {
   },
 };
 
-const DiscriminantExercise = ({route, _}) => {
+const DiscriminantExercise = ({settings, route}) => {
 
   const {t} = useTranslation();
   const [statement, setStatement] = useState<Statement>(null);
   const [alternatives, setAternatives] = useState<Alternative[]>([]); // if answers is an array of strings
   const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
-  const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
+  const {kalima, currentChapterName, exercises} = route?.params; // Get the kalima from the route parameters
   const [isValid, setIsValid] = useState<string>('neutral');
   const [otherSourate, setOtherSourate] = useState<string>('');
   const [exerciseIndex, setExerciseIndex] = useState(0);

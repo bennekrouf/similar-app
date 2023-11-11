@@ -1,4 +1,4 @@
-import { loadFromAsyncStorage, loadFromFirebase } from 'mayo-firestore-write';
+import { loadFromAsyncStorage, loadFromFirestore } from 'mayo-firestore-write';
 import { Logger } from 'mayo-logger';
 
 export const currentStorage = async () => {
@@ -7,10 +7,10 @@ export const currentStorage = async () => {
         
         if(!current) {
             Logger.info('currentStorage: No data in AsyncStorage, loading from Firebase.');
-            current = await loadFromFirebase();
+            current = await loadFromFirestore();
         }
 
-        return current?.answerStats || [];       
+        return current || {};       
     } catch (error) {
         Logger.error('currentStorage Error:', error);
         throw error;        

@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { View, Text, StyleSheet } from 'react-native';
 import { Tabs } from 'react-native-collapsible-tab-view';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
@@ -10,22 +10,18 @@ import { Logger } from 'mayo-logger';
 
 import ScrollableTab from './ScrollableTab/ScrollableTab';
 import useFetchLessons from '../../hooks/useFetchLessons';
+import { I18nManager } from 'react-native';
 
 const HEADER_HEIGHT = 0;
-interface ScrollableSwipablePageProps {}
+interface ScrollableSwipablePageProps {
+  selectedChapter: number;
+}
 
-const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
+const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter }) => {
+  I18nManager.forceRTL(true);
   const { user } = useContext(UserContext) as UserContextType;
-  const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const { contents, isLoading } = useFetchLessons(selectedChapter);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-  const handleChapterSelection = (chapter: any) => {
-    setSelectedChapter(chapter.no);
-  };
-
-
-
+  
   const handleSwiperIndexChanged = async (index: number) => {
     try {
       if (!selectedChapter) return;
@@ -36,21 +32,6 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
     }
   };
 
-  useEffect(() => {
-    const getCurrentIndexFromStorage = async () => {
-      try {
-        Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
-        const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
-        if (storedCurrentIndex) {
-          setCurrentIndex(parseInt(storedCurrentIndex));
-        }
-      } catch (error) {
-        Logger.error('Error retrieving currentIndex from AsyncStorage', error, { tag: 'LessonPages' });
-      }
-    };
-    getCurrentIndexFromStorage();
-  }, []);
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -60,18 +41,12 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
   }
 
   return (
-    <Tabs.Container>
+    <Tabs.Container onIndexChange={handleSwiperIndexChanged} tabBarHeight={0}>
       {contents?.length &&
-        contents.map(({ kalima, verses, similars, opposites }: any, index) => (
+        contents.map((content: any, index) => (
           <Tabs.Tab name={`Tab${index}`} key={index}>
             <Tabs.ScrollView>
-              <ScrollableTab
-                kalima={kalima}
-                verses={verses}
-                similars={similars}
-                opposites={opposites}
-                handleChapterSelection={handleChapterSelection}
-              />
+              <ScrollableTab content={content}/>
             </Tabs.ScrollView>
           </Tabs.Tab>
         ))}
@@ -80,11 +55,9 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ }) => {
 };
 
 const styles = StyleSheet.create({
-  header: {
-    height: HEADER_HEIGHT,
-    width: '100%',
-    backgroundColor: '#2196f3',
-  },
+  tabBar: {
+    minHeight: 30,
+  }
 });
 
 export default LessonPages;

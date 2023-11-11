@@ -6,7 +6,7 @@ import { MayoSettingsProvider } from 'mayo-settings';
 import { SignInScreen, UserProvider,  } from 'mayo-firebase-auth';
 
 import { ChapterProvider } from '../hooks/useFetchChapters';
-import MenuScreen from '../components/MenuScreen';
+import MainScreen from '../components/MainScreen';
 import InitialScreen from '../components/InitialScreen';
 import { RootStackParamList } from '../models/interfaces';
 import LessonPages from '../components/lesson/LessonPages';
@@ -29,7 +29,7 @@ export const MainApp: React.FC = () => {
                 }}
               />
               <Stack.Screen name="Initial" component={InitialScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="Menu" component={MenuScreen} 
+              <Stack.Screen name="Menu" component={MainScreen} 
                 options={{ 
                   headerLeft: () => null,  // Hide back button
                   headerShown: false,
