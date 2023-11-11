@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { Logger } from 'mayo-logger';
+import { User } from 'mayo-firestore-write';
 
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';

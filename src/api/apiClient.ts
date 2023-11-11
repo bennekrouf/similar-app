@@ -11,8 +11,8 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
   if (!(await isInternetReachable())) {
     if (cache) {
       const cachedData = await AsyncStorage.getItem(cacheKey);
-      const cachedDate = await AsyncStorage.getItem(dateKey);
       if (cachedData) {
+        const cachedDate = await AsyncStorage.getItem(dateKey);
         return {
           data: JSON.parse(cachedData),
           date: cachedDate
