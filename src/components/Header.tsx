@@ -13,13 +13,14 @@ import { handleLogout } from '../storage/handleLogout';
 
 import labels from '../modals/SourateConfiguration/labels.json';
 import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
-import { handleLabelSelect } from '../modals/SourateConfiguration/handleLabelSelect/handleLabelSelect';
 import SouratesSelector from '../modals/SourateSelector/SouratesSelector';
 import SourateBox from './SourateBox';
 import { usePersistedState } from '../hooks/usePersistState';
 import { useChapters } from '../hooks/useFetchChapters';
 import { currentStorage } from '../storage/currentStorage';
 
+import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
+import { getNamesByIndices } from '../modals/SourateConfiguration/getNamesByIndices';
 const initialState = [];
 const souratesModal = 'souratesModal';
 const settingsModal = 'settingsModal';
@@ -32,10 +33,37 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
   const { authEvents } = useContext(UserContext) as UserContextType;
   const {chapters, isLoading} = useChapters();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-
+  
   const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState as string[]);
   const onLabelClicked = (labelName: string) => {
-    handleLabelSelect(selectedLabels, setSelectedLabels, labelName);
+    // selectedLabels.push(labelName);
+    // const newIndicesList = getIndicesByName(selectedLabels);
+
+    // setSelectedLabels(getNamesByIndices(newIndicesList));
+    // console.log(selectedLabels);
+    let newSelectedLabels;
+
+    if (selectedLabels.includes(labelName)) {
+      // If the label is already selected, remove it and its range from the selection
+      const labelIndices = getIndicesByName([labelName]);
+      newSelectedLabels = selectedLabels.filter(
+        selected => !labelIndices.includes(getIndicesByName([selected])[0])
+      );
+    } else {
+      // If the label is not selected, add it and its range to the selection
+      // First, add the label itself
+      newSelectedLabels = [...selectedLabels, labelName];
+      // Then, calculate the indices for the new label and add any related labels
+      const newIndicesList = getIndicesByName([labelName]);
+      const relatedLabels = getNamesByIndices(newIndicesList).filter(
+        related => !newSelectedLabels.includes(related)
+      );
+      newSelectedLabels.push(...relatedLabels);
+    }
+  
+    setSelectedLabels(newSelectedLabels);
+    
+    
   };
 
   const handleChapterSelection = (chapter: any) => {
@@ -63,7 +91,6 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
           setSelectedLabels(res.knownSourates);
         }
         Logger.info('Fetched initial settings.', selectedLabels, { tag: 'Header:useEffect' });
-        // setAnswerStats(initialStats);
       } catch (error) {
         Logger.error('Error fetching initial settings.', error, { tag: 'Header:useEffect' });
         throw error;
