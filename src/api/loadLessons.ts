@@ -2,14 +2,15 @@ import { checkAndRemoveOldData } from './checkAndRemoveOldData';
 import { Logger } from 'mayo-logger'; 
 import { apiClient } from './apiClient';
 import Config from 'react-native-config';
+import { rangeParamsURI } from './rangeParamsURI';
 
 export async function loadLessons(chapterNo = 59) {
   checkAndRemoveOldData();
   try {
     let lessons: any[];
-    
-    // Use apiClient to fetch lessons
-    const endpoint = `similars/${chapterNo}`;
+    const rangesURI = await rangeParamsURI();
+    const endpoint = `similars/${chapterNo}?ranges=${rangesURI}`;
+    // const endpoint = `similars/${chapterNo}`;
     lessons = await apiClient.get(endpoint, true);
 
     if (lessons) {

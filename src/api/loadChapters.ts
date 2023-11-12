@@ -1,16 +1,11 @@
 import { Logger } from 'mayo-logger'; 
 import { apiClient } from './apiClient';
-import { userSouratesSettings } from '../components/userSouratesSettings';
-import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
-import { convertIndicesToRanges } from '../modals/SourateConfiguration/convertIndicesToRanges';
+import { rangeParamsURI } from './rangeParamsURI';
 
 export async function loadChapters() {
   try {
-    const settings = await userSouratesSettings();
-    const indices = getIndicesByName(settings);
-    const ranges = convertIndicesToRanges(indices);
-    const rangesParam = ranges.join(',');
-    const url = `chapters?ranges=${encodeURIComponent(rangesParam)}`;
+    const ranges = await rangeParamsURI();
+    const url = `chapters?ranges=${ranges}`;
 
     // Use apiClient to fetch chapters
     const chapters = await apiClient.get(url);
