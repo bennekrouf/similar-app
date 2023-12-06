@@ -4,8 +4,8 @@ import { signInFirebase } from 'mayo-firestore-write';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../models/interfaces';
 import { handleLogout } from '../storage/handleLogout';
-
-const firebaseConfig = {
+import { Platform } from 'react-native';
+const firebaseConfig = Platform.OS === 'android' ? {
   apiKey: 'AIzaSyAfvcfClkm9KKLG7f3pm5IdJi4skpGsXRQ',
   authDomain: 'tafseel-7f242.firebaseapp.com',
   projectId: 'tafseel-7f242',
@@ -14,7 +14,7 @@ const firebaseConfig = {
   appId: '1:581865288762:android:fca352231f244f19253103',
   databaseURL: '',
   measurementId: '',
-};
+}:undefined;
 
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;

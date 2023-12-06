@@ -14,6 +14,7 @@ import DiscriminantExercise from '../components/exercise/DiscriminantExercise';
 
 // Create the application stack
 const Stack = createStackNavigator<RootStackParamList>();
+const webClientId = "581865288762-pn1dvg84mtf77v2qjsm2r40k7p7gj4qb.apps.googleusercontent.com";
 
 export const MainApp: React.FC = () => {
   return (
@@ -22,7 +23,8 @@ export const MainApp: React.FC = () => {
         <ChapterProvider>
           <MayoSettingsProvider>
             <Stack.Navigator initialRouteName="Initial">
-              <Stack.Screen name="SignIn" component={SignInScreen} 
+              <Stack.Screen name="SignIn" component={SignInScreen}
+                initialParams={{ config: { webClientId } }}
                 options={{ 
                   headerLeft: () => null,  // Hide back button
                   headerShown: false,
