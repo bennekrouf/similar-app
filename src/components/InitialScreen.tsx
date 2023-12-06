@@ -5,6 +5,17 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../models/interfaces';
 import { handleLogout } from '../storage/handleLogout';
 
+const firebaseConfig = {
+  apiKey: 'AIzaSyAfvcfClkm9KKLG7f3pm5IdJi4skpGsXRQ',
+  authDomain: 'tafseel-7f242.firebaseapp.com',
+  projectId: 'tafseel-7f242',
+  storageBucket: 'tafseel-7f242.appspot.com',
+  messagingSenderId: '581865288762',
+  appId: '1:581865288762:android:fca352231f244f19253103',
+  databaseURL: '',
+  measurementId: '',
+};
+
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -13,7 +24,7 @@ const InitialScreen = () => {
     const onSignedIn = async (googleCredentials) => {
       try {
         if (!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        const newUser = await signInFirebase(googleCredentials);
+        const newUser = await signInFirebase(googleCredentials, firebaseConfig);
         if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
@@ -29,10 +40,9 @@ const InitialScreen = () => {
 
   useEffect(() => {
     if (user) {
-      // Navigate to MainScreen once user is authenticated
-      navigation.navigate('Menu');
+      navigation.navigate('Home');
     } else {
-      navigation.navigate('SignIn');
+      navigation.navigate('SignIn', { config: firebaseConfig });
     }
   }, [user]);
 

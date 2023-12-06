@@ -2,7 +2,7 @@ export type RootStackParamList = {
   ErrorScreen: { errorMessage: string };
   Initial: undefined;
   Menu: undefined;
-  SignIn: { app: string };
+  SignIn: { config?: any };
   LessonPages: {
     count?: number;
     goodCount?: number;

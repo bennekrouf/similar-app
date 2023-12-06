@@ -18,5 +18,11 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.facebook.react:react-android:0.72.6@aar'
+        }
     }
 }
