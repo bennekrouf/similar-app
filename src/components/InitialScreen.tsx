@@ -18,6 +18,10 @@ const firebaseConfig = Platform.OS === 'android' ? {
   webClientId: '581865288762-pn1dvg84mtf77v2qjsm2r40k7p7gj4qb.apps.googleusercontent.com'
 }:undefined;
 
+const initFirebase = async(googleCredentials:any) => {
+  return signInFirebase(googleCredentials, firebaseConfig);
+}
+
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -26,7 +30,7 @@ const InitialScreen = () => {
     const onSignedIn = async (googleCredentials) => {
       try {
         if (!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        const newUser = await signInFirebase(googleCredentials, firebaseConfig);
+        const newUser = await initFirebase(googleCredentials);
         if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 // import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MayoSettingsProvider } from 'mayo-settings';
-import { SignInScreen, UserProvider,  } from 'mayo-firebase-auth';
+import { SignInScreen, UserProvider, UserContext, UserContextType } from 'mayo-firebase-auth';
+import { customInitializeFirebase } from 'mayo-firestore-write';
 
 import { ChapterProvider } from '../hooks/useFetchChapters';
 import MainScreen from '../components/MainScreen';
@@ -11,15 +12,24 @@ import InitialScreen from '../components/InitialScreen';
 import { RootStackParamList } from '../models/interfaces';
 import LessonPages from '../components/lesson/LessonPages';
 import DiscriminantExercise from '../components/exercise/DiscriminantExercise';
-
+import * as firebaseConfig from '../../fireBaseConfig';
 // Create the application stack
 const Stack = createStackNavigator<RootStackParamList>();
 const webClientId = "581865288762-pn1dvg84mtf77v2qjsm2r40k7p7gj4qb.apps.googleusercontent.com";
 
 export const MainApp: React.FC = () => {
+  const { user } = useContext(UserContext) as UserContextType;
+
+  useEffect(() => {
+    const initializeFirebase = async () => {
+      await customInitializeFirebase(firebaseConfig);
+    };
+
+    if(user) initializeFirebase();
+  }, [user]);
   return (
-    <NavigationContainer>
-      <UserProvider>
+    // <NavigationContainer>
+    //   <UserProvider>
         <ChapterProvider>
           <MayoSettingsProvider>
             <Stack.Navigator initialRouteName="Initial">
@@ -47,7 +57,7 @@ export const MainApp: React.FC = () => {
             </Stack.Navigator>
           </MayoSettingsProvider>
         </ChapterProvider>
-      </UserProvider>
-    </NavigationContainer>
+    //   </UserProvider>
+    // </NavigationContainer>
     );
 };

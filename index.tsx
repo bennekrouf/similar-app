@@ -21,18 +21,24 @@ import 'intl-pluralrules';
 import { name } from './app.json';
 import { MainApp } from './src/navigation/AppNavigator';
 import {ErrorBoundary, Logger} from 'mayo-logger';
+import { NavigationContainer } from '@react-navigation/native';
+import { UserProvider } from 'mayo-firebase-auth';
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
-  Logger.configure({ 
-    appName: "Tafseel",
-    timestamp: true 
-  });
+  // Logger.configure({ 
+  //   appName: "Tafseel",
+  //   timestamp: true 
+  // });
 
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
-        <MainApp />
+        <NavigationContainer>
+          <UserProvider>
+            <MainApp />
+          </UserProvider>
+        </NavigationContainer>
       </ErrorBoundary>
     </SafeAreaProvider>
   );

@@ -30,7 +30,7 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
   const { openModal, closeModal } = useMayoSettings();
   // const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { authEvents } = useContext(UserContext) as UserContextType;
+  const { authEvents, user } = useContext(UserContext) as UserContextType;
   const {chapters, isLoading} = useChapters();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   
@@ -62,8 +62,6 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
     }
   
     setSelectedLabels(newSelectedLabels);
-    
-    
   };
 
   const handleChapterSelection = (chapter: any) => {
@@ -97,8 +95,8 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
       }
     };
 
-    fetchInitialSettings();
-  }, []);
+    if(user) fetchInitialSettings();
+  }, [user]);
 
   useEffect(() => {
     const getCurrentIndexFromStorage = async () => {

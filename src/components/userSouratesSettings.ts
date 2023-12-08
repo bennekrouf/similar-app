@@ -5,7 +5,7 @@ import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByNam
 
 export const userSouratesSettings = async () => {
     const res = await currentStorage();
-    return res?.knownSourates;
+    return res?.knownSourates || [];
 };
 
 export const indexFromStorage = async () => {

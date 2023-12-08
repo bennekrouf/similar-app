@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import { Chapter } from '../models/interfaces';
 import { loadChapters } from '../api/loadChapters';
 import { Logger } from 'mayo-logger'; 
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 interface ChapterContextProps {
   chapters: Chapter[];
@@ -18,6 +19,7 @@ interface ChapterProviderProps {
 export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) => {
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(UserContext) as UserContextType;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +35,8 @@ export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) =>
         setIsLoading(false);
       }
     };
-    fetchData();
-  }, []);
+    if(user) fetchData();
+  }, [user]);
 
   return (
     <ChapterContext.Provider value={{ chapters, isLoading }}>
