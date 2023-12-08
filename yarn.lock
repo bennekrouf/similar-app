@@ -1786,6 +1786,14 @@
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
+"@react-native-firebase/app@^18.7.1":
+  version "18.7.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.7.1.tgz#89fea18713a0fec9e2a0190a4be6b6c54208a73e"
+  integrity sha512-OcWfOUl47pIXcmD5lDn+b1hJktiU7DawXTqjxzDLfWpPzSQUys4OH9kV2ZEnFNKMuvgPELNtzq/H9+Bylc4PGA==
+  dependencies:
+    opencollective-postinstall "^2.0.3"
+    superstruct "^0.6.2"
+
 "@react-native-firebase/auth@^18.5.0", "@react-native-firebase/auth@^18.6.0":
   version "18.6.2"
   resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-18.6.2.tgz#53d6dc27c1c613887114a72d123e5fd0204085a0"
@@ -5362,12 +5370,13 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-mayo-firebase-auth@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/mayo-firebase-auth/-/mayo-firebase-auth-1.3.0.tgz#ccd82f3621e6f8d740ad695d19ffc91eb6b02411"
-  integrity sha512-j3Xw7oYQq7687Lg+5xM6rsFW5MyoWAQ7UfJVOh2oyH8zEregQNHeQOODh8MLgaNA5ua5ko9NaMZ3nyTkgrGNbw==
+mayo-firebase-auth@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npmjs.org/mayo-firebase-auth/-/mayo-firebase-auth-1.4.4.tgz#5a7e04af3b1df8b3ef8a6f475125bae262848a50"
+  integrity sha512-zd4tXrPMpUz2QfLxskjbOtAa9F1rDGka1fv+dEiblyT8Ve/1kFsd2JzdTK3zmRKW0amGYGzcqlUgkjihBtnSyg==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
+    "@react-native-firebase/app" "^18.7.1"
     "@react-native-firebase/auth" "^18.5.0"
     "@react-native-google-signin/google-signin" "^10.0.1"
     "@react-navigation/native" "^6.1.7"
@@ -5375,20 +5384,30 @@ mayo-firebase-auth@^1.3.0:
     "@types/node" "^20.6.2"
     "@types/react" "^18.2.27"
     events "^3.3.0"
-    mayo-firebase-config "^1.2.21"
+    mayo-firebase-config "^1.2.22"
     mayo-logger "^1.0.8"
+    react-native-device-info "^10.12.0"
+    react-native-screens "^3.27.0"
 
-mayo-firebase-config@^1.2.20, mayo-firebase-config@^1.2.21:
+mayo-firebase-config@^1.2.20:
   version "1.2.21"
   resolved "https://registry.npmjs.org/mayo-firebase-config/-/mayo-firebase-config-1.2.21.tgz#1fb68676d7c488a722b0fd04e5690f18f5f3cbe2"
   integrity sha512-sQTYUGG0Azk8TlScw+fqfqz/kj3lEIotSLjDa98g9ROLeD6kBvAkE1acpU/wAypj7GReC5jKfBJgSvO6pGm3HA==
   dependencies:
     mayo-logger "^1.0.8"
 
-mayo-firestore-write@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.npmjs.org/mayo-firestore-write/-/mayo-firestore-write-1.2.6.tgz#31de0f3f45138a480020bdc54368e7afa31c070c"
-  integrity sha512-OKa3e4PiHpp0cWrN68B0/kjYqdo4ossWgLU8JB44R/bATCC2OiLQ3AQgk2o/R0Dvke3zGxWyLRkElBv5S8aoFg==
+mayo-firebase-config@^1.2.22, mayo-firebase-config@^1.2.23:
+  version "1.2.23"
+  resolved "https://registry.npmjs.org/mayo-firebase-config/-/mayo-firebase-config-1.2.23.tgz#1d952f43cdf1f269254442bf2f52221068a21d1f"
+  integrity sha512-/0n7AISDMRC3G/BAY8jZ//XftkmdGhAa1uvHlJaVwotcuortehx99pXL2l7DndsJO6F58Morxkj3E8iHGVP9Uw==
+  dependencies:
+    mayo-logger "^1.0.8"
+    react-native-device-info "^10.12.0"
+
+mayo-firestore-write@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/mayo-firestore-write/-/mayo-firestore-write-1.3.0.tgz#c813af8446682843e9af53b33b8cdf298f8f7715"
+  integrity sha512-r8F8kaATiKUQ7mD7sr0zHSXy9gAszW7/2rsU8YmeWuK3dbszcSuKyYmWFDiv5NWVlcper4cYsYPVs8q3wG9hoA==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-community/async-storage" "^1.12.1"
@@ -5397,7 +5416,7 @@ mayo-firestore-write@^1.2.6:
     "@react-native-firebase/firestore" "^18.5.0"
     mayo-firebase-config "^1.2.20"
     mayo-logger "^1.0.8"
-    react-native-device-info "^10.11.0"
+    react-native-device-info "^10.12.0"
 
 mayo-logger@^1.0.8:
   version "1.1.0"
@@ -6764,10 +6783,10 @@ react-native-config@^1.5.1:
   resolved "https://registry.npmjs.org/react-native-config/-/react-native-config-1.5.1.tgz#73c94f511493e9b7ff9350cdf351d203a1b05acc"
   integrity sha512-g1xNgt1tV95FCX+iWz6YJonxXkQX0GdD3fB8xQtR1GUBEqweB9zMROW77gi2TygmYmUkBI7LU4pES+zcTyK4HA==
 
-react-native-device-info@^10.11.0:
-  version "10.11.0"
-  resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-10.11.0.tgz#2c9f378f1c3c5eb9aafa803d015b84325991a9aa"
-  integrity sha512-qRzhuYOm5ZXQi5dhfJFjDq157oipxcEW/fo0QyMm5+TI6V6/+P/tju+Hif6z0rpLCf7MV7iDVRv2Kqha4D/yvQ==
+react-native-device-info@^10.12.0:
+  version "10.12.0"
+  resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-10.12.0.tgz#be4e71cbcc9a05e8643b1a419a4450d4cef9bbcc"
+  integrity sha512-gnBkjyZNEqRd+5BNrdzuvmlraHTCH/to2x0Gp9rtDt0O9xWWW1MTYohUVWX9A0Ad2HVYcGanDCIvjWp4ngMZFg==
 
 react-native-devsettings@^1.0.5:
   version "1.0.5"

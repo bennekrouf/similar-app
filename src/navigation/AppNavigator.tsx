@@ -26,7 +26,7 @@ export const MainApp: React.FC = () => {
               <Stack.Screen name="SignIn" component={SignInScreen}
                 initialParams={{ config: { webClientId } }}
                 options={{ 
-                  headerLeft: () => null,  // Hide back button
+                  headerLeft: () => null,
                   headerShown: false,
                 }}
               />
