@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { loadLessons } from '../api/loadLessons';
 import { Logger } from 'mayo-logger';
-import { Statement, RootStackParamList } from '../models/interfaces';
+import { RootStackParamList } from '../models/RootStackParamList';
+import { Statement } from '../models/interfaces';
+import { initialState } from '../models/UserState';
+import { useFetchUser } from './useFetchUser';
 
 const useFetchLessons = (selectedChapter: number) => {
   const [contents, setContents] = useState<Statement[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<RootStackParamList["ErrorScreen"] | null>(null);
+  const [userState, setUserState, loading] = useFetchUser(initialState);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         Logger.info('Fetching lessons', { selectedChapter }, { tag: 'LessonsFetch' });
 
-        const lessons = await loadLessons(selectedChapter);
+        const lessons = await loadLessons(selectedChapter, userState.knownSourates);
         setContents(lessons);
 
         // Log lessons (Statements) with missing verses if needed

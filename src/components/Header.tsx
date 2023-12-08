@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -8,73 +8,41 @@ import { Logger } from 'mayo-logger';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 
-import { RootStackParamList } from '../models/interfaces';
+import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
 
-import labels from '../modals/SourateConfiguration/labels.json';
 import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
 import SouratesSelector from '../modals/SourateSelector/SouratesSelector';
 import SourateBox from './SourateBox';
-import { usePersistedState } from '../hooks/usePersistState';
+import labels from '../modals/SourateConfiguration/labels.json';
 import { useChapters } from '../hooks/useFetchChapters';
-import { currentStorage } from '../storage/currentStorage';
+import { UserState } from '../models/UserState';
+import { onLabelSelect } from './onLabelSelect';
 
-import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
-import { getNamesByIndices } from '../modals/SourateConfiguration/getNamesByIndices';
-const initialState = [];
-const souratesModal = 'souratesModal';
-const settingsModal = 'settingsModal';
+const souratesModal = 'souratesModal', settingsModal = 'settingsModal';
 
-const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
+type HeaderProps = {
+  exercises: any;
+  userState: UserState;
+  setUserState: any;
+  loading: boolean;
+};
+
+const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading }) => {
   const insets = useSafeAreaInsets();
   const { openModal, closeModal } = useMayoSettings();
-  // const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { authEvents } = useContext(UserContext) as UserContextType;
-  const {chapters, isLoading} = useChapters();
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  
-  const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState as string[]);
-  const onLabelClicked = (labelName: string) => {
-    // selectedLabels.push(labelName);
-    // const newIndicesList = getIndicesByName(selectedLabels);
+  const { chapters } = useChapters();
 
-    // setSelectedLabels(getNamesByIndices(newIndicesList));
-    // console.log(selectedLabels);
-    let newSelectedLabels;
-
-    if (selectedLabels.includes(labelName)) {
-      // If the label is already selected, remove it and its range from the selection
-      const labelIndices = getIndicesByName([labelName]);
-      newSelectedLabels = selectedLabels.filter(
-        selected => !labelIndices.includes(getIndicesByName([selected])[0])
-      );
-    } else {
-      // If the label is not selected, add it and its range to the selection
-      // First, add the label itself
-      newSelectedLabels = [...selectedLabels, labelName];
-      // Then, calculate the indices for the new label and add any related labels
-      const newIndicesList = getIndicesByName([labelName]);
-      const relatedLabels = getNamesByIndices(newIndicesList).filter(
-        related => !newSelectedLabels.includes(related)
-      );
-      newSelectedLabels.push(...relatedLabels);
-    }
-  
-    setSelectedLabels(newSelectedLabels);
-    
-    
-  };
-
-  const handleChapterSelection = (chapter: any) => {
-    setSelectedChapter(chapter.no);
+  const handleLabelSelect = (labelName) => {
+    onLabelSelect(labelName, userState, setUserState);
   };
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
     closeModal(souratesModal);
     if (chapter.no) {
-      handleChapterSelection({no: chapter.no});
-
+      setUserState({...userState, selectedChapter: chapter.no});
       try {
         await AsyncStorage.setItem('selectedChapter', chapter.no.toString());
       } catch (error) {
@@ -82,56 +50,6 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
       }
     }
   };
-
-  useEffect(() => {
-    const fetchInitialSettings = async () => {
-      try {
-        const res = await currentStorage();
-        if(res?.knownSourates) {
-          setSelectedLabels(res.knownSourates);
-        }
-        Logger.info('Fetched initial settings.', selectedLabels, { tag: 'Header:useEffect' });
-      } catch (error) {
-        Logger.error('Error fetching initial settings.', error, { tag: 'Header:useEffect' });
-        throw error;
-      }
-    };
-
-    fetchInitialSettings();
-  }, []);
-
-  useEffect(() => {
-    const getCurrentIndexFromStorage = async () => {
-      try {
-        Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
-        const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
-        if (storedCurrentIndex) {
-          setCurrentIndex(parseInt(storedCurrentIndex));
-        }
-      } catch (error) {
-        Logger.error('Error retrieving currentIndex from AsyncStorage', error, { tag: 'LessonPages' });
-      }
-    };
-    getCurrentIndexFromStorage();
-  }, []);
-
-  useEffect(() => {
-    const getSelectedChapterFromStorage = async () => {
-      try {
-        Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
-        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
-        if (storedSelectedChapter) {
-          setSelectedChapter(parseInt(storedSelectedChapter));
-        }
-      } catch (error) {
-        Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
-      }
-    };
-
-    // if (user) {
-      getSelectedChapterFromStorage();
-    // }
-  }, []);
 
   useEffect(() => {
     const onSignedOut = async () => {
@@ -146,6 +64,14 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
       authEvents.off('signedOut', onSignedOut);
     };
   }, []);
+  
+  if (loading) {
+    return <View><Text>Loading...</Text></View>;
+  }
+
+  // Calculate the totals
+  const totalGoodAnswers = Array.isArray(userState?.answerStats) ? userState?.answerStats.reduce((acc, stat) => acc + stat.g, 0) : 0;
+  const totalWrongAnswers = Array.isArray(userState) ? userState?.answerStats.reduce((acc, stat) => acc + stat.w, 0) : 0;
 
   return (
     <View style={{ paddingTop: insets.top, backgroundColor: 'white' }}>
@@ -153,12 +79,12 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
         <View style={styles.placeholderBox}></View>
 
         <TouchableOpacity onPress={() => openModal(souratesModal)}>
-          <SourateBox chapterNo={selectedChapter} />
+          <SourateBox chapterNo={userState.selectedChapter}/>
         </TouchableOpacity>
 
         {/* Header Box for the counts */}
         <View style={styles.headerBox}>
-            <Text style={styles.headerText}>G{stats.goodCount} W{stats.wrongCount} T{stats.count}</Text>
+            <Text style={styles.headerText}>G{totalGoodAnswers} W{totalWrongAnswers} T{exercises?.length}</Text>
         </View>
 
         {/* TouchableOpacity for the settings button */}
@@ -178,7 +104,10 @@ const Header = ({ stats, selectedChapter, setSelectedChapter }) => {
           logoutButtonText: 'Logout',
           showFooter: true,
         }}>
-        <LabelsSelector labels={labels} selectedLabels={selectedLabels} onLabelSelect={onLabelClicked} />
+        <LabelsSelector
+        labels={labels}
+        selectedLabels={userState.knownSourates}
+        onLabelSelect={handleLabelSelect} />
       </MayoSettingsModal>
 
       {/* MayoSettingsModal for Selecting Sourates */}
@@ -209,23 +138,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 10,
   },
-  header: {
-    flex: 1, // Takes up as much space as possible
-    justifyContent: 'center', // Horizontally center the headerText within headerBox
-    alignItems: 'center', // Vertically center the headerText within headerBox (if needed)
-    backgroundColor: '#e0e0e0',
-    padding: 5,
-    borderRadius: 5,
-  },
   headerBox: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 5,
     borderRadius: 5,
-  },
-  headerCount: {
-    fontWeight: 'bold',
   },
   headerSeparator: {
     height: 1, // Height of separator line

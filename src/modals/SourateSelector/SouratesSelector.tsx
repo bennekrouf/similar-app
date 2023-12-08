@@ -2,10 +2,11 @@
 import React from 'react';
 import {View, ScrollView, TouchableOpacity} from 'react-native';
 import SourateBox from '../../components/SourateBox';
+import { Chapter } from '../../models/interfaces';
 
 interface SouratesSelectorProps {
   handleLabelPress: (chapter: {no: number | undefined}) => Promise<void>;
-  chapters: any[]; // Consider providing a more specific type
+  chapters: Chapter[];
 }
 
 const SouratesSelector: React.FC<SouratesSelectorProps> = ({
@@ -28,7 +29,7 @@ const SouratesSelector: React.FC<SouratesSelectorProps> = ({
             marginVertical: 5,
           }}
           onPress={() => handleLabelPress(chapter)}>
-          <SourateBox chapterNo={chapter.no} count_ayat={chapter.count_ayat} />
+          <SourateBox chapterNo={chapter.no} count_ayat={chapter.count_ayat}/>
         </TouchableOpacity>
       ))}
     </View>

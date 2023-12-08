@@ -6,7 +6,7 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect }) => {
   const groupedLabels = _.groupBy(labels, 'section');
   const renderLabelsSection = (labelList) => (
     <View style={styles.section}>
-      {labelList?.map((item:any, index:number) => (
+      {labelList?.reverse().map((item:any, index:number) => (
         <LabelEntry 
           key={index}
           item={item}
@@ -29,11 +29,19 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect }) => {
   );
 };
 
+const indiq = (item) => {
+  return item.end === item.start ? `${item.end}` : `${item.end}-${item.start}`;
+}
+
 const LabelEntry = ({ item, isSelected, onSelect }) => (
   <TouchableOpacity 
     style={[styles.entry, isSelected ? styles.selectedLabel : {}]} 
     onPress={onSelect}>
-    <Text style={styles.labelText}>{item.name}</Text>
+    <View style={styles.labelContent}>
+      <Text style={styles.labelText}>{item.name}</Text>
+      {/* Additional Text for start-end */}
+      <Text style={styles.smallText}>{indiq(item)}</Text>
+    </View>
   </TouchableOpacity>
 );
 
@@ -48,7 +56,15 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   labelText: {
-    textAlign: 'right'
+    textAlign: 'center',
+    marginBottom: 2,
+  },
+  labelContent: {
+    alignItems: 'center',
+  },
+  smallText: {
+    fontSize: 10, // Smaller font size
+    color: '#666', // Less prominent color
   },
   entry: {
     padding: 10,

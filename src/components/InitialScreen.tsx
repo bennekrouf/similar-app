@@ -1,8 +1,10 @@
 import { useEffect, useContext } from 'react';
-import { UserContext, UserContextType } from 'mayo-firebase-auth';
-import { signInFirebase } from 'mayo-firestore-write';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../models/interfaces';
+
+import { signInFirebase } from 'mayo-firestore-write';
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
+
+import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
 import { Platform } from 'react-native';
 const firebaseConfig = Platform.OS === 'android' ? {
@@ -16,9 +18,17 @@ const firebaseConfig = Platform.OS === 'android' ? {
   measurementId: '',
 }:undefined;
 
+type ScreenNames = keyof RootStackParamList;
+const MenuScreen: ScreenNames = 'Menu';
+const SignInScreenName: ScreenNames = 'SignIn';
+
 const InitialScreen = () => {
-  const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
+  const { user, setUser, authEvents, userContextLoading } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    if(!userContextLoading) navigation.navigate(user ? MenuScreen : SignInScreenName);
+  }, [user, userContextLoading]);
 
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
@@ -40,7 +50,7 @@ const InitialScreen = () => {
 
   useEffect(() => {
     if (user) {
-      navigation.navigate('Home');
+      navigation.navigate('Menu');
     } else {
       navigation.navigate('SignIn', { config: firebaseConfig });
     }

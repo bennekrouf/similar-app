@@ -1,31 +1,42 @@
-import React, {useState} from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Button, StyleSheet, Text } from 'react-native';
 
 import Header from './Header';
-
 import LessonPages from './lesson/LessonPages';
-// import DiscriminantExercise from './exercise/DiscriminantExercise';
-import {loadExercise} from '../api/loadExercisesList';
+import DiscriminantExercise from './exercise/DiscriminantExercise';
+import { loadExercise } from '../api/loadExercisesList';
+import { settingsToRanges } from '../api/settingsToRanges';
+import { UserState, initialState } from '../models/UserState';
+import { useFetchUser } from '../hooks/useFetchUser';
 
 const MainScreen = () => {
-  const [selectedChapter, setSelectedChapter] = useState<number | 2>(2);
   const [selectedOption, setSelectedOption] = useState(null);
-
-  const stats = {
-    count: 10,
-    goodCount: 5,
-    wrongCount: 2,
+  const [exercises, setExercises] = useState();
+  const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
+  
+  useEffect(() => {
+    if(loading) return;
+    const loadExercises = async () => {
+      if (userState?.knownSourates) {
+        const ranges = settingsToRanges(userState?.knownSourates);
+        const exo = await loadExercise(ranges);
+        setExercises(exo);
+      }
+    };
+    loadExercises();
+  }, [userState, loading]);
+  if (loading) {
+    return <View><Text>Loading...</Text></View>;
   }
-  // Logger.info('User Preference Modal State:', { isOpen: isMayoSettingsOpen }, { tag: 'HomeScreen:ModalState' });
-
-  let content;
+  
+  let content:any;
   switch (selectedOption) {
     case 'Lessons':
-      content = <LessonPages selectedChapter={selectedChapter}/>;
+      content = <LessonPages selectedChapter={userState.selectedChapter}/>;
       break;
-    // case 'Exercises':
-    //   content = <DiscriminantExercise settings={settings}/>;
-    //   break;
+    case 'Exercises':
+      content = <DiscriminantExercise exercises={exercises}/>;
+      break;
     default:
       content = (
         <View style={styles.container}>
@@ -34,12 +45,17 @@ const MainScreen = () => {
         </View>
       );
   }
-
+  
   return (
-      <View style={styles.view}>
-        <Header stats={stats} selectedChapter={selectedChapter} setSelectedChapter={setSelectedChapter}/>
-        {content}
-      </View>
+    <View style={styles.view}>
+      <Header
+        exercises={exercises}
+        userState={userState} 
+        setUserState={setUserState}
+        loading={loading}
+        />
+      {content}
+    </View>
   );
 };
 
