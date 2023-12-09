@@ -32,11 +32,42 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
   const insets = useSafeAreaInsets();
   const { openModal, closeModal } = useMayoSettings();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { authEvents } = useContext(UserContext) as UserContextType;
-  const { chapters } = useChapters();
+  const { authEvents, user } = useContext(UserContext) as UserContextType;
+  const {chapters, isLoading} = useChapters();
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  
+  const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState as string[]);
+  const onLabelClicked = (labelName: string) => {
+    // selectedLabels.push(labelName);
+    // const newIndicesList = getIndicesByName(selectedLabels);
 
-  const handleLabelSelect = (labelName) => {
-    onLabelSelect(labelName, userState, setUserState);
+    // setSelectedLabels(getNamesByIndices(newIndicesList));
+    // console.log(selectedLabels);
+    let newSelectedLabels;
+
+    if (selectedLabels.includes(labelName)) {
+      // If the label is already selected, remove it and its range from the selection
+      const labelIndices = getIndicesByName([labelName]);
+      newSelectedLabels = selectedLabels.filter(
+        selected => !labelIndices.includes(getIndicesByName([selected])[0])
+      );
+    } else {
+      // If the label is not selected, add it and its range to the selection
+      // First, add the label itself
+      newSelectedLabels = [...selectedLabels, labelName];
+      // Then, calculate the indices for the new label and add any related labels
+      const newIndicesList = getIndicesByName([labelName]);
+      const relatedLabels = getNamesByIndices(newIndicesList).filter(
+        related => !newSelectedLabels.includes(related)
+      );
+      newSelectedLabels.push(...relatedLabels);
+    }
+  
+    setSelectedLabels(newSelectedLabels);
+  };
+
+  const handleChapterSelection = (chapter: any) => {
+    setSelectedChapter(chapter.no);
   };
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
@@ -50,6 +81,56 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
       }
     }
   };
+
+  useEffect(() => {
+    const fetchInitialSettings = async () => {
+      try {
+        const res = await currentStorage();
+        if(res?.knownSourates) {
+          setSelectedLabels(res.knownSourates);
+        }
+        Logger.info('Fetched initial settings.', selectedLabels, { tag: 'Header:useEffect' });
+      } catch (error) {
+        Logger.error('Error fetching initial settings.', error, { tag: 'Header:useEffect' });
+        throw error;
+      }
+    };
+
+    if(user) fetchInitialSettings();
+  }, [user]);
+
+  useEffect(() => {
+    const getCurrentIndexFromStorage = async () => {
+      try {
+        Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
+        const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
+        if (storedCurrentIndex) {
+          setCurrentIndex(parseInt(storedCurrentIndex));
+        }
+      } catch (error) {
+        Logger.error('Error retrieving currentIndex from AsyncStorage', error, { tag: 'LessonPages' });
+      }
+    };
+    getCurrentIndexFromStorage();
+  }, []);
+
+  useEffect(() => {
+    const getSelectedChapterFromStorage = async () => {
+      try {
+        Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
+        const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
+        if (storedSelectedChapter) {
+          setSelectedChapter(parseInt(storedSelectedChapter));
+        }
+      } catch (error) {
+        Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
+      }
+    };
+
+    // if (user) {
+      getSelectedChapterFromStorage();
+    // }
+  }, []);
 
   useEffect(() => {
     const onSignedOut = async () => {

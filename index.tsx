@@ -9,6 +9,7 @@ import './languageImports';
 import { name } from './app.json';
 import { MainApp } from './src/navigation/AppNavigator';
 import {ErrorBoundary, Logger} from 'mayo-logger';
+import { UserProvider } from 'mayo-firebase-auth';
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
@@ -16,14 +17,16 @@ const AppRoot: React.FC = () => {
   //   appName: "Tafseel",
   //   timestamp: true 
   // });
-  debugger
+
   return (
     <SafeAreaProvider>
-      {/* <ErrorBoundary> */}
-        {/* <NavigationContainer> */}
-          <MainApp />
-        {/* </NavigationContainer> */}
-      {/* </ErrorBoundary> */}
+      <ErrorBoundary>
+        <NavigationContainer>
+          <UserProvider>
+            <MainApp />
+          </UserProvider>
+        </NavigationContainer>
+      </ErrorBoundary>
     </SafeAreaProvider>
   );
 };

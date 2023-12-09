@@ -6,35 +6,33 @@ import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
-import { Platform } from 'react-native';
-const firebaseConfig = Platform.OS === 'android' ? {
-  apiKey: 'AIzaSyAfvcfClkm9KKLG7f3pm5IdJi4skpGsXRQ',
-  authDomain: 'tafseel-7f242.firebaseapp.com',
-  projectId: 'tafseel-7f242',
-  storageBucket: 'tafseel-7f242.appspot.com',
-  messagingSenderId: '581865288762',
-  appId: '1:581865288762:android:fca352231f244f19253103',
-  databaseURL: '',
-  measurementId: '',
-}:undefined;
+import conf from '../../fireBaseConfig';
 
 type ScreenNames = keyof RootStackParamList;
 const MenuScreen: ScreenNames = 'Menu';
 const SignInScreenName: ScreenNames = 'SignIn';
+
+const initFirebase = async(googleCredentials:any) => {
+  return signInFirebase(googleCredentials, conf.firebaseConfig);
+}
 
 const InitialScreen = () => {
   const { user, setUser, authEvents, userContextLoading } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
-    if(!userContextLoading) navigation.navigate(user ? MenuScreen : SignInScreenName);
+    if (user) {
+      navigation.navigate(MenuScreen);
+    } else {
+      navigation.navigate(SignInScreenName, { config: conf.firebaseConfig });
+    }
   }, [user, userContextLoading]);
 
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
       try {
         if (!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        const newUser = await signInFirebase(googleCredentials, firebaseConfig);
+        const newUser = await initFirebase(googleCredentials);
         if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
@@ -47,14 +45,6 @@ const InitialScreen = () => {
       authEvents.off('signedIn', onSignedIn);
     };
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      navigation.navigate('Menu');
-    } else {
-      navigation.navigate('SignIn', { config: firebaseConfig });
-    }
-  }, [user]);
 
   return null;
 };

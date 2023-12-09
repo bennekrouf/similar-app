@@ -55,10 +55,4 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter })
   );
 };
 
-const styles = StyleSheet.create({
-  tabBar: {
-    minHeight: 30,
-  }
-});
-
 export default LessonPages;

@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { loadLessons } from '../api/loadLessons';
 import { Logger } from 'mayo-logger';
 import { RootStackParamList } from '../models/RootStackParamList';
-import { Statement } from '../models/interfaces';
 import { initialState } from '../models/UserState';
 import { useFetchUser } from './useFetchUser';
+import { Statement } from '../models/interfaces';
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 const useFetchLessons = (selectedChapter: number) => {
   const [contents, setContents] = useState<Statement[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<RootStackParamList["ErrorScreen"] | null>(null);
   const [userState, setUserState, loading] = useFetchUser(initialState);
+  const { user } = useContext(UserContext) as UserContextType;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,8 +38,8 @@ const useFetchLessons = (selectedChapter: number) => {
       }
     };
 
-    fetchData();
-  }, [selectedChapter]);
+    if(user) fetchData();
+  }, [selectedChapter, user]);
 
   return { contents, isLoading, error };
 };
