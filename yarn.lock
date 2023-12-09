@@ -1587,10 +1587,17 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@react-native-async-storage/async-storage@^1.19.2", "@react-native-async-storage/async-storage@^1.19.3":
+"@react-native-async-storage/async-storage@^1.19.3":
   version "1.19.3"
   resolved "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.19.3.tgz#ad5fe3ed0a82d4624aa4500321c1e09c02daeb46"
   integrity sha512-CwGfoHCWdPOTPS+2fW6YRE1fFBpT9++ahLEroX5hkgwyoQ+TkmjOaUxixdEIoVua9Pz5EF2pGOIJzqOTMWfBlA==
+  dependencies:
+    merge-options "^3.0.4"
+
+"@react-native-async-storage/async-storage@^1.19.4":
+  version "1.19.7"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.19.7.tgz#05cab023eeb9ac2c2c1223f6fb57a564244f59a9"
+  integrity sha512-zvfhOWWnjzeP4exfgNwDUot7MQafEEJnbjjNsVKWRxRuQT521GLSHUJQHjMTLg19QPT+HbsGjL7rJzKkmXuq7w==
   dependencies:
     merge-options "^3.0.4"
 
@@ -1770,10 +1777,18 @@
   resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.4.1.tgz#7b880758adca65fe47ee866cf7b00416b9dcc192"
   integrity sha512-dAbY5mfw+6Kas/GJ6QX9AZyY+K+eq9ad4Su6utoph/nxyH3whp5cMSgRNgE2VhGQVRZ/OG0qq3IaD3+wzoqJXw==
 
-"@react-native-firebase/app@^18.5.0", "@react-native-firebase/app@^18.6.0":
+"@react-native-firebase/app@^18.5.0":
   version "18.6.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.6.0.tgz#939c92fda17c2641079314f30d52797db43a673e"
   integrity sha512-pJwq2D0VBk8QvmIw6qZ5P3Y5Uaq4LL9NarAcTdEIA342VlhmTB1rovcYHE/F/hohdGBwFzi5qXAQnZmTxv27sg==
+  dependencies:
+    opencollective-postinstall "^2.0.3"
+    superstruct "^0.6.2"
+
+"@react-native-firebase/app@^18.6.1":
+  version "18.6.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.6.1.tgz#9dd741b9b4e0493a7fa037c7e5717ba0c53086e4"
+  integrity sha512-lqINQLLTCmBSeln/cSPfvuJNQuwsPY9n6QyxSRRCTjyZdEPI3EY2df7isOCp8BwuxqYmkR9YhTNw2yFI72th+w==
   dependencies:
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
@@ -1785,10 +1800,10 @@
   dependencies:
     plist "^3.1.0"
 
-"@react-native-firebase/crashlytics@^18.6.0":
-  version "18.6.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/crashlytics/-/crashlytics-18.6.0.tgz#3a37d03178de6f2a1019f8054376f015f940503a"
-  integrity sha512-VGBvY8hNbyk30Fd1rTsQlUvSO425AnOootB+B0HCmuS2Mhn02RDA/ylPbkjGAavX+bM8TB6bOZ7hbpCAFgpa0Q==
+"@react-native-firebase/crashlytics@^18.6.1":
+  version "18.6.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-18.6.1.tgz#79b7c566a6cbc9df5aa5b3540c9bf0ce5195ee3e"
+  integrity sha512-mPP6RKwy0cCL4rYyanplwg2HGAswE4z4I9p0p3q8ZOuvD/F48IwVMebbE0f5aeEztlEBguL3KOeGXGUttw61+w==
   dependencies:
     stacktrace-js "^2.0.2"
 
@@ -5396,6 +5411,11 @@ mayo-logger@^1.0.8:
   version "1.0.8"
   resolved "https://registry.npmjs.org/mayo-logger/-/mayo-logger-1.0.8.tgz#57123a32e3673f2bc368dbe22d5bc34b6af98560"
   integrity sha512-hR3JiImAJUMcY9BZtpgtGsgvOJ0EnpO5vj35gkExaXLmZ1jtPMp2/30+WUM8XDTIH9LqWQ6RKYMmZ9KsJi5goQ==
+
+mayo-logger@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mayo-logger/-/mayo-logger-1.1.0.tgz#ee1236a4aa791d3bece7dd1315c28458e6868884"
+  integrity sha512-Lfnjppm5kD+7uv0OWHwDOUYOB19p2pK0AqLXihZc2UH5lPi3O3xN+dFGnHUoFHfdWdUqsVgYvFoUJQ5OAOua1Q==
 
 mayo-settings@^1.2.4:
   version "1.2.4"
