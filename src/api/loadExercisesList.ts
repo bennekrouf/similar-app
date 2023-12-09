@@ -1,14 +1,10 @@
 import { Logger } from 'mayo-logger'; 
-import { apiClient } from './apiClient';  // Assuming apiClient is in the same directory
+import { apiClient } from './apiClient';
 
-export async function loadExercise(kalima: string) {
+export async function loadExercise(ranges?: string) {
   try {
-    Logger.info('Initiating exercise list load', { kalima }, { tag: 'ExerciseListLoad' });
-
-    const endpoint = `exercise_list/${kalima}`;
-
-    // Using the apiClient with caching disabled.
-    const exercises = await apiClient.get(endpoint, false);
+    Logger.info('Initiating exercise list load', { ranges }, { tag: 'ExerciseListLoad' });
+    const exercises = await apiClient.get('exercise_list', { ranges }, false);
     
     Logger.info('Received exercise list data', { exercises }, { tag: 'ExerciseListLoad' });
     return exercises;

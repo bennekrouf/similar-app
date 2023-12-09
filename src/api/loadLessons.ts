@@ -1,16 +1,16 @@
-import { checkAndRemoveOldData } from './checkAndRemoveOldData';
+import Config from 'react-native-config';
 import { Logger } from 'mayo-logger'; 
 import { apiClient } from './apiClient';
-import Config from 'react-native-config';
+import { checkAndRemoveOldData } from './checkAndRemoveOldData';
+import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
+import { convertIndicesToRanges } from '../modals/SourateConfiguration/convertIndicesToRanges';
 
-export async function loadLessons(chapterNo = 59) {
+export async function loadLessons(chapterNo = 59, knownSourates: string[]) {
   checkAndRemoveOldData();
   try {
+    const indices = getIndicesByName(knownSourates);
     let lessons: any[];
-    
-    // Use apiClient to fetch lessons
-    const endpoint = `similars/${chapterNo}`;
-    lessons = await apiClient.get(endpoint, true);
+    lessons = await apiClient.get(`similars/${chapterNo}`, {ranges: convertIndicesToRanges(indices)}, true);
 
     if (lessons) {
       Logger.info(`Successfully fetched and/or retrieved lesson data from cache/API.`, { chapterNo }, { tag: 'loadLessons' });

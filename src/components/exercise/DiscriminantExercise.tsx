@@ -5,49 +5,62 @@ import {useTranslation} from 'react-i18next';
 import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import { syncStorage } from '../../storage/syncStorage';
 
-import {checkDiscriminant} from '../../api/checkDiscriminant';
-import {checkChapter} from '../../api/checkChapter';
 import {radioButtonText} from './radioButtonText';
 import CustomRadioButton from './CustomRadioButton';
 
 import { Alternative, Statement } from '../../models/interfaces';
 import { Logger } from 'mayo-logger';
+import { AnswerStat } from '../../models/AnswerStat';
+import { updateAnswerStats } from './updateStats';
 
 const theme = {
   ...DefaultTheme,
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'orange', // The primary color represents button color in `contained` mode.
+    primary: 'orange',
   },
 };
 
-const DiscriminantExercise = ({route, _}) => {
-
+const DiscriminantExercise = ({exercises}) => {
   const {t} = useTranslation();
   const [statement, setStatement] = useState<Statement>(null);
-  const [alternatives, setAternatives] = useState<Alternative[]>([]); // if answers is an array of strings
-  const [selectedValue, setSelectedValue] = useState<number>(); // Changed from string to number
-  const {kalima, currentChapterName, exercises} = route.params; // Get the kalima from the route parameters
+  const [alternatives, setAternatives] = useState<Alternative[]>([]);
+  const [selectedValue, setSelectedValue] = useState<number>();
+  // const {kalima, currentChapterName } = route?.params;
   const [isValid, setIsValid] = useState<string>('neutral');
   const [otherSourate, setOtherSourate] = useState<string>('');
   const [exerciseIndex, setExerciseIndex] = useState(0);
   const [exerciseType, setExerciseType] = useState('');
+  const [answerStats, setAnswerStats] = useState<AnswerStat[]>([]);
 
   const navigation = useNavigation();
 
-  const handleCheck = async (index: number) => {
+  useEffect(() => {
+    if(answerStats?.length === 0) return; 
+    syncStorage(answerStats);
+  }, [answerStats]);
+
+  const handleCheck = async (index: number, statement: Statement) => {
     Logger.info('Starting handleCheck...');
     setSelectedValue(index);
+    console.log(statement);
     try {
       const alternative = alternatives[index]?.verse;
-      const result = exerciseType === 'FindSourate'
-          ? await checkChapter(kalima, alternative.verse_no, alternative.chapter_no, statement?.verse.ungrouped_text.discriminant)
-          : await checkDiscriminant(kalima, statement?.verse.verse_no, statement?.verse.chapter_no, alternative.ungrouped_text.discriminant);
-      
-      const validationOutcome = result[0] === true ? 'right' : 'wrong';
+      const validationOutcome = statement.verse.chapter_no === alternative.chapter_no && statement.verse.verse_no === alternative.verse_no ? 'right':'wrong'; 
       setIsValid(validationOutcome);
+      let id: string;
+      if (validationOutcome === 'right') {
+        id = `${statement.verse.chapter_no}-${statement.verse.verse_no}`;
+        updateAnswerStats({ id, valid: true}, setAnswerStats);
+      } else {
+        id = `${statement.verse.chapter_no}-${statement.verse.verse_no}`;
+        updateAnswerStats({ id, valid: false}, setAnswerStats);
+        id = `${alternative.chapter_no}-${alternative.verse_no}`;
+        updateAnswerStats({ id, valid: false}, setAnswerStats);
+      }
       Logger.info(`Validation outcome: ${validationOutcome}`);
     } catch (error) {
       Logger.error('Error during handleCheck', error);
@@ -61,23 +74,23 @@ const DiscriminantExercise = ({route, _}) => {
         const data = exercises[exerciseIndex];
         setStatement(data.statement);
         setAternatives(data.alternatives);
-        setSelectedValue(undefined); // Reset the selected value
-        setIsValid('neutral'); // Reset the validation flag
+        setSelectedValue(undefined);
+        setIsValid('neutral');
         setExerciseType(data.exercise_type);
-        navigation.setOptions({
-          headerBackTitle: currentChapterName,
-        });
+        // navigation.setOptions({
+        //   headerBackTitle: currentChapterName,
+        // });
       } else {
         Logger.warn('No more exercises available!');
       }
     } catch (error) {
       Logger.error('Error updating exercise content', error);
     }
-  }, [exerciseIndex, exercises, currentChapterName, navigation]);
+  }, [exerciseIndex, exercises, navigation]);
 
   useEffect(() => {
     updateExerciseContent();
-  }, [updateExerciseContent, kalima]);
+  }, [updateExerciseContent]);
 
   return (
     <Provider theme={theme}>
@@ -87,13 +100,13 @@ const DiscriminantExercise = ({route, _}) => {
             <Card.Content>
               {exerciseType !== 'FindSourate' && (
                 <View style={styles.headerLine}>
+                  <Text style={styles.rightText}>
+                    {statement?.verse.sourate || ''}
+                  </Text>
                   <Text style={styles.leftText}>
                     {statement
                       ? `${statement?.verse.chapter_no}:${statement?.verse.verse_no}`
                       : ''}
-                  </Text>
-                  <Text style={styles.rightText}>
-                    {statement?.verse.sourate || ''}
                   </Text>
                 </View>
               )}
@@ -122,7 +135,7 @@ const DiscriminantExercise = ({route, _}) => {
                   selectedValue,
                 )}
                 selected={selectedValue === index}
-                onPress={() => handleCheck(index)}
+                onPress={() => handleCheck(index, statement)}
                 serviceFailed={isValid === 'wrong' && selectedValue === index}
                 serviceValid={isValid === 'right' && selectedValue === index}
               />
@@ -138,7 +151,7 @@ const DiscriminantExercise = ({route, _}) => {
               }}
               disabled={isValid !== 'right'}>
               {t('continue')}
-              <FontAwesomeIcon icon={faVolumeUp } size={60}/>
+              {/* <FontAwesomeIcon icon={faVolumeUp } size={60}/> */}
             </Button>
           </Card>
         </View>
@@ -157,13 +170,6 @@ const styles = StyleSheet.create({
     margin: 20,
     alignItems: 'flex-end',
     alignSelf: 'stretch',
-  },
-  radioButton: {
-    alignSelf: 'flex-end',
-  },
-  radioLabel: {
-    textAlign: 'right',
-    writingDirection: 'rtl',
   },
   headerLine: {
     flexDirection: 'row',
@@ -198,10 +204,6 @@ const styles = StyleSheet.create({
   card: {
     width: '95%', // Set the card width to almost full screen width
     alignSelf: 'center', // Center the card
-  },
-  radioButtonContainer: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
   },
 });
 

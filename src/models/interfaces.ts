@@ -1,34 +1,3 @@
-export type RootStackParamList = {
-  ErrorScreen: { errorMessage: string };
-  Initial: undefined;
-  Menu: undefined;
-  SignIn: { app: string };
-  LessonPages: {
-    count?: number;
-    goodCount?: number;
-    wrongCount?: number;
-  };
-  DiscriminantExercise: {
-    kalima?: string;
-    exercises?: any;
-    chapterName?: string;
-  };
-};
-
-
-export type MenuStackParamList = {
-  LessonPages: {
-    count?: number;
-    goodCount?: number;
-    wrongCount?: number;
-  };
-  DiscriminantExercise: {
-    kalima?: string;
-    exercises?: any;
-    chapterName?: string;
-  };
-};
-
 export interface Verse {
   chapter_no: number;
   verse_no: number;
@@ -52,11 +21,8 @@ export interface SimilarListProps {
 }
 
 export interface ScrollableTabProps {
-  kalima: string;
-  verses: Verse[];
-  similars: Verse[];
-  opposites: Verse[];
-  handleChapterSelection: (chapterNo: {no: number | undefined}) => void;
+  content: LessonListProps;
+  // handleChapterSelection: (chapterNo: {no: number | undefined}) => void;
 }
 export interface Chapter {
   sourate: string,

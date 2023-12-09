@@ -11,8 +11,8 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
   if (!(await isInternetReachable())) {
     if (cache) {
       const cachedData = await AsyncStorage.getItem(cacheKey);
-      const cachedDate = await AsyncStorage.getItem(dateKey);
       if (cachedData) {
+        const cachedDate = await AsyncStorage.getItem(dateKey);
         return {
           data: JSON.parse(cachedData),
           date: cachedDate
@@ -37,8 +37,11 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
     config.body = JSON.stringify(body);
   }
 
+  // Construct the full URL
+  const fullUrl = `${BASE_URL}/${endpoint}`;
+
   try {
-    const response = await fetch(`${BASE_URL}/${endpoint}`, config);
+    const response = await fetch(fullUrl, config);
     
     if (!response.ok) {
       throw new Error(`API Error: ${response.statusText}`);
@@ -69,7 +72,17 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
 }
 
 export const apiClient = {
-  get: (endpoint: string, cache = false) => request(endpoint, 'GET', undefined, cache),
+  get: (endpoint: string, queryParams = {}, cache = false) => {
+    // Filter out entries with undefined values
+    const filteredParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).filter(([_, value]) => value !== undefined)
+    ) as Record<string, string>;
+
+    // Construct query string from filtered queryParams object
+    const queryString = new URLSearchParams(filteredParams).toString();
+    const urlWithQuery = queryString ? `${endpoint}?${queryString}` : endpoint;
+    return request(urlWithQuery, 'GET', undefined, cache);
+  },
   post: (endpoint: string, body: any, cache = false) => request(endpoint, 'POST', body, cache),
   put: (endpoint: string, body: any, cache = false) => request(endpoint, 'PUT', body, cache),
   delete: (endpoint: string, cache = false) => request(endpoint, 'DELETE', undefined, cache),

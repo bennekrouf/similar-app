@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   ayahText: {
     fontSize: 12,
     lineHeight: 20,
-    textAlign: 'right',
+    // textAlign: 'right',
   },
   ayahContainer: {
     flexDirection: 'row', // Ensures items are horizontally aligned
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     fontFamily: 'ScheherazadeNew-Regular',
     fontSize: 25,
     marginBottom: 15,
-    writingDirection: 'rtl',
-    textAlign: 'right', // Add the textAlign directly to the inner Text components
+    // writingDirection: 'rtl',
+    // textAlign: 'right',
   },
   versesContainer: {
     margin: 10,

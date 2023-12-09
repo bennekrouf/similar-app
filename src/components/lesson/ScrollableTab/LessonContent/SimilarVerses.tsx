@@ -15,24 +15,23 @@ const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => {
         <View key={index}>
           {/* Similar Header */}
           <View style={styles.similarsHeader}>
+
             {/* Right column */}
+            <SourateBox chapterNo={chapter_no}/>
+
+            {/* Left column */}
             <View style={styles.columnContainer}>
               <View style={styles.columnNumber}>
                 <Text style={styles.columnTextNumber}>
-                  {`${chapter_no}:${verse_no}`}
+                  {`${verse_no}:${chapter_no}`}
                 </Text>
               </View>
             </View>
-            {/* Left column */}
-            <SourateBox chapterNo={chapter_no} />
+          
           </View>
-
           {/* Similar Content */}
           <View style={styles.similarsContent}>
-            <FormattedVerse
-              ungroupedText={ungrouped_text}
-              isOpposite={isOpposite}
-            />
+            <FormattedVerse ungroupedText={ungrouped_text} isOpposite={isOpposite} />
           </View>
         </View>
       ),
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
-    textAlign: 'right',
+    // textAlign: 'right',
   },
   similarsContent: {
     paddingHorizontal: 10,

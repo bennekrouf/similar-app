@@ -3,10 +3,12 @@ import { writeToAsyncStorage, syncAsyncStorageToFirestore } from 'mayo-firestore
 import { Logger } from 'mayo-logger';
 import Config from 'react-native-config';
 
+Config.FORCE_SYNC = 'true';
+
 const LAST_SYNC_DATE_KEY = 'LAST_SYNC_DATE';
 const FORCE_SYNC = Config.FORCE_SYNC === 'true';
 
-export const syncStorage = async (answerStats) => {
+export const syncStorage = async (answerStats:any) => {
     try {
         Logger.info(`Attempting to write to AsyncStorage with data: ${JSON.stringify(answerStats)}`);
         await writeToAsyncStorage({answerStats});
