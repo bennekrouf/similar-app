@@ -2161,10 +2161,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.27", "@types/react@^18.2.33":
+"@types/react@*", "@types/react@^18.2.33":
   version "18.2.42"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.42.tgz#6f6b11a904f6d96dda3c2920328a97011a00aba7"
   integrity sha512-c1zEr96MjakLYus/wPnuWDo1/zErfdU9rNsIGmE+NV71nx88FG9Ttgo5dqorXTu/LImX2f63WBP986gJkMPNbA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.2.27":
+  version "18.2.43"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.43.tgz#c58e5abe241e6f71f60ce30e2a9aceb9d3a2a374"
+  integrity sha512-nvOV01ZdBdd/KW6FahSbcNplt2jCJfyWdTos61RYHV+FVv5L/g9AOX1bmbVcWcLFL8+KHQfh1zVIQrud6ihyQA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -5363,9 +5372,9 @@ makeerror@1.0.12:
     tmpl "1.0.5"
 
 mayo-firebase-auth@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/mayo-firebase-auth/-/mayo-firebase-auth-1.4.4.tgz#5a7e04af3b1df8b3ef8a6f475125bae262848a50"
-  integrity sha512-zd4tXrPMpUz2QfLxskjbOtAa9F1rDGka1fv+dEiblyT8Ve/1kFsd2JzdTK3zmRKW0amGYGzcqlUgkjihBtnSyg==
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/mayo-firebase-auth/-/mayo-firebase-auth-1.4.5.tgz#c4385d34c8526c5d2ee92376a734827e257caf3c"
+  integrity sha512-xk4pjDeBfC7mJktzscq7XSz5i+Cp+JBnW4k5PALb/k9OfuHJZBotpyq2wWyR/ST5F89Zas9HyMfqUy3bV1xkaA==
   dependencies:
     "@react-native-async-storage/async-storage" "^1.19.3"
     "@react-native-firebase/app" "^18.7.1"
@@ -5376,12 +5385,11 @@ mayo-firebase-auth@^1.4.4:
     "@types/node" "^20.6.2"
     "@types/react" "^18.2.27"
     events "^3.3.0"
-    mayo-firebase-config "^1.2.22"
     mayo-logger "^1.0.8"
     react-native-device-info "^10.12.0"
     react-native-screens "^3.27.0"
 
-mayo-firebase-config@^1.2.20, mayo-firebase-config@^1.2.22, mayo-firebase-config@^1.2.23:
+mayo-firebase-config@^1.2.20, mayo-firebase-config@^1.2.23:
   version "1.2.23"
   resolved "https://registry.yarnpkg.com/mayo-firebase-config/-/mayo-firebase-config-1.2.23.tgz#1d952f43cdf1f269254442bf2f52221068a21d1f"
   integrity sha512-/0n7AISDMRC3G/BAY8jZ//XftkmdGhAa1uvHlJaVwotcuortehx99pXL2l7DndsJO6F58Morxkj3E8iHGVP9Uw==
