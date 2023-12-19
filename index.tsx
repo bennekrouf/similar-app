@@ -10,22 +10,21 @@ import { name } from './app.json';
 import { MainApp } from './src/navigation/AppNavigator';
 import {ErrorBoundary, Logger} from 'mayo-logger';
 import { UserProvider } from 'mayo-firebase-auth';
+import { MayoSettingsProvider } from 'mayo-settings';
+import { ChapterProvider } from './src/hooks/useFetchChapters';
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
-  // Logger.configure({ 
-  //   appName: "Tafseel",
-  //   timestamp: true 
-  // });
-
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
-        <NavigationContainer>
-          <UserProvider>
+      <UserProvider>
+        <ChapterProvider>
+          <MayoSettingsProvider>
             <MainApp />
-          </UserProvider>
-        </NavigationContainer>
+          </MayoSettingsProvider>
+          </ChapterProvider>
+        </UserProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   );

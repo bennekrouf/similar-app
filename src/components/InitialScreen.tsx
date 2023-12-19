@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { View, Image, StyleSheet } from 'react-native';
 
 import { signInFirebase } from 'mayo-firestore-write';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
@@ -8,31 +9,23 @@ import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
 import conf from '../../fireBaseConfig';
 
-type ScreenNames = keyof RootStackParamList;
-const MenuScreen: ScreenNames = 'Menu';
-const SignInScreenName: ScreenNames = 'SignIn';
-
-const initFirebase = async(googleCredentials:any) => {
-  return signInFirebase(googleCredentials, conf.firebaseConfig);
-}
-
 const InitialScreen = () => {
-  const { user, setUser, authEvents, userContextLoading } = useContext(UserContext) as UserContextType;
+  const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+  debugger
   useEffect(() => {
     if (user) {
-      navigation.navigate(MenuScreen);
+      navigation.navigate('Home');
     } else {
-      navigation.navigate(SignInScreenName, { config: conf.firebaseConfig });
+      navigation.navigate('SignIn', { config: conf.firebaseConfig });
     }
-  }, [user, userContextLoading]);
+  }, [user]);
 
   useEffect(() => {
     const onSignedIn = async (googleCredentials) => {
       try {
         if (!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        const newUser = await initFirebase(googleCredentials);
+        const newUser = await signInFirebase(googleCredentials, conf.firebaseConfig);
         if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
@@ -46,7 +39,25 @@ const InitialScreen = () => {
     };
   }, []);
 
-  return null;
+  return (
+    <View style={styles.container}>
+      <Image source={require('../../assets/mayologo.jpg')} style={styles.logo} />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
+});
 
 export default InitialScreen;
