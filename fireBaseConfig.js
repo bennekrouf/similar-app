@@ -1,6 +1,4 @@
-import { Platform } from 'react-native';
-
-module.exports = Platform.OS === 'android' ? {
+module.exports = {
     apiKey: 'AIzaSyAfvcfClkm9KKLG7f3pm5IdJi4skpGsXRQ',
     authDomain: 'tafseel-7f242.firebaseapp.com',
     projectId: 'tafseel-7f242',
@@ -10,4 +8,4 @@ module.exports = Platform.OS === 'android' ? {
     databaseURL: '',
     measurementId: '',
     webClientId: '581865288762-pn1dvg84mtf77v2qjsm2r40k7p7gj4qb.apps.googleusercontent.com'
-}:undefined;
+};
