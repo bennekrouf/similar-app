@@ -1,5 +1,5 @@
 export type LoginStackParamList = {
   ErrorScreen: { errorMessage: string };
-  MainScreen: undefined;
+  HomeScreen: undefined;
   SignIn: { app: string };
 };

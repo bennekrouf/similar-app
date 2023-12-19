@@ -8,7 +8,7 @@ import { RootStackParamList } from '../models/RootStackParamList';
 import { customInitializeFirebase } from 'mayo-firestore-write';
 
 // import { ChapterProvider } from '../hooks/useFetchChapters';
-import MainScreen from '../components/MainScreen';
+import HomeScreen from '../components/HomeScreen';
 import InitialScreen from '../components/InitialScreen';
 import LessonPages from '../components/lesson/LessonPages';
 import DiscriminantExercise from '../components/exercise/DiscriminantExercise';
@@ -24,7 +24,7 @@ export const MainApp: React.FC = () => {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="SignIn" component={SignInScreen} options={opt} />
         <Stack.Screen name="Login" component={InitialScreen} options={opt} />
-        <Stack.Screen name="Home" component={MainScreen} options={opt}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={opt}/>
         {/* <Stack.Screen name="LessonPages" component={LessonPages} options={opt}/>
         <Stack.Screen name="DiscriminantExercise" component={DiscriminantExercise} options={opt}/> */}
       </Stack.Navigator>

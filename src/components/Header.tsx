@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -16,8 +16,11 @@ import SouratesSelector from '../modals/SourateSelector/SouratesSelector';
 import SourateBox from './SourateBox';
 import labels from '../modals/SourateConfiguration/labels.json';
 import { useChapters } from '../hooks/useFetchChapters';
-import { UserState } from '../models/UserState';
+import { UserState, initialState } from '../models/UserState';
 import { onLabelSelect } from './onLabelSelect';
+import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
+import { getNamesByIndices } from '../modals/SourateConfiguration/getNamesByIndices';
+import { currentStorage } from '../storage/currentStorage';
 
 const souratesModal = 'souratesModal', settingsModal = 'settingsModal';
 
@@ -33,17 +36,13 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
   const { openModal, closeModal } = useMayoSettings();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { authEvents, user } = useContext(UserContext) as UserContextType;
-  const {chapters, isLoading} = useChapters();
+  const {chapters, isChapterLoading} = useChapters();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [selectedChapter, setSelectedChapter] = useState();
   
-  const [selectedLabels, setSelectedLabels] = usePersistedState<string[]>(initialState as string[]);
+  const [selectedLabels, setSelectedLabels] = useState<string[]>();
   const onLabelClicked = (labelName: string) => {
-    // selectedLabels.push(labelName);
-    // const newIndicesList = getIndicesByName(selectedLabels);
-
-    // setSelectedLabels(getNamesByIndices(newIndicesList));
-    // console.log(selectedLabels);
-    let newSelectedLabels;
+    let newSelectedLabels = [];
 
     if (selectedLabels.includes(labelName)) {
       // If the label is already selected, remove it and its range from the selection
@@ -120,7 +119,7 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
         Logger.info('Fetching selected chapter from storage', { tag: 'LessonPages' });
         const storedSelectedChapter = await AsyncStorage.getItem('selectedChapter');
         if (storedSelectedChapter) {
-          setSelectedChapter(parseInt(storedSelectedChapter));
+          setSelectedChapter(() => { parseInt(storedSelectedChapter) });
         }
       } catch (error) {
         Logger.error('Error retrieving selectedChapter from AsyncStorage', error, { tag: 'LessonPages' });
@@ -188,7 +187,7 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
         <LabelsSelector
         labels={labels}
         selectedLabels={userState.knownSourates}
-        onLabelSelect={handleLabelSelect} />
+        onLabelSelect={onLabelSelect} />
       </MayoSettingsModal>
 
       {/* MayoSettingsModal for Selecting Sourates */}

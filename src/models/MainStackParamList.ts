@@ -1,7 +1,7 @@
 export type MainStackParamList = {
     ErrorScreen: { errorMessage: string };
     InitialScreen: undefined;
-    MainScreen: undefined;
+    HomeScreen: undefined;
     LessonPages: {
       count?: number;
       goodCount?: number;

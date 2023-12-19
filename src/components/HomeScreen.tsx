@@ -5,11 +5,11 @@ import Header from './Header';
 import LessonPages from './lesson/LessonPages';
 import DiscriminantExercise from './exercise/DiscriminantExercise';
 import { loadExercise } from '../api/loadExercisesList';
-import { settingsToRanges } from '../api/settingsToRanges';
+import { rangeParamsURI } from '../api/settingsToRanges';
 import { UserState, initialState } from '../models/UserState';
 import { useFetchUser } from '../hooks/useFetchUser';
 
-const MainScreen = () => {
+const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [exercises, setExercises] = useState();
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
@@ -18,8 +18,8 @@ const MainScreen = () => {
     if(loading) return;
     const loadExercises = async () => {
       if (userState?.knownSourates) {
-        const ranges = settingsToRanges(userState?.knownSourates);
-        const exo = await loadExercise(ranges);
+        // const ranges = rangeParamsURI(userState?.knownSourates);
+        const exo = await loadExercise(); // TODO : pass the ranges as params
         setExercises(exo);
       }
     };
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MainScreen;
+export default HomeScreen;
