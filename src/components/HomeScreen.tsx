@@ -14,7 +14,6 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../models/RootStackParamList';
 
 const HomeScreen = () => {
-  debugger
   const [selectedOption, setSelectedOption] = useState(null);
   const [exercises, setExercises] = useState();
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);

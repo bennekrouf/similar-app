@@ -28,13 +28,12 @@ const AppRoot: React.FC = () => {
     <SafeAreaProvider>
       <ErrorBoundary>
         <UserProvider>
-        <MainApp />
+          <MayoSettingsProvider>
+            <MainApp />
+          </MayoSettingsProvider>
         </UserProvider>
         {/* <UserProvider>
           <ChapterProvider>
-            <MayoSettingsProvider>
-              <MainApp />
-            </MayoSettingsProvider>
           </ChapterProvider>
         </UserProvider> */}
       </ErrorBoundary>

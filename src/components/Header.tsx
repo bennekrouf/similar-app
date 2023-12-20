@@ -30,7 +30,6 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading }) => {
-  debugger
   const insets = useSafeAreaInsets();
   const { openModal, closeModal } = useMayoSettings();
   // const navigation = useNavigation<NavigationProp<RootStackParamList>>();

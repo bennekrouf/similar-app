@@ -8,7 +8,6 @@ import { getBestIndex } from '../components/getBestIndex';
 import { UserState } from '../models/UserState';
 
 export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T) => Promise<void>, boolean] => {
-  debugger
   const [userSettings, setUserSettings] = useState<T>(null);
   const [isLoading, setLoading] = useState(true);
   const { user } = useContext(UserContext) as UserContextType;

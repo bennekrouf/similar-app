@@ -11,10 +11,9 @@ import firebaseConfig from '../../fireBaseConfig.json';
 
 
 const InitialScreen = () => {
-  debugger
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  debugger
+
   useEffect(() => {
     if (user) {
       navigation.navigate('Home');
