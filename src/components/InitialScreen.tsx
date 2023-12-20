@@ -7,9 +7,11 @@ import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
-import conf from '../../fireBaseConfig';
+import firebaseConfig from '../../fireBaseConfig.json';
+
 
 const InitialScreen = () => {
+  debugger
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   debugger
@@ -17,7 +19,7 @@ const InitialScreen = () => {
     if (user) {
       navigation.navigate('Home');
     } else {
-      navigation.navigate('SignIn', { config: conf.firebaseConfig });
+      navigation.navigate('SignIn', { config: firebaseConfig });
     }
   }, [user]);
 
@@ -29,7 +31,7 @@ const InitialScreen = () => {
         } else {
           console.log('googleCredentials: ', googleCredentials);
         }
-        const newUser = await signInFirebase(googleCredentials, conf.firebaseConfig);
+        const newUser = await signInFirebase(googleCredentials, firebaseConfig);
         if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {

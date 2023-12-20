@@ -1,14 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Logger } from 'mayo-logger';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { useMayoSettings, MayoSettingsModal } from 'mayo-settings';
 
-import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
 
 import LabelsSelector from '../modals/SourateConfiguration/LabelsSelector';
@@ -32,10 +30,11 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading }) => {
+  debugger
   const insets = useSafeAreaInsets();
   const { openModal, closeModal } = useMayoSettings();
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { authEvents, user } = useContext(UserContext) as UserContextType;
+  // const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { user } = useContext(UserContext) as UserContextType;
   const {chapters, isChapterLoading} = useChapters();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedChapter, setSelectedChapter] = useState();
@@ -131,19 +130,19 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
     // }
   }, []);
 
-  useEffect(() => {
-    const onSignedOut = async () => {
-      Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
-      navigation.navigate('SignIn');
-    };
+  // useEffect(() => {
+  //   const onSignedOut = async () => {
+  //     Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
+  //     navigation.navigate('SignIn');
+  //   };
     
-    authEvents.on('signedOut', onSignedOut);
+  //   authEvents.on('signedOut', onSignedOut);
     
-    return () => {
-      Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
-      authEvents.off('signedOut', onSignedOut);
-    };
-  }, []);
+  //   return () => {
+  //     Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
+  //     authEvents.off('signedOut', onSignedOut);
+  //   };
+  // }, []);
   
   if (loading) {
     return <View><Text>Loading...</Text></View>;

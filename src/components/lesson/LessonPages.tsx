@@ -19,6 +19,7 @@ interface ScrollableSwipablePageProps {
 }
 
 const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter }) => {
+  debugger
   I18nManager.forceRTL(true);
   const [userState, setUserState] = useFetchUser(initialState);
   const { user } = useContext(UserContext) as UserContextType;

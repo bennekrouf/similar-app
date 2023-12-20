@@ -18,6 +18,7 @@ interface ChapterProviderProps {
 
 // Create a provider component
 export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) => {
+  debugger
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [isChapterLoading, setIsChapterLoading] = useState(false);
   const [userState, setPersistedState, loading] = useFetchUser(initialState);
@@ -52,6 +53,7 @@ export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) =>
 
 // Create a custom hook that shorthands the context!
 export const useChapters = () => {
+  debugger
   const context = useContext(ChapterContext);
   if (!context) {
     const errorMessage = "useChapters must be used within a ChapterProvider";

@@ -8,6 +8,7 @@ import { Statement } from '../models/interfaces';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 const useFetchLessons = (selectedChapter: number) => {
+  debugger
   const [contents, setContents] = useState<Statement[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<RootStackParamList["ErrorScreen"] | null>(null);

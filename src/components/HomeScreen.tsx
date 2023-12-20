@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 
 import Header from './Header';
@@ -8,12 +8,33 @@ import { loadExercise } from '../api/loadExercisesList';
 import { rangeParamsURI } from '../api/settingsToRanges';
 import { UserState, initialState } from '../models/UserState';
 import { useFetchUser } from '../hooks/useFetchUser';
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
+import { Logger } from 'mayo-logger';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../models/RootStackParamList';
 
 const HomeScreen = () => {
+  debugger
   const [selectedOption, setSelectedOption] = useState(null);
   const [exercises, setExercises] = useState();
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
-  
+  const { authEvents, user } = useContext(UserContext) as UserContextType;
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    const onSignedOut = async () => {
+      Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
+      navigation.navigate('SignIn');
+    };
+    
+    authEvents.on('signedOut', onSignedOut);
+    
+    return () => {
+      Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
+      authEvents.off('signedOut', onSignedOut);
+    };
+  }, []);
+
   useEffect(() => {
     if(loading) return;
     const loadExercises = async () => {
