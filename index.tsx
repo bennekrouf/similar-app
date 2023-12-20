@@ -11,16 +11,16 @@ import {ErrorBoundary, Logger} from 'mayo-logger';
 import { UserProvider } from 'mayo-firebase-auth';
 import { MayoSettingsProvider } from 'mayo-settings';
 import { ChapterProvider } from './src/hooks/useFetchChapters';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// (async () => {
-//   try {
-//     await AsyncStorage.clear();
-//     console.log('AsyncStorage has been cleared!');
-//   } catch (e) {
-//     console.error('Failed to clear the AsyncStorage.');
-//   }
-// })();
+(async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log('AsyncStorage has been cleared!');
+  } catch (e) {
+    console.error('Failed to clear the AsyncStorage.');
+  }
+})();
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
@@ -28,9 +28,11 @@ const AppRoot: React.FC = () => {
     <SafeAreaProvider>
       <ErrorBoundary>
         <UserProvider>
-          <MayoSettingsProvider>
-            <MainApp />
-          </MayoSettingsProvider>
+          <ChapterProvider>
+            <MayoSettingsProvider>
+              <MainApp />
+            </MayoSettingsProvider>
+          </ChapterProvider>
         </UserProvider>
         {/* <UserProvider>
           <ChapterProvider>
