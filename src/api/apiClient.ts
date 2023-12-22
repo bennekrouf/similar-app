@@ -73,6 +73,7 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
 
 export const apiClient = {
   get: (endpoint: string, queryParams = {}, cache = false) => {
+    queryParams = queryParams || {};
     // Filter out entries with undefined values
     const filteredParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).filter(([_, value]) => value !== undefined)

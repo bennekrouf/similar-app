@@ -9,7 +9,6 @@ import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
 import firebaseConfig from '../../fireBaseConfig.json';
 
-
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -31,7 +30,7 @@ const InitialScreen = () => {
           console.log('googleCredentials: ', googleCredentials);
         }
         const newUser = await signInFirebase(googleCredentials, firebaseConfig);
-        if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
+        if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
         handleLogout();
