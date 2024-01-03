@@ -12,18 +12,25 @@ import { UserProvider } from 'mayo-firebase-auth';
 import { MayoSettingsProvider } from 'mayo-settings';
 import { ChapterProvider } from './src/hooks/useFetchChapters';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSizeOfAsyncStorage } from "./iasSize";
 
-(async () => {
-  try {
-    await AsyncStorage.clear();
-    console.log('AsyncStorage has been cleared!');
-  } catch (e) {
-    console.error('Failed to clear the AsyncStorage.');
-  }
-})();
+// (async () => {
+//   try {
+//     await AsyncStorage.clear();
+//     console.log('AsyncStorage has been cleared!');
+//   } catch (e) {
+//     console.error('Failed to clear the AsyncStorage.');
+//   }
+// })();
+
+// Example usage
+
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
+  getSizeOfAsyncStorage().then(size => {
+    console.log('AsyncStorage size:', size);
+  });
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
@@ -34,10 +41,6 @@ const AppRoot: React.FC = () => {
             </MayoSettingsProvider>
           </ChapterProvider>
         </UserProvider>
-        {/* <UserProvider>
-          <ChapterProvider>
-          </ChapterProvider>
-        </UserProvider> */}
       </ErrorBoundary>
     </SafeAreaProvider>
   );
