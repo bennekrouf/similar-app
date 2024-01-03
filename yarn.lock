@@ -5438,10 +5438,10 @@ mayo-firebase-auth@^1.5.1:
     react-native-device-info "^10.12.0"
     react-native-screens "^3.27.0"
 
-mayo-firebase-config@^1.2.23:
-  version "1.2.23"
-  resolved "https://registry.yarnpkg.com/mayo-firebase-config/-/mayo-firebase-config-1.2.23.tgz#1d952f43cdf1f269254442bf2f52221068a21d1f"
-  integrity sha512-/0n7AISDMRC3G/BAY8jZ//XftkmdGhAa1uvHlJaVwotcuortehx99pXL2l7DndsJO6F58Morxkj3E8iHGVP9Uw==
+mayo-firebase-config@^1.2.24:
+  version "1.2.24"
+  resolved "https://registry.npmjs.org/mayo-firebase-config/-/mayo-firebase-config-1.2.24.tgz#256715758c8f8ee0321793ba7bf03049bef07bbb"
+  integrity sha512-VMoZcU060k+2pa2YT+MDfRIdtJXe4Ibms55EZ3TCKwoU/5VeL1q3CfrY5M+vUmTRvDIt7LAizAyGiS8h5YCHPg==
   dependencies:
     mayo-logger "^1.0.8"
     react-native-device-info "^10.12.0"
@@ -6841,9 +6841,9 @@ react-native-fontawesome@^7.0.0:
   resolved "https://registry.yarnpkg.com/react-native-fontawesome/-/react-native-fontawesome-7.0.0.tgz#9050d50e03c5264c071292b885ab189f29accfad"
   integrity sha512-UBZXyTLO8rK2NMf7Eomzb70b6cpL5JlBI4xwJGnRroRofrIXUxPelmm0Ojs6OcMs4ucAyPidCOxbJDJlmb2vdA==
 
-react-native-gesture-handler@^2.13.4:
+react-native-gesture-handler@^2.14.0:
   version "2.14.0"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.14.0.tgz#d6aec0d8b2e55c67557fd6107e828c0a1a248be8"
+  resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.14.0.tgz#d6aec0d8b2e55c67557fd6107e828c0a1a248be8"
   integrity sha512-cOmdaqbpzjWrOLUpX3hdSjsMby5wq3PIEdMq7okJeg9DmCzanysHSrktw1cXWNc/B5MAgxAn9J7Km0/4UIqKAQ==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
