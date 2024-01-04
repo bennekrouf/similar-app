@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { lessonsPrefix } from "./lessonsPrefix";
 
 const MONTH_DURATION = 1;
