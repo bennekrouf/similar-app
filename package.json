@@ -34,7 +34,7 @@
     "intl-pluralrules": "^2.0.1",
     "mayo-firebase-auth": "^1.5.1",
     "mayo-firebase-config": "^1.2.24",
-    "mayo-firestore-write": "^1.5.1",
+    "mayo-firestore-write": "^1.5.3",
     "mayo-logger": "^1.0.8",
     "mayo-settings": "^1.2.7",
     "patch-package": "^8.0.0",

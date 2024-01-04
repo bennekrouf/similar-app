@@ -33,7 +33,7 @@ const InitialScreen = () => {
         if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
         setUser(newUser);
       } catch (error) {
-        handleLogout();
+        // handleLogout();
       }
     };
     authEvents.on('signedIn', onSignedIn);
