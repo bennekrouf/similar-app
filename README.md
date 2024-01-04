@@ -1,6 +1,6 @@
 # Start
 
-ENVFILE=.env.local yarn ios
+ENVFILE=.env.staging yarn ios && ENVFILE=.env.staging yarn start
 ENVFILE=.env.staging yarn ios
 ENVFILE=.env.production yarn ios
 

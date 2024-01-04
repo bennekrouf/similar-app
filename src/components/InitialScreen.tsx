@@ -9,7 +9,6 @@ import { RootStackParamList } from '../models/RootStackParamList';
 import { handleLogout } from '../storage/handleLogout';
 import firebaseConfig from '../../fireBaseConfig.json';
 
-
 const InitialScreen = () => {
   const { user, setUser, authEvents } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -23,19 +22,12 @@ const InitialScreen = () => {
   }, [user]);
 
   useEffect(() => {
-    const onSignedIn = async (googleCredentials:any) => {
-      try {
-        if (!googleCredentials){
-          throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-        } else {
-          console.log('googleCredentials: ', googleCredentials);
-        }
-        const newUser = await signInFirebase(googleCredentials, firebaseConfig);
-        if (!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
-        setUser(newUser);
-      } catch (error) {
-        handleLogout();
-      }
+    const onSignedIn = async (googleCredentials) => {
+      console.log('IN SIGN IN !!!');
+      if(!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
+      const newUser = await signInFirebase(googleCredentials, firebaseConfig);
+      if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
+      setUser(newUser);
     };
     authEvents.on('signedIn', onSignedIn);
 

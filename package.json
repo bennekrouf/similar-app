@@ -9,7 +9,7 @@
     "start": "react-native start",
     "test": "jest",
     "dev": "node run-dev.js",
-    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
+    "build:ios": "react-native bundle --entry-file='index.tsx' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.2.3",

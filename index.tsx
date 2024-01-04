@@ -13,14 +13,14 @@ import { MayoSettingsProvider } from 'mayo-settings';
 import { ChapterProvider } from './src/hooks/useFetchChapters';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-(async () => {
-  try {
-    await AsyncStorage.clear();
-    console.log('AsyncStorage has been cleared!');
-  } catch (e) {
-    console.error('Failed to clear the AsyncStorage.');
-  }
-})();
+// (async () => {
+//   try {
+//     await AsyncStorage.clear();
+//     console.log('AsyncStorage has been cleared!');
+//   } catch (e) {
+//     console.error('Failed to clear the AsyncStorage.');
+//   }
+// })();
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
@@ -34,10 +34,6 @@ const AppRoot: React.FC = () => {
             </MayoSettingsProvider>
           </ChapterProvider>
         </UserProvider>
-        {/* <UserProvider>
-          <ChapterProvider>
-          </ChapterProvider>
-        </UserProvider> */}
       </ErrorBoundary>
     </SafeAreaProvider>
   );
