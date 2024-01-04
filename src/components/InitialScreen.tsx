@@ -22,12 +22,19 @@ const InitialScreen = () => {
   }, [user]);
 
   useEffect(() => {
-    const onSignedIn = async (googleCredentials) => {
-      console.log('IN SIGN IN !!!');
-      if(!googleCredentials) throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
-      const newUser = await signInFirebase(googleCredentials, firebaseConfig);
-      if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
-      setUser(newUser);
+    const onSignedIn = async (googleCredentials:any) => {
+      try {
+        if (!googleCredentials){
+          throw Error('InitialScreen - Trying to firebase signIn without googleCredentials !');
+        } else {
+          console.log('googleCredentials: ', googleCredentials);
+        }
+        const newUser = await signInFirebase(googleCredentials, firebaseConfig);
+        if(!newUser) throw Error('InitialScreen - Firebase sign do not return any user !');
+        setUser(newUser);
+      } catch (error) {
+        handleLogout();
+      }
     };
     authEvents.on('signedIn', onSignedIn);
 

@@ -12,6 +12,7 @@ import { UserProvider } from 'mayo-firebase-auth';
 import { MayoSettingsProvider } from 'mayo-settings';
 import { ChapterProvider } from './src/hooks/useFetchChapters';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSizeOfAsyncStorage } from "./iasSize";
 
 // (async () => {
 //   try {
@@ -24,6 +25,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AppRoot: React.FC = () => {
   I18nManager.forceRTL(true);
+  getSizeOfAsyncStorage().then(size => {
+    console.log('AsyncStorage size:', size);
+  });
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
