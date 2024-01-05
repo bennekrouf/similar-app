@@ -1,6 +1,6 @@
 /* eslint-disable radix */
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Tabs } from 'react-native-collapsible-tab-view';
 import React, { useContext } from 'react';
 
@@ -35,8 +35,8 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter })
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading...</Text>
+      <View style={styles.centeredContainer}>
+        <Image source={require('../../../assets/mayologo.jpg')} style={styles.logo} />
       </View>
     );
   }
@@ -54,5 +54,26 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter })
     </Tabs.Container>
   );
 };
+
+const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    borderRadius: 5,
+  },
+});
 
 export default LessonPages;

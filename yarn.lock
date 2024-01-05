@@ -5392,12 +5392,12 @@ mayo-logger@^1.0.8:
   dependencies:
     typescript "^5.3.2"
 
-mayo-settings@^1.2.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/mayo-settings/-/mayo-settings-1.2.7.tgz#d478a7b1a8a4b862e5f5f1b7d74d45474ef2d895"
-  integrity sha512-rl6v0bH7h98AYuykD+rC14JnbacpVcnkRplnNmEfAXnkWfwD7M1vUaLB+T95c7MfmakDwecH6TPv94Y10rls2g==
+mayo-settings@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/mayo-settings/-/mayo-settings-1.2.8.tgz#49812846dec8b01c80488d43b4144ac58adf6a6e"
+  integrity sha512-cAFerpewIljfZJk5JyNJTJ9+iiDT8ve9voB80jpCOhFkAiIFjgDRFtKmB7/orZ/Y/+oASG2Y9345HDLAJjqQ/A==
   dependencies:
-    "@types/react" "^18.2.27"
+    "@types/react" "^18.2.33"
     mayo-logger "^1.0.8"
 
 mdn-data@2.0.14:

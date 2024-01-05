@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import { View, Button, StyleSheet, Text } from 'react-native';
+import { View, Button, StyleSheet, Text, Image } from 'react-native';
 
 import Header from './Header';
 import LessonPages from './lesson/LessonPages';
@@ -15,7 +15,7 @@ import { RootStackParamList } from '../models/RootStackParamList';
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [exercises, setExercises] = useState();
+  const [exercises, setExercises] = useState([]);
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
   const { authEvents, user } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -38,15 +38,19 @@ const HomeScreen = () => {
     if(loading) return;
     const loadExercises = async () => {
       if (userState?.knownSourates) {
-        // const ranges = rangeParamsURI(userState?.knownSourates);
-        const exo = await loadExercise(); // TODO : pass the ranges as params
+        debugger
+        const ranges = await rangeParamsURI();
+        const exo = await loadExercise(ranges); // TODO : pass the ranges as params
         setExercises(exo);
       }
     };
     loadExercises();
   }, [userState, loading]);
   if (loading) {
-    return <View><Text>Loading...</Text></View>;
+    return (
+      <View style={styles.centeredContainer}>
+        <Image source={require('../../assets/mayologo.jpg')} style={styles.logo} />
+      </View>);
   }
   
   let content:any;
@@ -65,6 +69,10 @@ const HomeScreen = () => {
         </View>
       );
   }
+
+  // Calculate the totals
+  const totalGoodAnswers = Array.isArray(userState?.answerStats) ? userState?.answerStats.reduce((acc, stat) => acc + stat.g, 0) : 0;
+  const totalWrongAnswers = Array.isArray(userState) ? userState?.answerStats.reduce((acc, stat) => acc + stat.w, 0) : 0;
   
   return (
     <View style={styles.view}>
@@ -73,13 +81,23 @@ const HomeScreen = () => {
         userState={userState} 
         setUserState={setUserState}
         loading={loading}
-        />
+        count={exercises?.length}
+        goodCount={totalGoodAnswers}
+        wrongCount={totalWrongAnswers}
+      />
+
       {content}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -90,7 +108,13 @@ const styles = StyleSheet.create({
     elevation: 3,
     flex: 1,
     padding: 0,
-  }
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    borderRadius: 5,
+  },
 });
 
 export default HomeScreen;

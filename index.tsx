@@ -11,8 +11,8 @@ import {ErrorBoundary, Logger} from 'mayo-logger';
 import { UserProvider } from 'mayo-firebase-auth';
 import { MayoSettingsProvider } from 'mayo-settings';
 import { ChapterProvider } from './src/hooks/useFetchChapters';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getSizeOfAsyncStorage } from "./iasSize";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSizeOfAsyncStorage } from "./src/utils/iasSize";
 
 // (async () => {
 //   try {

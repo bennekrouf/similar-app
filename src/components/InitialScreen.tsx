@@ -44,13 +44,19 @@ const InitialScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.centeredContainer}>
       <Image source={require('../../assets/mayologo.jpg')} style={styles.logo} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -58,9 +64,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
+    borderRadius: 5,
   },
 });
 

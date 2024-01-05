@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -27,9 +27,12 @@ type HeaderProps = {
   userState: UserState;
   setUserState: any;
   loading: boolean;
+  count: number,
+  goodCount:number,
+  wrongCount:number
 };
 
-const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading }) => {
+const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading, count, goodCount, wrongCount }) => {
   const insets = useSafeAreaInsets();
   const { openModal, closeModal } = useMayoSettings();
   // const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -39,33 +42,33 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
   const [selectedChapter, setSelectedChapter] = useState();
   
   const [selectedLabels, setSelectedLabels] = useState<string[]>();
-  const onLabelClicked = (labelName: string) => {
-    let newSelectedLabels = [];
+  // const onLabelClicked = (labelName: string) => {
+  //   let newSelectedLabels = [];
 
-    if (selectedLabels.includes(labelName)) {
-      // If the label is already selected, remove it and its range from the selection
-      const labelIndices = getIndicesByName([labelName]);
-      newSelectedLabels = selectedLabels.filter(
-        selected => !labelIndices.includes(getIndicesByName([selected])[0])
-      );
-    } else {
-      // If the label is not selected, add it and its range to the selection
-      // First, add the label itself
-      newSelectedLabels = [...selectedLabels, labelName];
-      // Then, calculate the indices for the new label and add any related labels
-      const newIndicesList = getIndicesByName([labelName]);
-      const relatedLabels = getNamesByIndices(newIndicesList).filter(
-        related => !newSelectedLabels.includes(related)
-      );
-      newSelectedLabels.push(...relatedLabels);
-    }
+  //   if (selectedLabels.includes(labelName)) {
+  //     // If the label is already selected, remove it and its range from the selection
+  //     const labelIndices = getIndicesByName([labelName]);
+  //     newSelectedLabels = selectedLabels.filter(
+  //       selected => !labelIndices.includes(getIndicesByName([selected])[0])
+  //     );
+  //   } else {
+  //     // If the label is not selected, add it and its range to the selection
+  //     // First, add the label itself
+  //     newSelectedLabels = [...selectedLabels, labelName];
+  //     // Then, calculate the indices for the new label and add any related labels
+  //     const newIndicesList = getIndicesByName([labelName]);
+  //     const relatedLabels = getNamesByIndices(newIndicesList).filter(
+  //       related => !newSelectedLabels.includes(related)
+  //     );
+  //     newSelectedLabels.push(...relatedLabels);
+  //   }
   
-    setSelectedLabels(newSelectedLabels);
-  };
+  //   setSelectedLabels(newSelectedLabels);
+  // };
 
-  const handleChapterSelection = (chapter: any) => {
-    setSelectedChapter(chapter.no);
-  };
+  // const handleChapterSelection = (chapter: any) => {
+  //   setSelectedChapter(chapter.no);
+  // };
 
   const handleLabelPress = async (chapter: {no: number | undefined}) => {
     closeModal(souratesModal);
@@ -128,28 +131,12 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
       getSelectedChapterFromStorage();
     // }
   }, []);
-
-  // useEffect(() => {
-  //   const onSignedOut = async () => {
-  //     Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
-  //     navigation.navigate('SignIn');
-  //   };
-    
-  //   authEvents.on('signedOut', onSignedOut);
-    
-  //   return () => {
-  //     Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
-  //     authEvents.off('signedOut', onSignedOut);
-  //   };
-  // }, []);
   
   if (loading) {
-    return <View><Text>Loading...</Text></View>;
+    return <View style={styles.centeredContainer}>
+            <Image source={require('../../assets/mayologo.jpg')} style={styles.logo} />
+        </View>;
   }
-
-  // Calculate the totals
-  const totalGoodAnswers = Array.isArray(userState?.answerStats) ? userState?.answerStats.reduce((acc, stat) => acc + stat.g, 0) : 0;
-  const totalWrongAnswers = Array.isArray(userState) ? userState?.answerStats.reduce((acc, stat) => acc + stat.w, 0) : 0;
 
   return (
     <View style={{ paddingTop: insets.top, backgroundColor: 'white' }}>
@@ -162,7 +149,7 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
 
         {/* Header Box for the counts */}
         <View style={styles.headerBox}>
-            <Text style={styles.headerText}>G{totalGoodAnswers} W{totalWrongAnswers} T{exercises?.length}</Text>
+          <Text style={styles.headerText}>G{goodCount} W{wrongCount} T{count}</Text>
         </View>
 
         {/* TouchableOpacity for the settings button */}
@@ -181,6 +168,8 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
           headerTitle: 'Settings',
           logoutButtonText: 'Logout',
           showFooter: true,
+          displayName: user.displayName,
+          photoURL: user.photoURL
         }}>
         <LabelsSelector
           labels={labels}
@@ -207,6 +196,12 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
 export default Header;
 
 const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+  },
   headerText: {
       fontWeight: 'bold',
   },
@@ -245,5 +240,11 @@ const styles = StyleSheet.create({
   },
   optionsMenuText: {
       fontSize: 24,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    borderRadius: 5,
   },
 });

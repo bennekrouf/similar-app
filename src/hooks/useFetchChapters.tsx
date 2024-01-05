@@ -39,8 +39,8 @@ export const ChapterProvider: React.FC<ChapterProviderProps> = ({ children }) =>
         setIsChapterLoading(false);
       }
     };
-    if(user) fetchData();
-  }, [user]);
+    if(user && userState) fetchData();
+  }, [user, userState]);
 
   return (
     <ChapterContext.Provider value={{ chapters, isChapterLoading }}>
