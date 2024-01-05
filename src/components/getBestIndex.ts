@@ -3,8 +3,9 @@ import { getIndicesByName } from "../modals/SourateConfiguration/getIndicesByNam
 
 export const getBestIndex = async (selectedLabels: string[], asyncStorageReference: string) => {
     let storedIndex:string = await AsyncStorage.getItem(asyncStorageReference);
+    let storedIndexInt = parseInt(storedIndex) > 1 ? parseInt(storedIndex) : 2; //TODO pure hack
     const indices:number[] = getIndicesByName(selectedLabels);
-    const bestIndex:number = indices.includes(parseInt(storedIndex)) ? parseInt(storedIndex) : indices[0];
+    const bestIndex:number = indices.includes(storedIndexInt) ? storedIndexInt : indices[0];
     await AsyncStorage.setItem(asyncStorageReference, '' + bestIndex);
     return bestIndex;
   }

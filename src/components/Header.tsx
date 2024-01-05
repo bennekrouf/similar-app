@@ -183,9 +183,12 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
           showFooter: true,
         }}>
         <LabelsSelector
-        labels={labels}
-        selectedLabels={userState.knownSourates}
-        onLabelSelect={onLabelSelect} />
+          labels={labels}
+          selectedLabels={userState?.knownSourates}
+          onLabelSelect={onLabelSelect}
+          userState={userState}
+          setUserState={setUserState}
+        />
       </MayoSettingsModal>
 
       {/* MayoSettingsModal for Selecting Sourates */}

@@ -20,8 +20,8 @@ export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T
 
         if (savedState?.knownSourates?.length) {
           Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
-          savedState.currentIndex = await getBestIndex(savedState.knownSourates, 'currentIndex');
-          savedState.selectedChapter = await getBestIndex(savedState.knownSourates, 'selectedChapter');
+          savedState.currentIndex = await getBestIndex(savedState?.knownSourates, 'currentIndex');
+          savedState.selectedChapter = await getBestIndex(savedState?.knownSourates, 'selectedChapter');
           await updateUserSettings({...savedState});
         } else {
           await updateUserSettings({...initialState, ok: true});
@@ -45,8 +45,8 @@ export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T
 
     try {
       if (data?.knownSourates?.length) {
-        data.currentIndex = await getBestIndex(data.knownSourates, 'currentIndex');
-        data.selectedChapter = await getBestIndex(data.knownSourates, 'selectedChapter');
+        data.currentIndex = await getBestIndex(data?.knownSourates, 'currentIndex');
+        data.selectedChapter = await getBestIndex(data?.knownSourates, 'selectedChapter');
       }
       writeToAsyncStorage(data, false);
       // syncAsyncStorageToFirestore();

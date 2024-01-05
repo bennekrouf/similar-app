@@ -19,7 +19,7 @@ const useFetchLessons = (selectedChapter: number) => {
       try {
         Logger.info('Fetching lessons', { selectedChapter }, { tag: 'LessonsFetch' });
 
-        const lessons = await loadLessons(selectedChapter, userState.knownSourates);
+        const lessons = await loadLessons(selectedChapter, userState?.knownSourates);
         setContents(lessons);
 
         // Log lessons (Statements) with missing verses if needed

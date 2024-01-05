@@ -3,14 +3,14 @@ import { getIndicesByName } from "../modals/SourateConfiguration/getIndicesByNam
 import { getNamesByIndices } from "../modals/SourateConfiguration/getNamesByIndices";
 
 export const onLabelSelect = (labelName: string, userState: UserState, setUserState: any) => {
-    if (userState?.knownSourates?.length === 1 && userState.knownSourates.includes(labelName)) {
+    if (userState?.knownSourates?.length === 1 && userState?.knownSourates.includes(labelName)) {
         setUserState({...userState}); // force to recompute default sourate
         return;
     };
 
-    let newSelectedLabels = [...userState.knownSourates];
+    let newSelectedLabels = [...userState?.knownSourates];
     const labelIndices = getIndicesByName([labelName]);
-    const isLabelSelected = userState.knownSourates.includes(labelName);
+    const isLabelSelected = userState?.knownSourates.includes(labelName);
 
     if (isLabelSelected) {
         // Remove the specific label

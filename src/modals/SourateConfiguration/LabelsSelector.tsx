@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import _ from 'lodash';
 
-const LabelsSelector = ({ labels, selectedLabels, onLabelSelect }) => {
+const LabelsSelector = ({ labels, selectedLabels, onLabelSelect, userState, setUserState }) => {
   const groupedLabels = _.groupBy(labels, 'section');
   const renderLabelsSection = (labelList) => (
     <View style={styles.section}>
@@ -11,7 +11,7 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect }) => {
           key={index}
           item={item}
           isSelected={selectedLabels?.includes(item.name)}
-          onSelect={() => onLabelSelect(item.name)}
+          onSelect={() => onLabelSelect(item.name, userState, setUserState)}
         />
       ))}
     </View>
