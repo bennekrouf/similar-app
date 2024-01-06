@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginBottom: 15,
     // writingDirection: 'rtl',
-    // textAlign: 'right',
+    textAlign: 'right',
   },
   versesContainer: {
     margin: 10,

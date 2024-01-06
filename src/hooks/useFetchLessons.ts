@@ -8,8 +8,8 @@ import { Statement } from '../models/interfaces';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 
 const useFetchLessons = (selectedChapter: number) => {
-  const [contents, setContents] = useState<Statement[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [lesson, setLesson] = useState<Statement[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<RootStackParamList["ErrorScreen"] | null>(null);
   const [userState, setUserState, loading] = useFetchUser(initialState);
   const { user } = useContext(UserContext) as UserContextType;
@@ -17,13 +17,18 @@ const useFetchLessons = (selectedChapter: number) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!selectedChapter || !user || !userState) {
+          // Exit early if selectedChapter or user is not set
+          return;
+        }
+        setIsLoading(true);
         Logger.info('Fetching lessons', { selectedChapter }, { tag: 'LessonsFetch' });
 
-        const lessons = await loadLessons(selectedChapter, userState?.knownSourates);
-        setContents(lessons);
+        const lesson = await loadLessons(selectedChapter, userState?.knownSourates);
+        setLesson(lesson);
 
         // Log lessons (Statements) with missing verses if needed
-        lessons.forEach(lesson => {
+        lesson.forEach(lesson => {
           if (!lesson.verses) {
             Logger.warn('Lesson without verse', { lessonKalima: lesson.kalima }, { tag: 'LessonsFetch' });
           }
@@ -38,10 +43,10 @@ const useFetchLessons = (selectedChapter: number) => {
       }
     };
 
-    if(user) fetchData();
-  }, [selectedChapter, user]);
+    fetchData();
+  }, [selectedChapter, user, userState]);
 
-  return { contents, isLoading, error };
+  return { lesson, isLoading, error };
 };
 
 export default useFetchLessons;

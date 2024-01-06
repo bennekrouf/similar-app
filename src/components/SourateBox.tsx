@@ -12,7 +12,7 @@ const SourateBox: React.FC<{
   count_ayat?: number, 
   additionalStyles?: object;
 }> = ({ chapterNo, count_ayat, additionalStyles }) => {
-  I18nManager.forceRTL(true);
+  // I18nManager.forceRTL(true);
   const { chapters, isChapterLoading } = useChapters();
   
   return !isChapterLoading && (

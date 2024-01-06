@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 
-import { writeToAsyncStorage, loadFromAsyncStorage, syncAsyncStorageToFirestore } from 'mayo-firestore-write';
+import { writeToAsyncStorage, loadFromAsyncStorage, loadFromFirestore, syncAsyncStorageToFirestore } from 'mayo-firestore-write';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { Logger } from 'mayo-logger';
 
@@ -15,7 +15,10 @@ export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T
   useEffect(() => {
     const loadData = async () => {
       try {
-        const savedState: T | null = await loadFromAsyncStorage();
+        let savedState: T | null = await loadFromAsyncStorage();
+        if(!savedState) {
+          savedState = await loadFromFirestore();
+        }
         console.log(`Saved usersettings : ${JSON.stringify(savedState)}`);
 
         if (savedState?.knownSourates?.length) {

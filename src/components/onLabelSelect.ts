@@ -4,6 +4,7 @@ import { getNamesByIndices } from "../modals/SourateConfiguration/getNamesByIndi
 
 export const onLabelSelect = (labelName: string, userState: UserState, setUserState: any) => {
     if (userState?.knownSourates?.length === 1 && userState?.knownSourates.includes(labelName)) {
+        debugger
         setUserState({...userState}); // force to recompute default sourate
         return;
     };
@@ -30,6 +31,6 @@ export const onLabelSelect = (labelName: string, userState: UserState, setUserSt
         );
         newSelectedLabels.push(...relatedLabels);
     }
-
+    debugger
     setUserState({...userState, knownSourates: newSelectedLabels});
 };

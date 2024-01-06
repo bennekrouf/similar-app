@@ -12,5 +12,5 @@
   {"name": "الربع الثاني", "start": 7, "end": 16, "section": "quarters"},
   {"name": "الربع الثالث", "start": 17, "end": 39, "section": "quarters"},
   {"name": "الربع الرابع", "start": 40, "end": 114, "section": "quarters"},
-  {"name": "حافظ 👑", "start": 1, "end": 114, "section": "all"}
+  {"name": "حافظ", "h": "👑", "start": 1, "end": 114, "section": "all"}
 ]

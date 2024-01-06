@@ -30,7 +30,8 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect, userState, setU
 };
 
 const indiq = (item) => {
-  return item.end === item.start ? `${item.end}` : `${item.end}-${item.start}`;
+  return item.end === item.start ? `` : `${item.end}-${item.start}`;
+  // return item.end === item.start ? `${item.end}` : `${item.end}-${item.start}`;
 }
 
 const LabelEntry = ({ item, isSelected, onSelect }) => (

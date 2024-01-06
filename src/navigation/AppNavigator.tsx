@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen } from 'mayo-firebase-auth';
 import { RootStackParamList } from '../models/RootStackParamList';
 
-// import { ChapterProvider } from '../hooks/useFetchChapters';
 import HomeScreen from '../components/HomeScreen';
 import InitialScreen from '../components/InitialScreen';
 import LessonPages from '../components/lesson/LessonPages';
@@ -20,8 +19,8 @@ export const MainApp: React.FC = () => {
         <Stack.Screen name="SignIn" component={SignInScreen} options={opt} />
         <Stack.Screen name="Login" component={InitialScreen} options={opt} />
         <Stack.Screen name="Home" component={HomeScreen} options={opt}/>
-        {/* <Stack.Screen name="LessonPages" component={LessonPages} options={opt}/>
-        <Stack.Screen name="DiscriminantExercise" component={DiscriminantExercise} options={opt}/> */}
+        <Stack.Screen name="LessonPages" component={LessonPages} options={opt}/>
+        <Stack.Screen name="DiscriminantExercise" component={DiscriminantExercise} options={opt}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

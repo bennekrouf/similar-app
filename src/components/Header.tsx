@@ -2,6 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 import { Logger } from 'mayo-logger';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
@@ -19,6 +22,8 @@ import { onLabelSelect } from './onLabelSelect';
 import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
 import { getNamesByIndices } from '../modals/SourateConfiguration/getNamesByIndices';
 import { currentStorage } from '../storage/currentStorage';
+import { RootStackParamList } from '../models/RootStackParamList';
+import ProgressBar from './ProgressBar';
 
 const souratesModal = 'souratesModal', settingsModal = 'settingsModal';
 
@@ -29,17 +34,21 @@ type HeaderProps = {
   loading: boolean;
   count: number,
   goodCount:number,
-  wrongCount:number
+  wrongCount:number,
+  onTogglePage: any,
 };
 
-const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading, count, goodCount, wrongCount }) => {
+const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loading, count, goodCount, wrongCount, onTogglePage }) => {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const { openModal, closeModal } = useMayoSettings();
   // const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { user } = useContext(UserContext) as UserContextType;
   const {chapters, isChapterLoading} = useChapters();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedChapter, setSelectedChapter] = useState();
+  const [currentPage, setCurrentPage] = useState('Lesson');
   
   const [selectedLabels, setSelectedLabels] = useState<string[]>();
   // const onLabelClicked = (labelName: string) => {
@@ -80,6 +89,12 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
         console.log('Error saving selectedChapter:', error);
       }
     }
+  };
+
+  const handleTogglePage = () => {
+    const nextPage = currentPage === 'Exercise' ? 'Lesson' : 'Exercise';
+    setCurrentPage(nextPage);
+    onTogglePage(nextPage); // Use the callback instead of direct navigation
   };
 
   useEffect(() => {
@@ -138,6 +153,16 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
         </View>;
   }
 
+  // const answeredCount = goodCount + wrongCount;
+  // const totalProgress = count > 0 ? (answeredCount / count) : 0;
+  // const goodFlex = totalProgress > 0 ? (goodCount / answeredCount) : 0;
+  // const wrongFlex = totalProgress > 0 ? (wrongCount / answeredCount) : 0;
+
+  const answeredCount = 3;
+  const totalProgress = 0.5;
+  const goodFlex = 0.1;
+  const wrongFlex = 0.2;
+
   return (
     <View style={{ paddingTop: insets.top, backgroundColor: 'white' }}>
       <View style={styles.headerContainer}>
@@ -147,14 +172,32 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
           <SourateBox chapterNo={userState.selectedChapter}/>
         </TouchableOpacity>
 
-        {/* Header Box for the counts */}
+        {/* Header Box for the counts
         <View style={styles.headerBox}>
           <Text style={styles.headerText}>G{goodCount} W{wrongCount} T{count}</Text>
+        </View> */}
+
+        <View style={styles.progressBarContainer}>
+          {/* <View style={[styles.progressAnswered, { flex: totalProgress }]}>
+            <View style={[styles.progressGood, { flex: goodFlex }]} />
+            <View style={[styles.progressWrong, { flex: wrongFlex }]} />
+          </View>
+          <View style={{ flex: 1 - totalProgress }} /> */}
+           <ProgressBar totalProgress={totalProgress} goodProgress={goodCount} />
         </View>
 
+
+        <TouchableOpacity 
+          style={styles.toggleButton} 
+          onPress={handleTogglePage}>
+          <Text>{currentPage === 'Exercise' ? 'Lesson' : 'Exercise'}</Text>
+        </TouchableOpacity>
+
+
         {/* TouchableOpacity for the settings button */}
-        <TouchableOpacity style={styles.optionsButton} onPress={() => openModal(settingsModal)}>
-            <Text style={styles.optionsMenuText}>...</Text>
+        <TouchableOpacity onPress={() => openModal(settingsModal)}>
+            {/* <Text style={styles.optionsMenuText}>...</Text> */}
+            <FontAwesomeIcon icon={faCog} size={24} style={styles.settingsIcon} />
         </TouchableOpacity>
       </View>
       <View style={styles.headerSeparator} />
@@ -195,7 +238,22 @@ const Header: React.FC<HeaderProps> = ({ exercises, userState, setUserState, loa
 
 export default Header;
 
+
+
 const styles = StyleSheet.create({
+  progressBarContainer: {
+    height: 20,
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  settingsIcon: {
+    color: '#000', // or any color that suits your app theme
+    padding: 10, // adjust padding as needed
+    // other styles as needed
+  },
   centeredContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -247,4 +305,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 5,
   },
+  toggleButton: {
+    padding: 10,
+  }
 });

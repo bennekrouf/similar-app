@@ -1,5 +1,9 @@
 import React, {useEffect, useState, useContext} from 'react';
 import { View, Button, StyleSheet, Text, Image } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
+import { Logger } from 'mayo-logger';
 
 import Header from './Header';
 import LessonPages from './lesson/LessonPages';
@@ -8,10 +12,9 @@ import { loadExercise } from '../api/loadExercisesList';
 import { rangeParamsURI } from '../api/settingsToRanges';
 import { UserState, initialState } from '../models/UserState';
 import { useFetchUser } from '../hooks/useFetchUser';
-import { UserContext, UserContextType } from 'mayo-firebase-auth';
-import { Logger } from 'mayo-logger';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+
 import { RootStackParamList } from '../models/RootStackParamList';
+import useFetchLessons from '../hooks/useFetchLessons';
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -20,6 +23,9 @@ const HomeScreen = () => {
   const { authEvents, user } = useContext(UserContext) as UserContextType;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  // const selectedChapter = userState?.selectedChapter;
+  const { lesson, isLoading: lessonLoading, error: lessonError } = useFetchLessons(userState?.selectedChapter);
+  
   useEffect(() => {
     const onSignedOut = async () => {
       Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
@@ -34,18 +40,21 @@ const HomeScreen = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if(loading) return;
-    const loadExercises = async () => {
-      if (userState?.knownSourates) {
-        debugger
-        const ranges = await rangeParamsURI();
-        const exo = await loadExercise(ranges); // TODO : pass the ranges as params
-        setExercises(exo);
-      }
-    };
-    loadExercises();
-  }, [userState, loading]);
+  const loadExercises = async () => {
+    if (userState?.knownSourates) {
+      const ranges = await rangeParamsURI();
+      const exo = await loadExercise(ranges);
+      setExercises(exo);
+    }
+  };
+
+  const handleTogglePage = (nextPage) => {
+    setSelectedOption(nextPage);
+    if (nextPage === 'Exercise') {
+      loadExercises();
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.centeredContainer}>
@@ -55,17 +64,22 @@ const HomeScreen = () => {
   
   let content:any;
   switch (selectedOption) {
-    case 'Lessons':
-      content = <LessonPages selectedChapter={userState.selectedChapter}/>;
+    case 'Lesson':
+      content = <LessonPages
+        selectedChapter={userState?.selectedChapter}
+        lesson={lesson}
+        isLoading={lessonLoading}
+        error={lessonError}
+      />;
       break;
-    case 'Exercises':
+    case 'Exercise':
       content = <DiscriminantExercise exercises={exercises}/>;
       break;
     default:
       content = (
         <View style={styles.container}>
-          <Button title="Lessons" onPress={() => setSelectedOption('Lessons')} />
-          <Button title="Exercises" onPress={() => setSelectedOption('Exercises')} />
+          <Button title="Lesson" onPress={() => setSelectedOption('Lesson')} />
+          <Button title="Exercises" onPress={() => setSelectedOption('Exercise')} />
         </View>
       );
   }
@@ -84,6 +98,7 @@ const HomeScreen = () => {
         count={exercises?.length}
         goodCount={totalGoodAnswers}
         wrongCount={totalWrongAnswers}
+        onTogglePage={handleTogglePage}
       />
 
       {content}

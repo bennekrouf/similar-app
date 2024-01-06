@@ -24,7 +24,7 @@ import { getSizeOfAsyncStorage } from "./src/utils/iasSize";
 // })();
 
 const AppRoot: React.FC = () => {
-  I18nManager.forceRTL(true);
+  // I18nManager.forceRTL(true);
   getSizeOfAsyncStorage().then(size => {
     console.log('AsyncStorage size:', size);
   });

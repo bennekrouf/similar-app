@@ -8,7 +8,7 @@ import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { Logger } from 'mayo-logger';
 
 import ScrollableTab from './ScrollableTab/ScrollableTab';
-import useFetchLessons from '../../hooks/useFetchLessons';
+// import useFetchLessons from '../../hooks/useFetchLessons';
 import { I18nManager } from 'react-native';
 import { useFetchUser } from '../../hooks/useFetchUser';
 import { initialState } from '../../models/UserState';
@@ -16,13 +16,16 @@ import { initialState } from '../../models/UserState';
 const HEADER_HEIGHT = 0;
 interface ScrollableSwipablePageProps {
   selectedChapter: number;
+  lesson: any;
+  isLoading: boolean;
+  error: any;
 }
 
-const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter }) => {
-  I18nManager.forceRTL(true);
+const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter, lesson, isLoading, error }) => {
+  // I18nManager.forceRTL(true);
   const [userState, setUserState] = useFetchUser(initialState);
   const { user } = useContext(UserContext) as UserContextType;
-  const { contents, isLoading } = useFetchLessons(selectedChapter);
+  // const { contents, isLoading } = useFetchLessons(selectedChapter);
   
   const handleSwiperIndexChanged = async (index: number) => {
     try {
@@ -33,18 +36,18 @@ const LessonPages: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter })
     }
   };
 
-  if (isLoading) {
-    return (
-      <View style={styles.centeredContainer}>
-        <Image source={require('../../../assets/mayologo.jpg')} style={styles.logo} />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View style={styles.centeredContainer}>
+  //       <Image source={require('../../../assets/mayologo.jpg')} style={styles.logo} />
+  //     </View>
+  //   );
+  // }
 
   return (
     <Tabs.Container onIndexChange={handleSwiperIndexChanged} tabBarHeight={0}>
-      {contents?.length &&
-        contents.map((content: any, index) => (
+      {lesson?.length &&
+        lesson.map((content: any, index) => (
           <Tabs.Tab name={`Tab${index}`} key={index}>
             <Tabs.ScrollView>
               <ScrollableTab content={content} />
