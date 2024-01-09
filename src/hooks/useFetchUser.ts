@@ -4,17 +4,18 @@ import { writeToAsyncStorage, loadFromAsyncStorage, loadFromFirestore, syncAsync
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
 import { Logger } from 'mayo-logger';
 
-import { getBestIndex } from '../components/getBestIndex';
+import { getBestIndex } from '../utils/getBestIndex';
 import { UserState } from '../models/UserState';
 
 export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T) => Promise<void>, boolean] => {
   const [userSettings, setUserSettings] = useState<T>(null);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const { user } = useContext(UserContext) as UserContextType;
 
   useEffect(() => {
     const loadData = async () => {
       try {
+        setLoading(true);
         let savedState: T | null = await loadFromAsyncStorage();
         if(!savedState) {
           savedState = await loadFromFirestore();
@@ -22,7 +23,7 @@ export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T
         console.log(`Saved usersettings : ${JSON.stringify(savedState)}`);
 
         if (savedState?.knownSourates?.length) {
-          Logger.info('Fetching currentIndex from storage', { tag: 'LessonPages' });
+          Logger.info('Fetching currentIndex from storage', { tag: 'Lesson' });
           savedState.currentIndex = await getBestIndex(savedState?.knownSourates, 'currentIndex');
           savedState.selectedChapter = await getBestIndex(savedState?.knownSourates, 'selectedChapter');
           await updateUserSettings({...savedState});

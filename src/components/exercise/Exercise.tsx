@@ -1,19 +1,19 @@
-import React, {useCallback, useEffect, useState, useContext} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import {Button, Text, Card, Provider, DefaultTheme} from 'react-native-paper';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import {Text, Card, Provider, DefaultTheme} from 'react-native-paper';
 import { syncStorage } from '../../storage/syncStorage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useContext } from 'react';
 
-import {radioButtonText} from './radioButtonText';
+import {radioButtonText} from '../../utils/radioButtonText';
 import CustomRadioButton from './CustomRadioButton';
-
+import useCurrentScreen from '../../hooks/useCurrentScreen';
 import { Alternative, Statement } from '../../models/interfaces';
 import { Logger } from 'mayo-logger';
 import { AnswerStat } from '../../models/AnswerStat';
-import { updateAnswerStats } from './updateStats';
+import { updateAnswerStats } from '../../utils/updateStats';
 
 const theme = {
   ...DefaultTheme,
@@ -24,7 +24,9 @@ const theme = {
   },
 };
 
-const DiscriminantExercise = ({exercises}) => {
+const Exercise = ({exercises, isLoading, error }) => {
+  useCurrentScreen('Exercise');
+  
   const {t} = useTranslation();
   const [statement, setStatement] = useState<Statement>(null);
   const [alternatives, setAternatives] = useState<Alternative[]>([]);
@@ -35,6 +37,7 @@ const DiscriminantExercise = ({exercises}) => {
   const [exerciseIndex, setExerciseIndex] = useState(0);
   const [exerciseType, setExerciseType] = useState('');
   const [answerStats, setAnswerStats] = useState<AnswerStat[]>([]);
+  const [tId, setTId] = useState(null);
 
   const navigation = useNavigation();
 
@@ -42,6 +45,14 @@ const DiscriminantExercise = ({exercises}) => {
     if(answerStats?.length === 0) return; 
     syncStorage(answerStats);
   }, [answerStats]);
+
+  useEffect(() => {
+    return () => {
+        if (tId) {
+            clearTimeout(tId);
+        }
+    };
+}, [tId]);
 
   const handleCheck = async (index: number, statement: Statement) => {
     Logger.info('Starting handleCheck...');
@@ -55,6 +66,12 @@ const DiscriminantExercise = ({exercises}) => {
       if (validationOutcome === 'right') {
         id = `${statement.verse.chapter_no}-${statement.verse.verse_no}`;
         updateAnswerStats({ id, valid: true}, setAnswerStats);
+        // Set a timeout to load the next question after 2 seconds
+        const tId = setTimeout(() => {
+          setExerciseIndex(prevIndex => prevIndex + 1);
+          updateExerciseContent();
+        }, 2000); // 2000 milliseconds delay
+        setTId(tId);
       } else {
         id = `${statement.verse.chapter_no}-${statement.verse.verse_no}`;
         updateAnswerStats({ id, valid: false}, setAnswerStats);
@@ -141,19 +158,6 @@ const DiscriminantExercise = ({exercises}) => {
               />
             ))}
           </View>
-
-          <Card style={styles.newExerciseButtonCard}>
-            <Button
-              mode="contained"
-              onPress={() => {
-                setExerciseIndex(prevIndex => prevIndex + 1);
-                updateExerciseContent();
-              }}
-              disabled={isValid !== 'right'}>
-              {t('continue')}
-              {/* <FontAwesomeIcon icon={faVolumeUp } size={60}/> */}
-            </Button>
-          </Card>
         </View>
       </ScrollView>
     </Provider>
@@ -207,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiscriminantExercise;
+export default Exercise;

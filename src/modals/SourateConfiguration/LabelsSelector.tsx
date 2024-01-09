@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import _ from 'lodash';
 
-const LabelsSelector = ({ labels, selectedLabels, onLabelSelect, userState, setUserState }) => {
+const LabelsSelector = ({ labels, selectedSourates, onSourateSelect, userState, setUserState, triggerChapterFetch}) => {
   const groupedLabels = _.groupBy(labels, 'section');
   const renderLabelsSection = (labelList) => (
     <View style={styles.section}>
@@ -10,8 +10,8 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect, userState, setU
         <LabelEntry 
           key={index}
           item={item}
-          isSelected={selectedLabels?.includes(item.name)}
-          onSelect={() => onLabelSelect(item.name, userState, setUserState)}
+          isSelected={selectedSourates?.includes(item.name)}
+          onSelect={() => onSourateSelect(item.name, userState, setUserState, triggerChapterFetch)}
         />
       ))}
     </View>
@@ -21,7 +21,6 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect, userState, setU
     <View>
     {Object.entries(groupedLabels).map(([sectionName, labelList]) => (
       <View key={sectionName}>
-        {/* <Text style={styles.sectionTitle}>{sectionName}</Text> */}
         {renderLabelsSection(labelList)}
       </View>
     ))}
@@ -31,12 +30,11 @@ const LabelsSelector = ({ labels, selectedLabels, onLabelSelect, userState, setU
 
 const indiq = (item) => {
   return item.end === item.start ? `` : `${item.end}-${item.start}`;
-  // return item.end === item.start ? `${item.end}` : `${item.end}-${item.start}`;
 }
 
 const LabelEntry = ({ item, isSelected, onSelect }) => (
   <TouchableOpacity 
-    style={[styles.entry, isSelected ? styles.selectedLabel : {}]} 
+    style={[styles.entry, isSelected ? styles.selectedSourate : {}]} 
     onPress={onSelect}>
     <View style={styles.labelContent}>
       <Text style={styles.labelText}>{item.name}</Text>
@@ -80,12 +78,12 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: 'grey',
   },
-  selectedLabel: {
+  selectedSourate: {
     backgroundColor: '#b0b0b0',
     borderColor: '#8a8a8a',
     color: 'white'
   },
-  selectedLabelTextColor: {
+  selectedSourateTextColor: {
     color: 'white'
   },
   sectionTitle: {

@@ -20,7 +20,7 @@ export async function loadLessons(chapterNo = 59, knownSourates: string[]) {
     }
 
   } catch (error) {
-    const errorMessage = `Lesson API call failed for chapter ${chapterNo} using endpoint: ${Config.DOMAIN}/similars/${chapterNo}`;
+    const errorMessage = `Lesson API call failed for sourate ${chapterNo} using endpoint: ${Config.DOMAIN}/similars/${chapterNo}`;
     Logger.error(errorMessage, error, { tag: 'loadLessons' });
     Logger.info(`Ensure you've set the correct environment file or try running 'yarn dev' or 'ENVFILE=.env.local yarn ios' or 'android'`, null, { tag: 'loadLessons' });
 

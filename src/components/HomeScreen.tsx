@@ -1,58 +1,32 @@
-import React, {useEffect, useState, useContext} from 'react';
-import { View, Button, StyleSheet, Text, Image } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-
-import { UserContext, UserContextType } from 'mayo-firebase-auth';
-import { Logger } from 'mayo-logger';
+import React, {useState} from 'react';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBook, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 import Header from './Header';
-import LessonPages from './lesson/LessonPages';
-import DiscriminantExercise from './exercise/DiscriminantExercise';
-import { loadExercise } from '../api/loadExercisesList';
-import { rangeParamsURI } from '../api/settingsToRanges';
+import Lesson from './lesson/Lesson';
+import Exercise from './exercise/Exercise';
 import { UserState, initialState } from '../models/UserState';
 import { useFetchUser } from '../hooks/useFetchUser';
 
-import { RootStackParamList } from '../models/RootStackParamList';
 import useFetchLessons from '../hooks/useFetchLessons';
+import useFetchExercises from '../hooks/useFetchExercises';
+import useCurrentScreen from '../hooks/useCurrentScreen';
+import useHandleSignOut from '../hooks/useHandleSignOut';
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [exercises, setExercises] = useState([]);
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
-  const { authEvents, user } = useContext(UserContext) as UserContextType;
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-  // const selectedChapter = userState?.selectedChapter;
   const { lesson, isLoading: lessonLoading, error: lessonError } = useFetchLessons(userState?.selectedChapter);
+  const { exercises, isLoading: exerciseLoading, error: exerciseError } = useFetchExercises();
+  const [currentPage, setCurrentPage] = useState('Lesson');
   
-  useEffect(() => {
-    const onSignedOut = async () => {
-      Logger.info('User signed out. Navigating to SignIn.', null, { tag: 'HomeScreen:onSignedOut' });
-      navigation.navigate('SignIn');
-    };
-    
-    authEvents.on('signedOut', onSignedOut);
-    
-    return () => {
-      Logger.info('Cleanup: Removing signedOut event listener.', null, { tag: 'HomeScreen:useEffectCleanup' });
-      authEvents.off('signedOut', onSignedOut);
-    };
-  }, []);
+  useCurrentScreen('Home');
+  useHandleSignOut();
 
-  const loadExercises = async () => {
-    if (userState?.knownSourates) {
-      const ranges = await rangeParamsURI();
-      const exo = await loadExercise(ranges);
-      setExercises(exo);
-    }
-  };
-
-  const handleTogglePage = (nextPage) => {
-    setSelectedOption(nextPage);
-    if (nextPage === 'Exercise') {
-      loadExercises();
-    }
+  const handleTogglePage = () => {
+    const nextPage = currentPage === 'Exercise' ? 'Lesson' : 'Exercise';
+    setCurrentPage(nextPage);
   };
 
   if (loading) {
@@ -65,7 +39,7 @@ const HomeScreen = () => {
   let content:any;
   switch (selectedOption) {
     case 'Lesson':
-      content = <LessonPages
+      content = <Lesson
         selectedChapter={userState?.selectedChapter}
         lesson={lesson}
         isLoading={lessonLoading}
@@ -73,13 +47,28 @@ const HomeScreen = () => {
       />;
       break;
     case 'Exercise':
-      content = <DiscriminantExercise exercises={exercises}/>;
+      content = <Exercise
+        exercises={exercises}
+        isLoading={exerciseLoading}
+        error={exerciseError}
+      />;
       break;
     default:
       content = (
         <View style={styles.container}>
-          <Button title="Lesson" onPress={() => setSelectedOption('Lesson')} />
-          <Button title="Exercises" onPress={() => setSelectedOption('Exercise')} />
+          <TouchableOpacity 
+            style={styles.menuButton} 
+            onPress={() => setSelectedOption('Lesson')}>
+            <FontAwesomeIcon icon={faBook} size={24} style={styles.menuIcon} />
+            <Text style={styles.menuText}>Lesson</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.menuButton} 
+            onPress={() => setSelectedOption('Exercise')}>
+            <FontAwesomeIcon icon={faGraduationCap} size={24} style={styles.menuIcon} />
+            <Text style={styles.menuText}>Exercises</Text>
+          </TouchableOpacity>
         </View>
       );
   }
@@ -91,14 +80,12 @@ const HomeScreen = () => {
   return (
     <View style={styles.view}>
       <Header
-        exercises={exercises}
         userState={userState} 
         setUserState={setUserState}
         loading={loading}
         count={exercises?.length}
         goodCount={totalGoodAnswers}
         wrongCount={totalWrongAnswers}
-        onTogglePage={handleTogglePage}
       />
 
       {content}
@@ -107,16 +94,32 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  menuButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 20,
+    padding: 15,
+    marginVertical: 10,
+    width: '80%',
+  },
+  menuIcon: {
+    marginRight: 10,
+  },
+  menuText: {
+    fontSize: 18,
+  },
   centeredContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFF',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   view: {
     backgroundColor: '#fff',
