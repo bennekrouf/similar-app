@@ -29,6 +29,8 @@ crashlytics().setCrashlyticsCollectionEnabled(true);
 // })();
 
 const testCrash = () => {
+  console.log('Simulate crash');
+
   crashlytics().setCrashlyticsCollectionEnabled(true);
   crashlytics().crash(); // This will cause a test crash
 };
