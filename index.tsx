@@ -42,11 +42,14 @@ const AppRoot: React.FC = () => {
   });
   crashlytics().setCrashlyticsCollectionEnabled(true);
   
-  return (<SafeAreaProvider>
+  return 
+          (
+          <SafeAreaProvider>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Button title="Test Crash" onPress={testCrash} />
               </View>
-          </SafeAreaProvider>);
+          </SafeAreaProvider>
+          );
     //   <ErrorBoundary>
     //     <UserProvider>
     //       <SourateProvider>
