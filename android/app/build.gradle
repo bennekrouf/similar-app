@@ -10,7 +10,8 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 def enableProguardInReleaseBuilds = false
 def appAssets = ["../assets/fonts"]
 react {
-    entryFile = file("../../index.tsx")
+    entryFile: file("../../index.tsx")
+    assetsPath: new File(rootProject.projectDir, '../assets/fonts/')
 }
 
 project.ext.react = [

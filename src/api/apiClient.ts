@@ -2,8 +2,8 @@ import { isInternetReachable } from './netUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 
-// const BASE_URL = Config.DOMAIN || 'http://localhost:8000';
-const BASE_URL = 'http://test.similar.mayorana.ch';
+// const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
+const BASE_URL = 'http://test.similar.mayorana.ch/';
 
 async function request(endpoint: string, method = 'GET', body?: any, cache?: boolean) {
   const cacheKey = `${method}_${endpoint}`;
@@ -25,27 +25,29 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
   }
 
   const headers = {
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
+    // 'Content-Type': 'application/json',
+    // 'X-Requested-With': 'XMLHttpRequest',
   };
 
-  const config: RequestInit = {
-    method,
-    headers,
-  };
+   // Ensure correct URL formation
+   const url = `${BASE_URL}/${endpoint.startsWith('/') ? endpoint.slice(1) : endpoint}`;
 
-  if (body) {
-    config.body = JSON.stringify(body);
-  }
-
-  // Construct the full URL
-  const fullUrl = `${BASE_URL}/${endpoint}`;
+   // Setup request configuration
+   const config: RequestInit = {
+     method,
+     headers: {
+      'Content-Type': 'application/json',
+     },
+   };
+ 
+   if (body) {
+     config.body = JSON.stringify(body);
+   }
 
   try {
-    const response = await fetch(fullUrl, config);
-    
+    const response = await fetch(url, config);
     if (!response.ok) {
-      throw new Error(`API Error: ${response.statusText}`);
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
     }
 
     const responseData = await response.json();
@@ -66,6 +68,8 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
           data: JSON.parse(cachedData),
           date: cachedDate
         };
+      } else {
+        throw error;
       }
     }
     throw error;
@@ -88,4 +92,21 @@ export const apiClient = {
   post: (endpoint: string, body: any, cache = false) => request(endpoint, 'POST', body, cache),
   put: (endpoint: string, body: any, cache = false) => request(endpoint, 'PUT', body, cache),
   delete: (endpoint: string, cache = false) => request(endpoint, 'DELETE', undefined, cache),
+};
+
+export const flushCache = async () => {
+  try {
+    // Retrieve all keys
+    const keys = await AsyncStorage.getAllKeys();
+
+    const cacheKeys = keys.filter(key => 
+      key.startsWith('GET_') || key.startsWith('POST_')
+    );
+    // Remove filtered keys
+    await AsyncStorage.multiRemove(cacheKeys);
+
+    console.log('Cache flushed successfully');
+  } catch (error) {
+    console.error('Error flushing cache:', error);
+  }
 };
