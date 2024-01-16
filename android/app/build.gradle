@@ -20,9 +20,7 @@ project.ext.react = [
 ]
 android {
     ndkVersion rootProject.ext.ndkVersion
-
-    compileSdkVersion 34
-
+    compileSdkVersion rootProject.ext.compileSdkVersion
     namespace "com.mayorana.tafseel"
     defaultConfig {
         applicationId "com.mayorana.tafseel"
