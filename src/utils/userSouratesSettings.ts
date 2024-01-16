@@ -10,7 +10,7 @@ export const userSouratesSettings = async () => {
 
 export const indexFromStorage = async () => {
     try {
-        Logger.info('Fetching index from storage', { tag: 'LessonPages' });
+        Logger.info('Fetching index from storage', { tag: 'Lesson' });
         const storedCurrentIndex = await AsyncStorage.getItem('currentIndex');
         let storedCurrentIndexInt = parseInt(storedCurrentIndex);
         // Verify that it is still in user range preferences
@@ -22,6 +22,6 @@ export const indexFromStorage = async () => {
 
         return storedCurrentIndexInt;
     } catch (error) {
-        Logger.error('Error retrieving index from AsyncStorage', error, { tag: 'LessonPages' });
+        Logger.error('Error retrieving index from AsyncStorage', error, { tag: 'Lesson' });
     }
 };

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { I18nManager } from 'react-native';
-import { Chapter } from '../models/interfaces';
-import { useChapters } from '../hooks/useFetchChapters';
+import { Sourate } from '../models/interfaces';
+import { useChapters } from '../hooks/useFetchSourates';
 
-const sourateColor = (chapterNo: number, chapters: Chapter[]) => chapters?.find(c => c.no === chapterNo)?.background_color
-const sourateName = (chapterNo:number, chapters: Chapter[]) => chapters?.find(c => c.no === chapterNo)?.sourate
+const sourateColor = (chapterNo: number, sourates: Sourate[]) => sourates?.find(c => c.no === chapterNo)?.background_color
+const sourateName = (chapterNo:number, sourates: Sourate[]) => sourates?.find(c => c.no === chapterNo)?.sourate
 
 const SourateBox: React.FC<{
   chapterNo: number,
@@ -13,20 +13,20 @@ const SourateBox: React.FC<{
   additionalStyles?: object;
 }> = ({ chapterNo, count_ayat, additionalStyles }) => {
   // I18nManager.forceRTL(true);
-  const { chapters, isChapterLoading } = useChapters();
+  const { sourates, isSourateLoading } = useChapters();
   
-  return !isChapterLoading && (
+  return !isSourateLoading && (
     <View
       style={[
         styles.columnContainer,
         styles.leftColumn,
-        { backgroundColor: sourateColor(chapterNo, chapters) },
+        { backgroundColor: sourateColor(chapterNo, sourates) },
         additionalStyles,
       ]}
     > 
       <View style={[styles.column, { backgroundColor: 'black' }]}>
         <Text style={[styles.columnText, { textAlign: 'right' }]}>
-          {sourateName(chapterNo, chapters)}
+          {sourateName(chapterNo, sourates)}
           {count_ayat !== undefined ? ` (${count_ayat})` : ""}
         </Text>
       </View>

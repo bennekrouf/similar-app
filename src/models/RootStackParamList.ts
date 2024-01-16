@@ -3,12 +3,12 @@ export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   SignIn: { config?: any };
-  LessonPages: {
+  Lesson: {
     count?: number;
     goodCount?: number;
     wrongCount?: number;
   };
-  DiscriminantExercise: {
+  Exercise: {
     settings: any,
     kalima?: string;
     exercises?: any;

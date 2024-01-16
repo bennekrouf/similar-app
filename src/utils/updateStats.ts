@@ -1,6 +1,6 @@
 import { Logger } from "mayo-logger";
-import { Item } from "../../models/AnswerStat";
-import { syncStorage } from "../../storage/syncStorage";
+import { Item } from "../models/AnswerStat";
+import { syncStorage } from "../storage/syncStorage";
 
 export const updateAnswerStats = (item: Item, setAnswerStats: any) => {
     const now = new Date();

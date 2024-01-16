@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.google.firebase.crashlytics"
+apply plugin: 'com.google.gms.google-services'
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -10,17 +11,16 @@ def enableProguardInReleaseBuilds = false
 def appAssets = ["../assets/fonts"]
 react {
     entryFile = file("../../index.tsx")
+    // assetsPath = new File(rootProject.projectDir, '../assets/fonts/')
 }
 
 project.ext.react = [
-    assetsPath: new File(rootProject.projectDir, '../assets/fonts/'),
+    // assetsPath: new File(rootProject.projectDir, '../assets/fonts/'),
     // entryFile: new File("../../index.tsx")
 ]
 android {
     ndkVersion rootProject.ext.ndkVersion
-
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     namespace "com.mayorana.tafseel"
     defaultConfig {
         applicationId "com.mayorana.tafseel"
@@ -56,16 +56,16 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-gesture-handler')
     implementation project(':react-native-localize')
-    implementation platform('com.google.firebase:firebase-bom:30.1.0')
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 
-    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
-    }
+    // debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
+    // debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+    //     exclude group:'com.squareup.okhttp3', module:'okhttp'
+    // }
 
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
+    // debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

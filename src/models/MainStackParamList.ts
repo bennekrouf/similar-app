@@ -2,13 +2,13 @@ export type MainStackParamList = {
     ErrorScreen: { errorMessage: string };
     InitialScreen: undefined;
     HomeScreen: undefined;
-    LessonPages: {
+    Lesson: {
       count?: number;
       goodCount?: number;
       wrongCount?: number;
     };
   
-    DiscriminantExercise: {
+    Exercise: {
       settings: any,
       kalima?: string;
       exercises?: any;

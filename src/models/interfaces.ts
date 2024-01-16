@@ -24,7 +24,7 @@ export interface ScrollableTabProps {
   content: LessonListProps;
   // handleChapterSelection: (chapterNo: {no: number | undefined}) => void;
 }
-export interface Chapter {
+export interface Sourate {
   sourate: string,
   no: number,
   mekka: false,
