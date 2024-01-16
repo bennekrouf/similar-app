@@ -10,18 +10,18 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 def enableProguardInReleaseBuilds = false
 def appAssets = ["../assets/fonts"]
 react {
-    entryFile: file("../../index.tsx")
-    assetsPath: new File(rootProject.projectDir, '../assets/fonts/')
+    entryFile = file("../../index.tsx")
+    // assetsPath = new File(rootProject.projectDir, '../assets/fonts/')
 }
 
 project.ext.react = [
-    assetsPath: new File(rootProject.projectDir, '../assets/fonts/'),
+    // assetsPath: new File(rootProject.projectDir, '../assets/fonts/'),
     // entryFile: new File("../../index.tsx")
 ]
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 17
 
     namespace "com.mayorana.tafseel"
     defaultConfig {
