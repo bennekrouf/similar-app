@@ -295,7 +295,6 @@
 		};
 		43657852CAC4DCCE34A0FCBD /* [CP-User] [RNFB] Crashlytics Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

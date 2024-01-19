@@ -1897,14 +1897,14 @@ PODS:
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.14.0):
+  - RNGestureHandler (2.14.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - RNGoogleSignin (10.1.1):
     - GoogleSignIn (~> 7.0)
     - React-Core
-  - RNLocalize (3.0.5):
+  - RNLocalize (3.0.6):
     - React-Core
   - RNReanimated (3.6.1):
     - glog
@@ -2251,9 +2251,9 @@ SPEC CHECKSUMS:
   RNFBAuth: a800af76ce0baed0c839307aa0aa0c2443dbbee6
   RNFBCrashlytics: 11f52604cc41fde69e8cc8fcc9c578fc8d5b8a15
   RNFBFirestore: d469f8331952970100a1015baebc2bb831a667a7
-  RNGestureHandler: a426f2b9134a10ac56ff78593fb068541e68f0e7
+  RNGestureHandler: 28bdf9a766c081e603120f79e925b72817c751c6
   RNGoogleSignin: aac5c1ec73422109dec1da770247a1e410dcc620
-  RNLocalize: a725877f311db45acc6bff2382b3283e744a3945
+  RNLocalize: 4222a3756cdbe2dc9a5bdf445765a4d2572107cb
   RNReanimated: 9fc2b08ed365d7dc451bc451605d89c01f2c935b
   RNScreens: 2b73f5eb2ac5d94fbd61fa4be0bfebd345716825
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
