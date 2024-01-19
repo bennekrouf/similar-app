@@ -2,8 +2,8 @@ import { isInternetReachable } from './netUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 
-// const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
-const BASE_URL = 'http://test.similar.mayorana.ch/';
+const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
+console.log("Config.DOMAIN : ", Config.DOMAIN);
 
 async function request(endpoint: string, method = 'GET', body?: any, cache?: boolean) {
   const cacheKey = `${method}_${endpoint}`;
@@ -14,14 +14,16 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
       const cachedData = await AsyncStorage.getItem(cacheKey);
       if (cachedData) {
         const cachedDate = await AsyncStorage.getItem(dateKey);
+        const errorMessage = `No internet connection available and no cache found for ${BASE_URL}/${endpoint}.`;
         return {
           data: JSON.parse(cachedData),
-          date: cachedDate
+          date: cachedDate,
+          error: errorMessage,
         };
       }
-      throw new Error('No internet connection available and no cache found.');
+      throw new Error(`No internet connection available for ${BASE_URL}/${endpoint}.`);
     }
-    throw new Error('No internet connection available.');
+    throw new Error(`No internet connection available for ${BASE_URL}/${endpoint}.`);
   }
 
   const headers = {
@@ -47,7 +49,7 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
   try {
     const response = await fetch(url, config);
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      throw new Error(`API Error: ${response.status} ${response.statusText} for ${url}.`);
     }
 
     const responseData = await response.json();
@@ -64,9 +66,11 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
       const cachedData = await AsyncStorage.getItem(cacheKey);
       const cachedDate = await AsyncStorage.getItem(dateKey);
       if (cachedData) {
+        const errorMessage = `Error: ${error.message} (Cached data used for ${BASE_URL}/${endpoint}).`;
         return {
           data: JSON.parse(cachedData),
-          date: cachedDate
+          date: cachedDate,
+          error: errorMessage,
         };
       } else {
         throw error;

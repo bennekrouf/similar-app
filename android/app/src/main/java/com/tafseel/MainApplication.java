@@ -10,6 +10,7 @@ import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import com.facebook.react.modules.i18nmanager.I18nUtil;
 // import com.mayorana.mayofirebaseconfig.FirebaseConfigExtractorPackage;
+// import io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsPackage;
 
 import java.util.List;
 // import com.reactcommunity.rnlocalize.RNLocalizePackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          // packages.add(new ReactNativeFirebaseCrashlyticsPackage());
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           // packages.add(new RNGestureHandlerPackage());
@@ -66,7 +68,6 @@ public class MainApplication extends Application implements ReactApplication {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
       DefaultNewArchitectureEntryPoint.load();
     }
-    // ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
     sharedI18nUtilInstance.allowRTL(getApplicationContext(), true);
   }
