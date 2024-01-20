@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "npx react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "dotenv -e .env -- npx react-native run-android",
+    "start": "node setenv.js react-native start",
+    "ios": "node setenv.js react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start",
     "test": "jest",
     "dev": "node run-dev.js",
     "build:ios": "react-native bundle --entry-file='index.tsx' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
@@ -29,6 +29,7 @@
     "@react-navigation/stack": "^6.3.17",
     "axios": "^1.6.0",
     "deprecated-react-native-prop-types": "^5.0.0",
+    "dotenv": "^16.3.2",
     "i18next": "^23.4.4",
     "intl": "^1.2.5",
     "intl-pluralrules": "^2.0.1",

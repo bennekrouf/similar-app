@@ -62,20 +62,20 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
 
     return responseData;
   } catch (error) {
-    if (cache) {
-      const cachedData = await AsyncStorage.getItem(cacheKey);
-      const cachedDate = await AsyncStorage.getItem(dateKey);
-      if (cachedData) {
-        const errorMessage = `Error: ${error.message} (Cached data used for ${BASE_URL}/${endpoint}).`;
-        return {
-          data: JSON.parse(cachedData),
-          date: cachedDate,
-          error: errorMessage,
-        };
-      } else {
-        throw error;
-      }
-    }
+    // if (cache) {
+    //   const cachedData = await AsyncStorage.getItem(cacheKey);
+    //   const cachedDate = await AsyncStorage.getItem(dateKey);
+    //   if (cachedData) {
+    //     const errorMessage = `Error: ${error.message} (Cached data used for ${BASE_URL}/${endpoint}).`;
+    //     return {
+    //       data: JSON.parse(cachedData),
+    //       date: cachedDate,
+    //       error: errorMessage,
+    //     };
+    //   } else {
+    //     throw error;
+    //   }
+    // }
     throw error;
   }
 }

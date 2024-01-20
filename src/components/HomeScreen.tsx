@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBook, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import ConfigModal from './ConfigModal';
 
 import Header from './Header';
 import Lesson from './lesson/Lesson';
@@ -13,16 +14,44 @@ import useFetchLessons from '../hooks/useFetchLessons';
 import useFetchExercises from '../hooks/useFetchExercises';
 import useCurrentScreen from '../hooks/useCurrentScreen';
 import useHandleSignOut from '../hooks/useHandleSignOut';
+import Config from 'react-native-config';
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
-  const { lesson, isLoading: lessonLoading, error: lessonError } = useFetchLessons(userState?.selectedChapter);
+  const { lesson, isLoading: lessonLoading, error: lessonError, fetchLessons } = useFetchLessons();
   const { exercises, isLoading: exerciseLoading, error: exerciseError } = useFetchExercises();
   const [currentPage, setCurrentPage] = useState('Lesson');
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [pingResult, setPingResult] = useState('');
   
   useCurrentScreen('Home');
   useHandleSignOut();
+
+  useEffect(() => {
+    const fet = async () => {
+      if (userState?.selectedChapter) {
+        const res = await fetchLessons(userState?.selectedChapter);
+        console.log(res);
+      }
+    }
+    fet();
+  }, [userState?.selectedChapter]);
+
+  const fetchPingResult = async () => {
+    try {
+      const response = await fetch(`${Config.DOMAIN}/ping`);
+      const result = await response.text();
+      setPingResult(result);
+    } catch (error) {
+      setPingResult(`Error: ${error.message}`);
+    }
+  };
+
+  const showPopup = async () => {
+    await fetchPingResult();
+    setModalVisible(true);
+  };
 
   const handleTogglePage = () => {
     const nextPage = currentPage === 'Exercise' ? 'Lesson' : 'Exercise';
@@ -56,6 +85,11 @@ const HomeScreen = () => {
     default:
       content = (
         <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={showPopup}>
+            <Text style={styles.menuText}>Configuration state</Text>
+          </TouchableOpacity>
           <TouchableOpacity 
             style={styles.menuButton} 
             onPress={() => setSelectedOption('Lesson')}>
@@ -69,6 +103,13 @@ const HomeScreen = () => {
             <FontAwesomeIcon icon={faGraduationCap} size={24} style={styles.menuIcon} />
             <Text style={styles.menuText}>Exercises</Text>
           </TouchableOpacity>
+
+          <ConfigModal
+            isVisible={isModalVisible}
+            onClose={() => setModalVisible(false)}
+            domain={Config.DOMAIN}
+            pingResult={pingResult}
+          />
         </View>
       );
   }
