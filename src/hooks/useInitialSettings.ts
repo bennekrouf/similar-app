@@ -12,8 +12,8 @@ export const useInitialSettings = () => {
       try {
         if (!user) return;
         const res = await currentStorage();
-        if (res?.knownSourates) {
-          setselectedSourates(res.knownSourates);
+        if (res?.ranges) {
+          setselectedSourates(res.ranges);
         }
         Logger.info('Fetched initial settings.', { selectedSourates }, { tag: 'useInitialSettings' });
       } catch (error) {
