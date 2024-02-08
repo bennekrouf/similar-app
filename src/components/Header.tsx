@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import React, {useContext, useState} from 'react';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -35,10 +35,11 @@ type HeaderProps = {
   count: number
   goodCount:number,
   wrongCount:number,
+  onSelectExercise: () => void,
 };
 
 const Header: React.FC<HeaderProps> = ({ 
-  userState, setUserState, loading, count, goodCount, wrongCount,
+  userState, setUserState, loading, count, goodCount, wrongCount, onSelectExercise,
 }) => {
   const { currentScreen } = useContext(CurrentScreenContext);
   
@@ -59,7 +60,6 @@ const Header: React.FC<HeaderProps> = ({
   const selectedSourates = useInitialSettings();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const handleLabelPress = async (sourate: {no: number | undefined}) => {
-    debugger
     closeModal(souratesModal);
     if (sourate.no) {
       setUserState({...userState, selectedChapter: sourate.no});
@@ -72,11 +72,6 @@ const Header: React.FC<HeaderProps> = ({
   };
   
   useCurrentIndexFromStorage();
-  // const handleTogglePage = () => {
-  //   const nextPage = currentPage === 'Exercise' ? 'Lesson' : 'Exercise';
-  //   setCurrentPage(nextPage);
-  //   onTogglePage(nextPage);
-  // };
 
   const handleTogglePage = () => {
     if (currentScreen === 'Exercise') {
@@ -104,25 +99,26 @@ const Header: React.FC<HeaderProps> = ({
     );
   }
 
-  // const answeredCount = goodCount + wrongCount;
-  // const totalProgress = count > 0 ? (answeredCount / count) : 0;
-  // const goodFlex = totalProgress > 0 ? (goodCount / answeredCount) : 0;
-  // const wrongFlex = totalProgress > 0 ? (wrongCount / answeredCount) : 0;
-
-  const answeredCount = 3;
-  const totalProgress = 0.5;
-  const goodFlex = 0.1;
-  const wrongFlex = 0.2;
+  const answeredCount = goodCount + wrongCount;
+  const totalProgress = count > 0 ? (answeredCount / count) : 0;
+  const goodFlex = totalProgress > 0 ? (goodCount / answeredCount) : 0;
+  const wrongFlex = totalProgress > 0 ? (wrongCount / answeredCount) : 0;
 
   return (
     <View style={{ paddingTop: insets.top, backgroundColor: 'white' }}>
       <View style={styles.headerContainer}>
-        {/* TouchableOpacity for the settings button */}
-        <TouchableOpacity onPress={() => openModal(settingsModal)}>
-          <FontAwesomeIcon icon={faCog} size={24} style={[styles.settingsIcon, styles.roundedButton]} />
-        </TouchableOpacity>
-
         {/* <View style={styles.placeholderBox}></View> */}
+
+        <TouchableOpacity 
+          onPress={onSelectExercise}
+          style={[styles.toggleButton, styles.roundedButton]}
+        >
+          <FontAwesomeIcon 
+            icon={isExerciseScreen ?  faGraduationCap:faBook} 
+            size={20} 
+            style={styles.iconStyle} 
+          />
+        </TouchableOpacity>
 
         {displaySelectedChapter && (
           <TouchableOpacity onPress={() => openModal(souratesModal)}>
@@ -142,20 +138,10 @@ const Header: React.FC<HeaderProps> = ({
           </View>
         )}
 
-        {!isHomeScreen && (
-          <TouchableOpacity 
-          style={[styles.toggleButton, styles.roundedButton]} 
-          onPress={onTogglePage}>
-            {/* <Text style={styles.buttonText}>
-              {currentPage === 'Exercise' ? ' Lesson' : ' Exercise'}
-            </Text> */}
-            <FontAwesomeIcon 
-              icon={currentPage === 'Exercise' ?  faGraduationCap:faBook} 
-              size={20} 
-              style={styles.iconStyle} 
-            />
-          </TouchableOpacity>
-        )}
+        {/* TouchableOpacity for the settings button */}
+        <TouchableOpacity onPress={() => openModal(settingsModal)}>
+          <FontAwesomeIcon icon={faCog} size={24} style={[styles.settingsIcon, styles.roundedButton]} />
+        </TouchableOpacity>
       </View>
       <View style={styles.headerSeparator} />
 
@@ -173,7 +159,7 @@ const Header: React.FC<HeaderProps> = ({
         }}>
         <LabelsSelector
           labels={labels}
-          selectedSourates={userState?.knownSourates}
+          selectedSourates={userState?.ranges}
           onSourateSelect={onSourateSelect}
           userState={userState}
           setUserState={setUserState}
@@ -224,8 +210,7 @@ const styles = StyleSheet.create({
   },
   settingsIcon: {
     color: '#000', // or any color that suits your app theme
-    padding: 10, // adjust padding as needed
-    // other styles as needed
+    padding: 20, // adjust padding as needed
   },
   centeredContainer: {
     flex: 1,

@@ -14,11 +14,11 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
       const cachedData = await AsyncStorage.getItem(cacheKey);
       if (cachedData) {
         const cachedDate = await AsyncStorage.getItem(dateKey);
-        const errorMessage = `No internet connection available and no cache found for ${BASE_URL}/${endpoint}.`;
+        // const errorMessage = `No internet connection available and no cache found for ${BASE_URL}/${endpoint}.`;
         return {
           data: JSON.parse(cachedData),
           date: cachedDate,
-          error: errorMessage,
+          error: null,
         };
       }
       throw new Error(`No internet connection available for ${BASE_URL}/${endpoint}.`);

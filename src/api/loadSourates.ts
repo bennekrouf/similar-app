@@ -3,9 +3,9 @@ import { apiClient } from './apiClient';
 import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
 import { convertIndicesToRanges } from '../modals/SourateConfiguration/convertIndicesToRanges';
 
-export async function loadChapters(knownSourates: string[]) {
+export async function loadChapters(ranges: string[]) {
   try {
-    const indices = getIndicesByName(knownSourates);
+    const indices = getIndicesByName(ranges);
     // Use apiClient to fetch sourates
     const sourates = await apiClient.get('chapters', {ranges: convertIndicesToRanges(indices)}, true);
     Logger.info(`Successfully fetched and/or retrieved sourate data from cache/API.`, null, { tag: 'loadChapters' });

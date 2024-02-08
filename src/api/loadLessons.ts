@@ -5,10 +5,10 @@ import { checkAndRemoveOldData } from './checkAndRemoveOldData';
 import { getIndicesByName } from '../modals/SourateConfiguration/getIndicesByName';
 import { convertIndicesToRanges } from '../modals/SourateConfiguration/convertIndicesToRanges';
 
-export async function loadLessons(chapterNo = 59, knownSourates: string[]) {
+export async function loadLessons(chapterNo = 59, ranges: string[]) {
   checkAndRemoveOldData();
   try {
-    const indices = getIndicesByName(knownSourates);
+    const indices = getIndicesByName(ranges);
     let lessons: any[];
     lessons = await apiClient.get(`similars/${chapterNo}`, {ranges: convertIndicesToRanges(indices)}, true);
 
