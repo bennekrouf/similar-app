@@ -1,10 +1,12 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { Sourate } from '../models/interfaces';
-import { loadChapters } from '../api/loadSourates';
+
 import { Logger } from 'mayo-logger';
-import { useFetchUser } from './useFetchUser';
-import { initialState } from '../models/UserState';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
+
+import { useFetchUser } from './useFetchUser';
+import { loadChapters } from '../api/loadSourates';
+import { Sourate } from '../models/Sourate';
+import { initialState } from '../models/UserState';
 
 interface SourateContextProps {
   sourates: Sourate[];

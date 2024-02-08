@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { I18nManager } from 'react-native';
-import { Sourate } from '../models/interfaces';
+import { Sourate } from '../models/Sourate';
 import { useChapters } from '../hooks/useFetchSourates';
 
 const sourateColor = (chapterNo: number, sourates: Sourate[]) => sourates?.find(c => c.no === chapterNo)?.background_color

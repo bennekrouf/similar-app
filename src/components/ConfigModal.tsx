@@ -1,4 +1,3 @@
-// ConfigModal.js
 import React from 'react';
 import { Modal, View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 

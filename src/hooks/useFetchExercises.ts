@@ -1,10 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { Logger } from 'mayo-logger';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
+
 import { useFetchUser } from './useFetchUser';
 import { initialState } from '../models/UserState';
 import { rangeParamsURI } from '../api/settingsToRanges';
 import { apiClient } from '../api/apiClient';
+
+const EXERCISE_URL = 'exercises';
 
 const useFetchExercises = () => {
   const [exercises, setExercises] = useState<any[] | null>(null);
@@ -16,16 +19,13 @@ const useFetchExercises = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!userState || !user) {
-            return;
-        }
         const ranges = await rangeParamsURI();
         
         setIsLoading(true);
-        Logger.info('Fetching exercises', { ranges }, { tag: 'ExercisesFetch' });
-
-        Logger.info('Initiating exercise list load', { ranges }, { tag: 'ExerciseListLoad' });
-        const fetchedExercises = await apiClient.get('exercise_list', { ranges }, false);
+        const params = { ranges, ...userState?.knownSourates }
+        
+        Logger.info('Initiating exercise list load', params, { tag: 'ExerciseListLoad' });
+        const fetchedExercises = await apiClient.get(EXERCISE_URL, params, false);
         Logger.info('Received exercise list data', { exercises }, { tag: 'ExerciseListLoad' });
 
         setExercises(fetchedExercises);
@@ -39,7 +39,10 @@ const useFetchExercises = () => {
       }
     };
 
-    fetchData();
+    if (userState && user && !loading) {
+      fetchData();
+    }
+    
   }, [user, userState]);
 
   return { exercises, isLoading, error };

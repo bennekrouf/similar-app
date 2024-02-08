@@ -146,9 +146,6 @@ const Header: React.FC<HeaderProps> = ({
           <TouchableOpacity 
           style={[styles.toggleButton, styles.roundedButton]} 
           onPress={onTogglePage}>
-            {/* <Text style={styles.buttonText}>
-              {currentPage === 'Exercise' ? ' Lesson' : ' Exercise'}
-            </Text> */}
             <FontAwesomeIcon 
               icon={currentPage === 'Exercise' ?  faGraduationCap:faBook} 
               size={20} 

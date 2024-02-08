@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, ScrollView, TouchableOpacity} from 'react-native';
 import SourateBox from '../../components/SourateBox';
-import { Sourate } from '../../models/interfaces';
+import { Sourate } from '../../models/Sourate';
 
 interface SouratesSelectorProps {
   handleLabelPress: (sourate: {no: number | undefined}) => Promise<void>;

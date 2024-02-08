@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import LessonContent from './LessonContent';
-import {ScrollableTabProps} from '../../../models/interfaces';
+import {ScrollableTabProps} from '../../../models/ScrollableTabProps';
 
 const ScrollableTab: React.FC<ScrollableTabProps> = ({content}) => {
   const {t} = useTranslation();

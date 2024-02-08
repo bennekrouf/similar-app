@@ -1,7 +1,8 @@
 // MainContent.tsx
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {LessonListProps} from '../../../models/interfaces';
+
+import {LessonListProps} from '../../../models/LessonListProps';
 import MainVerses from './LessonContent/MainVerses';
 import SimilarVerses from './LessonContent/SimilarVerses';
 
