@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
-import {VerseListProps} from '../../../../models/interfaces';
-import {View} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
+
+import {VerseListProps} from '../../../../models/VerseListProps';
 import FormattedVerse from '../../FormattedVerse';
 import SourateBox from '../../../SourateBox';
 

@@ -2,7 +2,8 @@ import { isInternetReachable } from './netUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 
-const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
+// const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
+const BASE_URL = 'http://test.similar.mayorana.ch';
 console.log("Config.DOMAIN : ", Config.DOMAIN);
 
 async function request(endpoint: string, method = 'GET', body?: any, cache?: boolean) {

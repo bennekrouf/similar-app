@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Logger } from 'mayo-logger';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';
+
 import { currentStorage } from '../storage/currentStorage';
 
 export const useInitialSettings = () => {

@@ -1,4 +1,3 @@
-// CurrentScreenContext.ts
 import React, { createContext, useState, FC, ReactNode } from 'react';
 
 interface CurrentScreenContextType {

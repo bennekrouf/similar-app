@@ -3,17 +3,17 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Text, Card, Provider, DefaultTheme} from 'react-native-paper';
-import { syncStorage } from '../../storage/syncStorage';
-import { useFocusEffect } from '@react-navigation/native';
-import { useContext } from 'react';
 
-import {radioButtonText} from '../../utils/radioButtonText';
+import { Logger } from 'mayo-logger';
+
+import { syncStorage } from '../../storage/syncStorage';
 import CustomRadioButton from './CustomRadioButton';
 import useCurrentScreen from '../../hooks/useCurrentScreen';
-import { Alternative, Statement } from '../../models/interfaces';
-import { Logger } from 'mayo-logger';
+import { Alternative } from '../../models/Alternative';
 import { AnswerStat } from '../../models/AnswerStat';
+import {radioButtonText} from '../../utils/radioButtonText';
 import { updateAnswerStats } from '../../utils/updateStats';
+import { Statement } from '../../models/Statement';
 
 const theme = {
   ...DefaultTheme,

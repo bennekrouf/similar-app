@@ -22,10 +22,10 @@ export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T
         }
         console.log(`Saved usersettings : ${JSON.stringify(savedState)}`);
 
-        if (savedState?.knownSourates?.length) {
+        if (savedState?.ranges?.length) {
           Logger.info('Fetching currentIndex from storage', { tag: 'Lesson' });
-          savedState.currentIndex = await getBestIndex(savedState?.knownSourates, 'currentIndex');
-          savedState.selectedChapter = await getBestIndex(savedState?.knownSourates, 'selectedChapter');
+          savedState.currentIndex = await getBestIndex(savedState?.ranges, 'currentIndex');
+          savedState.selectedChapter = await getBestIndex(savedState?.ranges, 'selectedChapter');
           await updateUserSettings({...savedState});
         } else {
           await updateUserSettings({...initialState, ok: true});
@@ -48,9 +48,9 @@ export const useFetchUser = <T extends UserState>(initialState: T): [T, (data: T
     }
 
     try {
-      if (data?.knownSourates?.length) {
-        data.currentIndex = await getBestIndex(data?.knownSourates, 'currentIndex');
-        data.selectedChapter = await getBestIndex(data?.knownSourates, 'selectedChapter');
+      if (data?.ranges?.length) {
+        data.currentIndex = await getBestIndex(data?.ranges, 'currentIndex');
+        data.selectedChapter = await getBestIndex(data?.ranges, 'selectedChapter');
       }
       writeToAsyncStorage(data, false);
       // syncAsyncStorageToFirestore();

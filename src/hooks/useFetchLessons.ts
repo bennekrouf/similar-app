@@ -1,11 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
-import { loadLessons } from '../api/loadLessons';
+import { useState, useContext } from 'react';
+
 import { Logger } from 'mayo-logger';
+import { UserContext, UserContextType } from 'mayo-firebase-auth';
+
+import { useFetchUser } from './useFetchUser';
+import { loadLessons } from '../api/loadLessons';
 import { RootStackParamList } from '../models/RootStackParamList';
 import { initialState } from '../models/UserState';
-import { useFetchUser } from './useFetchUser';
-import { Statement } from '../models/interfaces';
-import { UserContext, UserContextType } from 'mayo-firebase-auth';
+import { Statement } from '../models/Statement';
 
 const useFetchLessons = (selectedChapter: number) => {
   const [lesson, setLesson] = useState<Statement[] | null>(null);

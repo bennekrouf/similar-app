@@ -1,5 +1,5 @@
-import {Text, StyleSheet, View} from 'react-native';
 import React from 'react';
+import {Text, StyleSheet, View} from 'react-native';
 
 function FormattedVerse({ungroupedText, isOpposite}) {
   const discriminantStyle = isOpposite ? styles.differentTextWrong : styles.differentTextRight;

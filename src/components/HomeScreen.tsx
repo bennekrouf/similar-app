@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBook, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
-import ConfigModal from './ConfigModal';
+import Config from 'react-native-config';
 
+import ConfigModal from './ConfigModal';
 import Header from './Header';
 import Lesson from './lesson/Lesson';
 import Exercise from './exercise/Exercise';
@@ -12,15 +13,20 @@ import { useFetchUser } from '../hooks/useFetchUser';
 
 import useFetchLessons from '../hooks/useFetchLessons';
 import useFetchExercises from '../hooks/useFetchExercises';
+import useFetchChapterStats from '../hooks/useFetchChapterStats';
+import useFetchVerseStats from '../hooks/useFetchVerseStats';
 import useCurrentScreen from '../hooks/useCurrentScreen';
 import useHandleSignOut from '../hooks/useHandleSignOut';
-import Config from 'react-native-config';
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
   const { lesson, isLoading: lessonLoading, error: lessonError } = useFetchLessons(userState?.selectedChapter);
   const { exercises, isLoading: exerciseLoading, error: exerciseError } = useFetchExercises();
+
+  const { chapterStats, isChapterStatsLoading } = useFetchChapterStats();
+  const { verseStats, isVerseStatsLoading,  } = useFetchVerseStats();
+ 
   const [currentPage, setCurrentPage] = useState('Lesson');
   const [isModalVisible, setModalVisible] = useState(false);
   const [pingResult, setPingResult] = useState('');
@@ -45,11 +51,6 @@ const HomeScreen = () => {
   const showPopup = async () => {
     await fetchPingResult();
     setModalVisible(true);
-  };
-
-  const handleTogglePage = () => {
-    const nextPage = currentPage === 'Exercise' ? 'Lesson' : 'Exercise';
-    setCurrentPage(nextPage);
   };
 
   if (loading) {

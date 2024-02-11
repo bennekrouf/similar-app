@@ -2,6 +2,7 @@ import { useEffect, useContext } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UserContext } from 'mayo-firebase-auth';
 import { Logger } from 'mayo-logger';
+
 import { RootStackParamList } from '../models/RootStackParamList';
 
 const useHandleSignOut = () => {
