@@ -3,8 +3,8 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "android": "node setenv.js react-native run-android",
-    "start": "node setenv.js react-native start",
+    "android": "dotenv -e .env -- npx react-native run-android",
+    "start": "node setenv.js .env \"npx react-native start\"",
     "ios": "node setenv.js .env react-native run-ios",
     "lint": "eslint .",
     "test": "jest",
