@@ -21,7 +21,7 @@ import useHandleSignOut from '../hooks/useHandleSignOut';
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [userState, setUserState, loading] = useFetchUser<UserState>(initialState);
-  const { lesson, isLoading: lessonLoading, error: lessonError, fetchLessons } = useFetchLessons();
+  const { lesson, isLoading: lessonLoading, error: lessonError } = useFetchLessons(userState?.selectedChapter);
   const { exercises, isLoading: exerciseLoading, error: exerciseError } = useFetchExercises();
 
   const { chapterStats, isChapterStatsLoading } = useFetchChapterStats();
@@ -30,19 +30,13 @@ const HomeScreen = () => {
   const [currentPage, setCurrentPage] = useState('Lesson');
   const [isModalVisible, setModalVisible] = useState(false);
   const [pingResult, setPingResult] = useState('');
+
+  const selectExercise = () => {
+    setSelectedOption(prevOption => prevOption === 'Exercise' ? 'Lesson' : 'Exercise');
+  };
   
   useCurrentScreen('Home');
   useHandleSignOut();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userState?.selectedChapter) {
-        const res = await fetchLessons(userState?.selectedChapter);
-        console.log(res);
-      }
-    }
-    fetchData();
-  }, [userState?.selectedChapter]);
 
   const fetchPingResult = async () => {
     try {
@@ -128,6 +122,7 @@ const HomeScreen = () => {
         count={exercises?.length}
         goodCount={totalGoodAnswers}
         wrongCount={totalWrongAnswers}
+        onSelectExercise={selectExercise}
       />
 
       {content}

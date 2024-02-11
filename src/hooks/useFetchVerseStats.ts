@@ -20,10 +20,11 @@ const useFetchVerseStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        debugger
         const ranges = await rangeParamsURI();
         
         setIsVerseStatsLoading(true);
-        const body = { user_stats: userState?.knownSourates, ranges };
+        const body = { user_stats: userState?.ranges, ranges };
         
         Logger.info('Initiating verse stats load', { body }, { tag: 'VerseStatsLoad' });
         

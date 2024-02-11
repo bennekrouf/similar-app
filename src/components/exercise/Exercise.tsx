@@ -24,6 +24,8 @@ const theme = {
   },
 };
 
+const NEXT_QUESTION_TIME = 2000;
+
 const Exercise = ({exercises, isLoading, error }) => {
   useCurrentScreen('Exercise');
   
@@ -64,18 +66,18 @@ const Exercise = ({exercises, isLoading, error }) => {
       setIsValid(validationOutcome);
       let id: string;
       if (validationOutcome === 'right') {
-        id = `${statement.verse.chapter_no}-${statement.verse.verse_no}`;
+        id = `${statement.verse.chapter_no}:${statement.verse.verse_no}`;
         updateAnswerStats({ id, valid: true}, setAnswerStats);
         // Set a timeout to load the next question after 2 seconds
         const tId = setTimeout(() => {
           setExerciseIndex(prevIndex => prevIndex + 1);
           updateExerciseContent();
-        }, 2000); // 2000 milliseconds delay
+        }, NEXT_QUESTION_TIME);
         setTId(tId);
-      } else {
-        id = `${statement.verse.chapter_no}-${statement.verse.verse_no}`;
+      } else { // decrease the right and the wrong selected answer
+        id = `${statement.verse.chapter_no}:${statement.verse.verse_no}`;
         updateAnswerStats({ id, valid: false}, setAnswerStats);
-        id = `${alternative.chapter_no}-${alternative.verse_no}`;
+        id = `${alternative.chapter_no}:${alternative.verse_no}`;
         updateAnswerStats({ id, valid: false}, setAnswerStats);
       }
       Logger.info(`Validation outcome: ${validationOutcome}`);

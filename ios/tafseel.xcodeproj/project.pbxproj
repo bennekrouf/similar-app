@@ -261,7 +261,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh index.tsx\n\n# WITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\n# REACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n#  /bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n\n#if [ \"${CONFIGURATION}\" = \"Staging\" ]; then\n#  cp ${SRCROOT}/.env.staging ${SRCROOT}/.env\n#else\n#  cp ${SRCROOT}/.env.production ${SRCROOT}/.env\n#fi\n";
+			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh index.tsx\n";
 		};
 		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -2,7 +2,8 @@ import { isInternetReachable } from './netUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Config from 'react-native-config';
 
-const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
+// const BASE_URL = (Config.DOMAIN || 'http://127.0.0.1:7000').replace(/\/+$/, '');
+const BASE_URL = 'http://test.similar.mayorana.ch';
 console.log("Config.DOMAIN : ", Config.DOMAIN);
 
 async function request(endpoint: string, method = 'GET', body?: any, cache?: boolean) {
@@ -14,11 +15,11 @@ async function request(endpoint: string, method = 'GET', body?: any, cache?: boo
       const cachedData = await AsyncStorage.getItem(cacheKey);
       if (cachedData) {
         const cachedDate = await AsyncStorage.getItem(dateKey);
-        const errorMessage = `No internet connection available and no cache found for ${BASE_URL}/${endpoint}.`;
+        // const errorMessage = `No internet connection available and no cache found for ${BASE_URL}/${endpoint}.`;
         return {
           data: JSON.parse(cachedData),
           date: cachedDate,
-          error: errorMessage,
+          error: null,
         };
       }
       throw new Error(`No internet connection available for ${BASE_URL}/${endpoint}.`);

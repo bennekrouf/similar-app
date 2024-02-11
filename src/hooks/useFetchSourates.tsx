@@ -33,7 +33,7 @@ export const SourateProvider: React.FC<SourateProviderProps> = ({ children }) =>
       try {
         setIsChapterLoading(true);
         
-        const chaptersData = await loadChapters(userState?.knownSourates);
+        const chaptersData = await loadChapters(userState?.ranges);
         setChapters(chaptersData);
         Logger.info('Sourates data successfully fetched and set.', null, { tag: 'ChapterContext' });
       } catch (error) {

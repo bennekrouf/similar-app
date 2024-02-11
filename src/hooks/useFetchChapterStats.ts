@@ -7,7 +7,7 @@ import { initialState } from '../models/UserState';
 import { rangeParamsURI } from '../api/settingsToRanges';
 import { apiClient } from '../api/apiClient';
 
-const CHAPTER_STATS_URL = '/chapter-stats-analytics';
+const CHAPTER_STATS_URL = '/chapter_stats_analytics';
 
 const useFetchChapterStats = () => {
   const [chapterStats, setChapterStats] = useState<any[] | null>(null);
@@ -22,12 +22,11 @@ const useFetchChapterStats = () => {
         const ranges = await rangeParamsURI();
         
         setIsChapterStatsLoading(true);
-        const body = { user_stats: userState?.knownSourates, ranges };
 
-        Logger.info('Initiating chapter stats load', { body }, { tag: 'ChapterStatsLoad' });
+        Logger.info('Initiating chapter stats load', { ranges }, { tag: 'ChapterStatsLoad' });
         
         // Assuming apiClient.post can handle sending both query params and body as JSON
-        const fetchedChapterStats = await apiClient.post(CHAPTER_STATS_URL, body);
+        const fetchedChapterStats = await apiClient.post(CHAPTER_STATS_URL, ranges);
         
         Logger.info('Received chapter stats data', { chapterStats: fetchedChapterStats }, { tag: 'ChapterStatsFetch' });
 

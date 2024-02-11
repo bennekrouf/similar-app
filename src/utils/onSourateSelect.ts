@@ -3,15 +3,15 @@ import { getIndicesByName } from "../modals/SourateConfiguration/getIndicesByNam
 import { getNamesByIndices } from "../modals/SourateConfiguration/getNamesByIndices";
 
 export const onSourateSelect = (labelName: string, userState: UserState, setUserState: any, triggerChapterFetch: any) => {
-    if (userState?.knownSourates?.length === 1 && userState?.knownSourates.includes(labelName)) {
+    if (userState?.ranges?.length === 1 && userState?.ranges.includes(labelName)) {
         debugger
         setUserState({...userState}); // force to recompute default sourate
         return;
     };
 
-    let newSelectedSourates = [...userState?.knownSourates];
+    let newSelectedSourates = [...userState?.ranges];
     const labelIndices = getIndicesByName([labelName]);
-    const isSourateSelected = userState?.knownSourates.includes(labelName);
+    const isSourateSelected = userState?.ranges.includes(labelName);
 
     if (isSourateSelected) {
         // Remove the specific label
@@ -31,6 +31,6 @@ export const onSourateSelect = (labelName: string, userState: UserState, setUser
         );
         newSelectedSourates.push(...relatedLabels);
     }
-    setUserState({...userState, knownSourates: newSelectedSourates});
+    setUserState({...userState, ranges: newSelectedSourates});
     // triggerChapterFetch();
 };

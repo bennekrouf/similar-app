@@ -1,14 +1,13 @@
 {
   "name": "tafseel",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "android": "dotenv -e .env -- npx react-native run-android",
     "start": "node setenv.js .env \"npx react-native start\"",
-    "ios": "node setenv.js react-native run-ios",
+    "ios": "node setenv.js .env react-native run-ios",
     "lint": "eslint .",
     "test": "jest",
-    "dev": "node run-dev.js",
     "build:ios": "react-native bundle --entry-file='index.tsx' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
@@ -33,12 +32,12 @@
     "i18next": "^23.4.4",
     "intl": "^1.2.5",
     "intl-pluralrules": "^2.0.1",
-    "mayo-firebase-auth": "^1.5.1",
+    "mayo-firebase-auth": "1.5.2",
     "mayo-firebase-config": "^1.2.24",
     "mayo-firestore-write": "^1.5.3",
     "mayo-loader": "^1.0.2",
-    "mayo-logger": "^1.3.0",
-    "mayo-settings": "^1.2.8",
+    "mayo-logger": "^1.3.1",
+    "mayo-settings": "^1.2.9",
     "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-i18next": "^13.0.3",

@@ -14,14 +14,12 @@ const CustomRadioButton = ({ text, selected, onPress, serviceFailed, serviceVali
         isSelectedAndValid && styles.validContainer,
       ]}
       onPress={onPress}>
-      <Text style={[styles.text, I18nManager.isRTL && styles.textRTL]}>
-        {text}
-      </Text>
       <Icon
         name={selected ? "radiobox-marked" : "radiobox-blank"}
         size={24}
         style={styles.radioIcon}
       />
+      <Text style={[styles.text, I18nManager.isRTL && styles.textRTL]}>{text}</Text>
     </TouchableOpacity>
   );
 };
