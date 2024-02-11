@@ -25,18 +25,9 @@ import { RootStackParamList } from '../models/RootStackParamList';
 import { useCurrentIndexFromStorage } from '../hooks/useCurrentIndexFromStorage';
 import { useInitialSettings } from '../hooks/useInitialSettings';
 import { useSelectedChapterFromStorage } from '../hooks/useSelectedSourateFromStorage';
+import { HeaderProps } from '../models/HeaderProps';
 
 const souratesModal = 'souratesModal', settingsModal = 'settingsModal';
-
-type HeaderProps = {
-  userState: UserState
-  setUserState: any,
-  loading: boolean,
-  count: number
-  goodCount:number,
-  wrongCount:number,
-  onSelectExercise: () => void,
-};
 
 const Header: React.FC<HeaderProps> = ({ 
   userState, setUserState, loading, count, goodCount, wrongCount, onSelectExercise,

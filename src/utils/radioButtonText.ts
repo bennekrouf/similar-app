@@ -35,7 +35,7 @@ export const radioButtonText = (
     const additionalText = type === 'FindDiscriminant' && isOk === 'wrong'
       ? `(${alternative.sourate})`
       : '';
-    return isRTL ? `${additionalText} ${sourate}` : `${sourate} ${additionalText}`;
+    return `${sourate} ${additionalText}`;
   }
   return sourate;
 };

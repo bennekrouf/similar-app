@@ -19,10 +19,11 @@ const useFetchExercises = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        debugger
         const ranges = await rangeParamsURI();
         
         setIsLoading(true);
-        const params = { ranges, ...userState?.knownSourates }
+        const params = { ranges, ...userState?.ranges }
         
         Logger.info('Initiating exercise list load', params, { tag: 'ExerciseListLoad' });
         const fetchedExercises = await apiClient.get(EXERCISE_URL, params, false);
