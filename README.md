@@ -1,5 +1,8 @@
 # Start
 
+yarn global add dotenv-cli
+
+
 ENVFILE=.env.staging yarn ios && ENVFILE=.env.staging yarn start
 ENVFILE=.env.staging yarn ios
 ENVFILE=.env.production yarn ios
