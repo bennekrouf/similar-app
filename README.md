@@ -1,21 +1,31 @@
 # Start
 
+
 yarn global add dotenv-cli
 
 
-ENVFILE=.env.staging yarn ios && ENVFILE=.env.staging yarn start
-ENVFILE=.env.staging yarn ios
-ENVFILE=.env.production yarn ios
+## Android
 
-cd android && ENVFILE=.env.staging ./gradlew assembleRelease
+ENVFILE=.env.staging yarn android && ENVFILE=.env yarn start
+ENVFILE=.env.staging yarn android
+ENVFILE=.env.production yarn android
 
-
-Follow crashlytics on ios :
-
-xcrun simctl spawn booted log stream --level debug --style compact | grep -i crash
+cd android && ENVFILE=.env ./gradlew assembleRelease
 
 . ~/devtools/go-jdk17-nodelatestLTS
 java --version
 nvm use 18
 ./gradlew clean
+
+
+## IOS
+
+ENVFILE=.env.staging yarn ios && ENVFILE=.env yarn start
+ENVFILE=.env.staging yarn ios
+ENVFILE=.env.production yarn ios
+
+
+Follow crashlytics on ios :
+
+xcrun simctl spawn booted log stream --level debug --style compact | grep -i crash
 

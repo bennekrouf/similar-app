@@ -18,7 +18,7 @@ import labels from '../modals/SourateConfiguration/labels.json';
 import { useChapters } from '../hooks/useFetchSourates';
 import { UserState } from '../models/UserState';
 import { onSourateSelect } from '../utils/onSourateSelect';
-import ProgressBar from './ProgressBar';
+// import ProgressBar from './ProgressBar';
 import { CurrentScreenContext } from '../hooks/CurrentScreenContext';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../models/RootStackParamList';
@@ -132,11 +132,11 @@ const Header: React.FC<HeaderProps> = ({
           </View> 
         */}
 
-        {displayProgress && (
+        {/* {displayProgress && (
           <View style={styles.progressBarContainer}>
            <ProgressBar totalProgress={totalProgress} goodProgress={goodCount} />
           </View>
-        )}
+        )} */}
 
         {/* TouchableOpacity for the settings button */}
         <TouchableOpacity onPress={() => openModal(settingsModal)}>
