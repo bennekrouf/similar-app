@@ -18,6 +18,9 @@ nvm use 18
 ./gradlew clean
 
 
+adb shell input keyevent 82
+
+
 ## IOS
 
 ENVFILE=.env.staging yarn ios && ENVFILE=.env yarn start
