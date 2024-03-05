@@ -8,11 +8,12 @@ import { I18nManager } from 'react-native';
 import { useFetchUser } from '../../hooks/useFetchUser';
 import { initialState } from '../../models/UserState';
 import useCurrentScreen from '../../hooks/useCurrentScreen';
+import { LessonListProps } from '../../models/LessonListProps';
 
 const HEADER_HEIGHT = 0;
 interface ScrollableSwipablePageProps {
   selectedChapter: number;
-  lesson: any;
+  lesson: LessonListProps[];
   isLoading: boolean;
   error: any;
 }
@@ -39,10 +40,23 @@ const Lesson: React.FC<ScrollableSwipablePageProps> = ({ selectedChapter, lesson
   //   );
   // }
 
+  const sortLessonsByVerseNo = (lessons: LessonListProps[]) => {
+    return lessons
+      ?.slice() // Create a copy of the lesson array
+      .sort((a, b) => {
+        // Sort based on the first verse_no
+        const verseA = a.verses[0];
+        const verseB = b.verses[0];
+        return verseA.verse_no - verseB.verse_no;
+      });
+  };
+
+  const sortedLessons = sortLessonsByVerseNo(lesson);
+
   return (
     <Tabs.Container onIndexChange={handleSwiperIndexChanged} tabBarHeight={0}>
-      {lesson?.length &&
-        lesson.map((content: any, index:number) => (
+      {sortedLessons?.length &&
+        sortedLessons.map((content: LessonListProps, index:number) => (
           <Tabs.Tab name={`Tab${index}`} key={index}>
             <Tabs.ScrollView>
               <ScrollableTab content={content} />
