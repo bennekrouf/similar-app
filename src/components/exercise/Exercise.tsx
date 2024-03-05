@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import {Text, Card, Provider, DefaultTheme} from 'react-native-paper';
+import {Card, Provider, DefaultTheme} from 'react-native-paper';
 
 import { Logger } from 'mayo-logger';
 

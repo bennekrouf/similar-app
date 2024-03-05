@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Text, Card} from 'react-native-paper';
+import {View, StyleSheet, Text} from 'react-native';
+import {Card} from 'react-native-paper';
 
 import {VerseListProps} from '../../../../models/VerseListProps';
 import FormattedVerse from '../../FormattedVerse';

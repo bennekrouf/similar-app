@@ -4,7 +4,6 @@ import { getNamesByIndices } from "../modals/SourateConfiguration/getNamesByIndi
 
 export const onSourateSelect = (labelName: string, userState: UserState, setUserState: any, triggerChapterFetch: any) => {
     if (userState?.ranges?.length === 1 && userState?.ranges.includes(labelName)) {
-        debugger
         setUserState({...userState}); // force to recompute default sourate
         return;
     };

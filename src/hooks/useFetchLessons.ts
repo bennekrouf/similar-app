@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { Logger } from 'mayo-logger';
 import { UserContext, UserContextType } from 'mayo-firebase-auth';

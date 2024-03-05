@@ -21,8 +21,8 @@ export const MainApp: React.FC = () => {
           <Stack.Screen name="SignIn" component={SignInScreen} options={opt} />
           <Stack.Screen name="Login" component={InitialScreen} options={opt} />
           <Stack.Screen name="Home" component={HomeScreen} options={opt}/>
-          {/* <Stack.Screen name="Lesson" component={Lesson} options={opt}/>
-          <Stack.Screen name="Exercise" component={Exercise} options={opt}/> */}
+          <Stack.Screen name="Lesson" component={Lesson} options={opt}/>
+          <Stack.Screen name="Exercise" component={Exercise} options={opt}/>
         </Stack.Navigator>
       </NavigationContainer>
     </CurrentScreenProvider>

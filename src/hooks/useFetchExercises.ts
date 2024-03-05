@@ -19,7 +19,7 @@ const useFetchExercises = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        debugger
+        
         const ranges = await rangeParamsURI();
         
         setIsLoading(true);
