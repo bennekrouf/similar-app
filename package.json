@@ -24,7 +24,7 @@
     "@react-native-firebase/crashlytics": "^18.7.3",
     "@react-native-firebase/firestore": "^18.7.1",
     "@react-native-google-signin/google-signin": "^10.1.0",
-    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native": "^6.1.12",
     "@react-navigation/stack": "^6.3.17",
     "axios": "^1.6.0",
     "deprecated-react-native-prop-types": "^5.0.0",
@@ -32,6 +32,7 @@
     "i18next": "^23.4.4",
     "intl": "^1.2.5",
     "intl-pluralrules": "^2.0.1",
+    "mayo-firebase-auth": "^1.5.6",
     "mayo-firebase-config": "^1.2.24",
     "mayo-firestore-write": "^1.5.3",
     "mayo-loader": "^1.0.2",
@@ -58,8 +59,7 @@
     "react-native-svg": "^13.14.0",
     "react-native-svg-transformer": "^1.3.0",
     "react-native-swiper": "^1.6.0",
-    "react-native-vector-icons": "^10.0.1",
-    "yarn": "^1.22.21"
+    "react-native-vector-icons": "^10.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

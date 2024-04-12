@@ -79,25 +79,25 @@ const HomeScreen = () => {
       break;
     default:
       content = (
-        <View style={styles.container}>
+        <View>
           <TouchableOpacity
             style={styles.menuButton}
             onPress={showPopup}>
             <Text style={styles.menuText}>Configuration state</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
             style={styles.menuButton} 
             onPress={() => setSelectedOption('Lesson')}>
             <FontAwesomeIcon icon={faBook} size={24} style={styles.menuIcon} />
             <Text style={styles.menuText}>Lesson</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
             style={styles.menuButton} 
             onPress={() => setSelectedOption('Exercise')}>
             <FontAwesomeIcon icon={faGraduationCap} size={24} style={styles.menuIcon} />
             <Text style={styles.menuText}>Exercises</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <ConfigModal
             isVisible={isModalVisible}
@@ -115,7 +115,7 @@ const HomeScreen = () => {
   
   return (
     <View style={styles.view}>
-      <Header
+      {/* <Header
         userState={userState} 
         setUserState={setUserState}
         loading={loading}
@@ -123,7 +123,7 @@ const HomeScreen = () => {
         goodCount={totalGoodAnswers}
         wrongCount={totalWrongAnswers}
         onSelectExercise={selectExercise}
-      />
+      /> */}
 
       {content}
     </View>

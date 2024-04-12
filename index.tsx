@@ -20,7 +20,7 @@ const AppRoot: React.FC = () => {
     console.log('AsyncStorage size:', size);
   });
   crashlytics().setCrashlyticsCollectionEnabled(true);
-  
+  debugger
   return (
     <SafeAreaProvider>
       <UserProvider>

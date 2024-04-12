@@ -14,6 +14,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const opt = { headerLeft: () => null, headerShown: false };
 
 export const MainApp: React.FC = () => {
+  debugger
   return (
     <CurrentScreenProvider>
       <NavigationContainer>
