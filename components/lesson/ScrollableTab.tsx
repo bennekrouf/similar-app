@@ -8,13 +8,12 @@ import {ScrollableTabProps} from '../../models/interfaces';
 import ChapterSelectionModal from './ChapterSelectionModal'; // Import the TypeScript declaration file
 import {
   View,
-  Text,
-  TouchableOpacity,
   PanResponder,
   PanResponderInstance,
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScrollableTabHeader from './ScrollableTabHeader'; // Import the new header component
 
 type RootStackParamList = {
   SwipablePage: undefined; // If this route does not take any parameters
@@ -71,35 +70,8 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
   return (
     <ScrollableTabView>
       <View style={styles.view}>
-        {/* Left section of the header */}
-        <View style={styles.headerContainer}>
-          <View>
-            <Text style={styles.leftHeaderText}>
-              {kalima} ({verses.length + similars.length})
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={styles.navigationButton}
-            onPress={() =>
-              navigation.navigate('DiscriminantExercise', {
-                kalima,
-                currentChapterName: verses[0].sourate,
-              })
-            }>
-            <Text style={styles.navigationText}>{t('test')}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.sourateHeaderView}
-            onPress={handleOpenModal}>
-            <View>
-              <Text style={styles.rightHeaderText}>{verses[0].sourate}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.verseList}>
+        <ScrollableTabHeader kalima={kalima} verses={verses} />
+        <View>
           <LessonContent
             verses={verses}
             key="verseList"
@@ -124,61 +96,10 @@ const ScrollableTab: React.FC<ScrollableTabProps> = ({
 export default ScrollableTab;
 
 const styles = StyleSheet.create({
-  navigationButton: {
-    //...add your styles here
-  },
-  navigationText: {
-    //...add your styles here
-  },
   view: {
     backgroundColor: '#fff',
     elevation: 3,
     flex: 1,
     padding: 0,
-  },
-  centerHeaderText: {
-    fontSize: 18,
-    fontFamily: 'ScheherazadeNew-Medium',
-    color: '#040101',
-    // Add additional styles as needed
-  },
-  headerContainer: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 0,
-    paddingHorizontal: 3,
-    elevation: 3, // This will add shadow in Android
-    shadowColor: '#000', // iOS shadow
-    shadowOffset: {
-      // iOS shadow
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22, // iOS shadow
-    shadowRadius: 2.22, // iOS shadow
-    backgroundColor: '#fff', // You should set background color for the shadow to appear
-  },
-  leftHeaderText: {
-    fontSize: 18,
-    fontFamily: 'ScheherazadeNew-Medium',
-    color: '#040101',
-    // Add additional styles as needed
-  },
-  sourateHeaderView: {
-    backgroundColor: 'green',
-    color: 'white',
-    borderRadius: 15,
-    paddingHorizontal: 10,
-  },
-  rightHeaderText: {
-    fontSize: 18,
-    fontFamily: 'ScheherazadeNew-Regular',
-    // fontWeight: 'bold',
-    // color: '#040101',
-    color: 'white',
-  },
-  verseList: {
-    // paddingTop: 40,
   },
 });
