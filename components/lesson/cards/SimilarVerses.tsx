@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-import {VerseListProps} from '../../models/interfaces';
+import {VerseListProps} from '../../../models/interfaces';
 import {View} from 'react-native';
-import FormattedVerse from './FormattedVerse';
+import FormattedVerse from '../FormattedVerse';
 
 const SimilarVerses: React.FC<VerseListProps> = ({verses, isOpposite}) => (
   <View style={[styles.similarsContainer]}>

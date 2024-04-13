@@ -2,8 +2,8 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {LessonListProps} from '../../models/interfaces';
-import MainVerses from './MainVerses';
-import SimilarVerses from './SimilarVerses';
+import MainVerses from './cards/MainVerses';
+import SimilarVerses from './cards/SimilarVerses';
 
 const MainContent: React.FC<LessonListProps> = ({
   verses,

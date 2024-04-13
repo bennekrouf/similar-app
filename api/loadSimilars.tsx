@@ -19,13 +19,17 @@ export async function loadSimilars(chapterNo = 40) {
     const similarsAPI = await fetch(`${config.domain}similars/${chapterNo}`);
     // console.log('config.domain33 : ', similarsAPI);
     similars = await similarsAPI.json();
-
-    similars = similars?.map(item => ({
-      kalima: item.kalima,
-      verses: formatSimilars(item.verses),
-      similars: formatSimilars(item.similars),
-      opposites: formatSimilars(item.opposites),
-    }));
+    
+    similars = similars?.map(similar => ({
+      kalima: similar.kalima,
+      verses: formatSimilars(similar.verses),
+      similars: formatSimilars(similar.similars),
+      opposites: formatSimilars(similar.opposites),
+    })).sort((a, b) => {
+      const ayahA = a.verses[0].verse.ayah;
+      const ayahB = b.verses[0].verse.ayah;
+      return ayahB - ayahA;
+    });
     AsyncStorage.setItem('similars', JSON.stringify(similars));
     return similars;
   } catch (error) {

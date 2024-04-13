@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {VerseListProps} from '../../models/interfaces';
-import FormattedVerse from './FormattedVerse';
+import {VerseListProps} from '../../../models/interfaces';
+import FormattedVerse from '../FormattedVerse';
 
 const Verses: React.FC<VerseListProps> = ({verses}) => (
   <View style={styles.versesContainer}>
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     textAlign: 'right', // Add the textAlign directly to the inner Text components
   },
   versesContainer: {
-    margin: 10,
     padding: 10,
   },
 });
