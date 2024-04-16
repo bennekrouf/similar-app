@@ -1,8 +1,23 @@
+
+// Plugins block must be at the top
+plugins {
+    id "com.github.ben-manes.versions" version "0.49.0" apply false
+}
+
 rootProject.name = 'tafseel'
-apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+// Include ':app' and other modules
 include ':app'
-includeBuild('../node_modules/@react-native/gradle-plugin')
+
+// React Native specific setup
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); 
+applyNativeModulesSettingsGradle(settings)
+
+// Including and configuring specific React Native libraries
 include ':react-native-gesture-handler'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
+
 include ':react-native-localize'
 project(':react-native-localize').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-localize/android')
+
+// Including React Native Gradle Plugin
+includeBuild('../node_modules/@react-native/gradle-plugin')
