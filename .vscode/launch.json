@@ -7,6 +7,13 @@
             "type": "reactnativedirect",
             "cwd": "${workspaceFolder}",
             "platform": "ios"
+        },
+        {
+            "name": "Debug Android",
+            "type": "reactnative",
+            "request": "launch",
+            "platform": "android",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
