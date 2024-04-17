@@ -1,5 +1,4 @@
-package com.tafseel;
-
+package com.mayorana.tafseel;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;

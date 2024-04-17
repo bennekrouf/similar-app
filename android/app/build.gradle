@@ -1,6 +1,9 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply plugin: "com.google.firebase.crashlytics"
+apply plugin: 'com.google.gms.google-services'
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 react {
 }
@@ -15,7 +18,7 @@ android {
 
     namespace "com.tafseel"
     defaultConfig {
-        applicationId "com.tafseel"
+        namespace "com.mayorana.tafseel"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

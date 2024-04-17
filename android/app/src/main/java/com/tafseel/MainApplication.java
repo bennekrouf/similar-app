@@ -1,5 +1,5 @@
-package com.tafseel;
-
+package com.mayorana.tafseel;
+import android.os.Bundle; // needed for onCreate method
 import android.app.Application;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -8,6 +8,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
+import com.facebook.react.modules.i18nmanager.I18nUtil;
+
 import java.util.List;
 // import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 // import com.reactcommunity.rnlocalize.RNLocalizePackage;
