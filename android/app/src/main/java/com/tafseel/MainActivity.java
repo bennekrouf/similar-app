@@ -23,8 +23,8 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
-    I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
-    sharedI18nUtilInstance.allowRTL(context, true);
+    // I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
+    // sharedI18nUtilInstance.allowRTL(context, true);
     return new DefaultReactActivityDelegate(
         this,
         getMainComponentName(),
